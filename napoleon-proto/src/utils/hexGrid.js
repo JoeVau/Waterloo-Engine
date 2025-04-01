@@ -10,7 +10,6 @@ export function loadMap(mapData) {
         r,
         terrain: hexData.terrain,
         units: [],
-        // visible: { blue: 'hidden', red: 'hidden' }, // Commented out - no fog
       });
     }
   }
@@ -27,8 +26,8 @@ export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset)
   const adjustedX = (x - offset.x) / zoom;
   const adjustedY = (y - offset.y) / zoom;
   const r = Math.round(adjustedY / hexHeight);
-  const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.375;
-  const q = Math.round((adjustedX - offsetX) / (hexWidth * 0.75));
+  const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.5; // Match render offset
+  const q = Math.round((adjustedX - offsetX) / hexWidth); // Full width
   return hexes.find(h => h.q === q && h.r === r);
 }
 

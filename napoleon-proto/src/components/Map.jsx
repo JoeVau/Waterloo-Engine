@@ -4,8 +4,8 @@ import { drawHex, drawUnits } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
 
 const hexSize = 8;
-const hexWidth = hexSize * 2;
-const hexHeight = hexSize * Math.sqrt(3);
+const hexWidth = hexSize * 2; // 16
+const hexHeight = hexSize * Math.sqrt(3); // ~13.856
 
 const terrainColors = {
   plains: '#ffffff',
@@ -28,9 +28,9 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
     ctx.scale(zoom, zoom);
 
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth * 0.75;
+      const x = hex.q * hexWidth; // Full width between columns
       const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.375;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5; // Half width for odd rows
       const finalX = x + offsetX;
       const finalY = y;
 
@@ -41,12 +41,28 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
         finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
         drawHex(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain], false, hex, zoom, false);
+      }
+    });
 
+    hexes.forEach(hex => {
+      const x = hex.q * hexWidth;
+      const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
+      if (
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
+      ) {
         if (selectedUnitId && hex.units.includes(selectedUnitId)) {
           const unitHex = hex;
           hexes.forEach(h => {
-            if (hexDistance(unitHex.q, unitHex.r, h.q, h.r) <= 2) {
-              const hx = h.q * hexWidth * 0.75 + (h.r % 2 === 0 ? 0 : hexWidth * 0.375);
+            const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
+            if (distance <= 2) {
+              const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
               const hy = h.r * hexHeight;
               ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
               ctx.beginPath();
@@ -70,7 +86,7 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
           const order = orders.blue[topUnit.id] || orders.red[topUnit.id];
           if (order && order.type === 'move') {
             const destHex = hexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
-            const destX = destHex.q * hexWidth * 0.75 + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.375);
+            const destX = destHex.q * hexWidth + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
             const destY = destHex.r * hexHeight;
             ctx.strokeStyle = '#ff0';
             ctx.lineWidth = 2 / zoom;
