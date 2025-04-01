@@ -1,45 +1,26 @@
 import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
+import Frame from './Frame';
 import { loadMap, getHexAtPosition, hexDistance } from '../utils/hexGrid';
-import italianCampaign from '../data/maps/italianCampaign.json'; // Adjust path as needed
+import italianCampaign from '../data/maps/italianCampaign.json';
 
 function MapContainer() {
   const canvasRef = useRef(null);
   const [hexes, setHexes] = useState([]);
   const [units, setUnits] = useState([]);
   const [turn, setTurn] = useState(1);
-  const [currentPlayer, setCurrentPlayer] = useState('blue'); // Blue starts
+  const [currentPlayer, setCurrentPlayer] = useState('blue');
   const [orders, setOrders] = useState({ blue: {}, red: {} });
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [selectedHex, setSelectedHex] = useState(null);
+  const [selectedUnitId, setSelectedUnitId] = useState(null);
 
-  // Load initial state from italianCampaign.json
   useEffect(() => {
     const { hexes: loadedHexes, units: loadedUnits } = loadMap(italianCampaign);
     setHexes(loadedHexes);
     setUnits(loadedUnits);
-    updateFog(loadedHexes, loadedUnits);
   }, []);
-
-  // Update fog based on unit positions
-  const updateFog = (currentHexes, currentUnits) => {
-    const newHexes = currentHexes.map(hex => ({
-      ...hex,
-      visible: { blue: 'hidden', red: 'hidden' },
-    }));
-    currentUnits.forEach(unit => {
-      const hex = newHexes.find(h => h.units.includes(unit.id));
-      if (!hex) return;
-      const team = unit.team;
-      newHexes.forEach(h => {
-        if (hexDistance(hex.q, hex.r, h.q, h.r) <= 2) {
-          h.visible[team] = 'full';
-          h.visible[team === 'blue' ? 'red' : 'blue'] = h.units.length ? 'partial' : 'hidden';
-        }
-      });
-    });
-    setHexes(newHexes);
-  };
 
   const handleClick = (e) => {
     const canvas = canvasRef.current;
@@ -50,21 +31,46 @@ function MapContainer() {
     const clickedHex = getHexAtPosition(x, y, hexes, Map.hexWidth, Map.hexHeight, zoom, offset);
     if (!clickedHex) return;
 
-    const unit = units.find(u => hexes.find(h => h.q === u.position[0] && h.r === u.position[1] && h.units.includes(u.id)));
-    if (unit && unit.team === currentPlayer && !orders[unit.team][unit.id]) {
+    if (selectedHex && clickedHex.q === selectedHex[0] && clickedHex.r === selectedHex[1]) {
+      setSelectedHex(null);
+      setSelectedUnitId(null);
       setOrders(prev => ({
         ...prev,
-        [unit.team]: { ...prev[unit.team], [unit.id]: null },
+        [currentPlayer]: {},
       }));
-    } else if (orders[currentPlayer][unit ?.id] === null) {
-      const unitId = unit.id;
-      const unitHex = hexes.find(h => h.units.includes(unitId));
+      return;
+    }
+
+    setSelectedHex([clickedHex.q, clickedHex.r]);
+    setSelectedUnitId(null);
+    setOrders(prev => ({
+      ...prev,
+      [currentPlayer]: {},
+    }));
+
+    if (clickedHex.units.length && !selectedUnitId) return;
+
+    if (selectedUnitId && orders[currentPlayer][selectedUnitId] === null) {
+      const unitHex = hexes.find(h => h.units.includes(selectedUnitId));
       if (hexDistance(unitHex.q, unitHex.r, clickedHex.q, clickedHex.r) <= 2) {
         setOrders(prev => ({
           ...prev,
-          [currentPlayer]: { [unitId]: { type: 'move', dest: [clickedHex.q, clickedHex.r] } },
+          [currentPlayer]: { [selectedUnitId]: { type: 'move', dest: [clickedHex.q, clickedHex.r] } },
         }));
+        setSelectedUnitId(null);
+        setSelectedHex(null);
       }
+    }
+  };
+
+  const handleUnitSelect = (unitId) => {
+    const unit = units.find(u => u.id === unitId);
+    if (unit && unit.team === currentPlayer && !orders[unit.team][unit.id]) {
+      setSelectedUnitId(unitId);
+      setOrders(prev => ({
+        ...prev,
+        [unit.team]: { [unitId]: null },
+      }));
     }
   };
 
@@ -77,7 +83,7 @@ function MapContainer() {
     const mouseY = e.clientY - rect.top;
 
     const zoomDelta = e.deltaY > 0 ? 0.9 : 1.1;
-    const newZoom = Math.max(0.5, Math.min(3, zoom * zoomDelta));
+    const newZoom = Math.max(0.5, Math.min(5, zoom * zoomDelta));
     const zoomRatio = newZoom / zoom;
 
     setOffset(prev => ({
@@ -108,15 +114,16 @@ function MapContainer() {
   };
 
   const handleEndTurn = (team) => {
-    if (team !== currentPlayer) return; // Only active player can end turn
+    if (team !== currentPlayer) return;
     if (currentPlayer === 'blue') {
-      setCurrentPlayer('red'); // Blue ends, Red’s turn
+      setCurrentPlayer('red');
     } else {
-      // Red ends, resolve both turns
       resolveTurn();
-      setCurrentPlayer('blue'); // Back to Blue for next turn
+      setCurrentPlayer('blue');
       setTurn(turn + 1);
     }
+    setSelectedUnitId(null);
+    setSelectedHex(null);
   };
 
   const resolveTurn = () => {
@@ -129,54 +136,39 @@ function MapContainer() {
           oldHex.units = oldHex.units.filter(id => id !== unitId);
           newHex.units.push(unitId);
           const unit = units.find(u => u.id === unitId);
-          unit.position = order.dest; // Keep unit position in sync
+          unit.position = order.dest;
         }
       });
     });
     setOrders({ blue: {}, red: {} });
-    updateFog(newHexes, units);
+    setHexes(newHexes);
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      {/* Blue Sidebar */}
-      <div style={{ width: '200px', background: '#bbf', padding: '10px' }}>
-        <h3>Blue Player</h3>
-        <p>Turn: {turn} {currentPlayer === 'blue' ? '(Active)' : ''}</p>
-        <p>Unit: {units[0] ?.name}</p>
-        <p>Position: [{units[0] ?.position[0]}, {units[0] ?.position[1]}]</p>
-        <p>Order: {orders.blue.blue_1 ? `Move to [${orders.blue.blue_1.dest}]` : 'None'}</p>
-        <button onClick={() => handleEndTurn('blue')} disabled={currentPlayer !== 'blue'}>
-          End Turn
-        </button>
-      </div>
-
-      {/* Canvas */}
-      <div style={{ width: '1000px', height: '800px', background: '#ccc' }}>
-        <canvas
-          ref={canvasRef}
-          width={1000}
-          height={800}
-          onClick={handleClick}
-          onWheel={handleWheel}
-          onMouseDown={handleMouseDown}
-          style={{ display: 'block', cursor: 'grab' }}
-        />
-        <Map canvasRef={canvasRef} hexes={hexes} units={units} orders={orders} zoom={zoom} offset={offset} />
-      </div>
-
-      {/* Red Sidebar */}
-      <div style={{ width: '200px', background: '#fbb', padding: '10px' }}>
-        <h3>Red Player</h3>
-        <p>Turn: {turn} {currentPlayer === 'red' ? '(Active)' : ''}</p>
-        <p>Unit: {units[1] ?.name}</p>
-        <p>Position: [{units[1] ?.position[0]}, {units[1] ?.position[1]}]</p>
-        <p>Order: {orders.red.red_1 ? `Move to [${orders.red.red_1.dest}]` : 'None'}</p>
-        <button onClick={() => handleEndTurn('red')} disabled={currentPlayer !== 'red'}>
-          End Turn
-        </button>
-      </div>
-    </div>
+    <Frame
+      hexes={hexes}
+      units={units}
+      turn={turn}
+      currentPlayer={currentPlayer}
+      orders={orders}
+      selectedHex={selectedHex}
+      selectedUnitId={selectedUnitId}
+      onEndTurn={handleEndTurn}
+      onUnitSelect={handleUnitSelect}
+    >
+      <Map
+        canvasRef={canvasRef}
+        hexes={hexes}
+        units={units}
+        orders={orders}
+        zoom={zoom}
+        offset={offset}
+        selectedUnitId={selectedUnitId}
+        onClick={handleClick}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+      />
+    </Frame>
   );
 }
 

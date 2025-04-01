@@ -4,18 +4,17 @@ export function loadMap(mapData) {
   for (let q = 0; q < gridSize; q++) {
     for (let r = 0; r < gridSize; r++) {
       const key = `${q},${r}`;
-      const hexData = mapHexes[key] || { terrain: 'plains' }; // Default to plains if not in JSON
+      const hexData = mapHexes[key] || { terrain: 'plains' };
       hexes.push({
         q,
         r,
         terrain: hexData.terrain,
         units: [],
-        visible: { blue: 'hidden', red: 'hidden' }, // Fog per player
+        // visible: { blue: 'hidden', red: 'hidden' }, // Commented out - no fog
       });
     }
   }
 
-  // Place units in hexes
   units.forEach(unit => {
     const hex = hexes.find(h => h.q === unit.position[0] && h.r === unit.position[1]);
     if (hex) hex.units.push(unit.id);
@@ -34,9 +33,15 @@ export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset)
 }
 
 export function hexDistance(q1, r1, q2, r2) {
+  const x1 = q1 - Math.floor(r1 / 2);
+  const x2 = q2 - Math.floor(r2 / 2);
+  const z1 = r1;
+  const z2 = r2;
+  const y1 = -x1 - z1;
+  const y2 = -x2 - z2;
   return Math.max(
-    Math.abs(q1 - q2),
-    Math.abs(r1 - r2),
-    Math.abs((q1 + r1) - (q2 + r2))
+    Math.abs(x1 - x2),
+    Math.abs(y1 - y2),
+    Math.abs(z1 - z2)
   );
 }

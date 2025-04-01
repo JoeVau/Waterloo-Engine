@@ -34,6 +34,13 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
     ctx.textBaseline = 'middle';
     ctx.fillText(hex.name, x, y);
   }
+
+  ctx.fillStyle = '#000'; // Black for visibility
+  ctx.font = `${6 / zoom}px Arial`; // Small font, scales with zoom
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
+
 }
 
 export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset) {

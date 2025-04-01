@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { getHexAtPosition } from '../utils/hexGrid';
-import { drawHex, drawFeatures, drawUnits } from '../utils/renderUtils';
+import { drawHex, drawUnits } from '../utils/renderUtils';
+import { hexDistance } from '../utils/hexGrid';
 
 const hexSize = 8;
 const hexWidth = hexSize * 2;
@@ -12,7 +13,7 @@ const terrainColors = {
   hills: '#8b4513',
 };
 
-export default function Map({ canvasRef, hexes, units, orders, zoom, offset }) {
+export default function Map({ canvasRef, hexes, units, orders, zoom, offset, selectedUnitId, onClick, onWheel, onMouseDown }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -26,7 +27,6 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset }) {
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Draw hexes
     hexes.forEach(hex => {
       const x = hex.q * hexWidth * 0.75;
       const y = hex.r * hexHeight;
@@ -40,52 +40,65 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset }) {
         finalY > -offset.y / zoom - hexHeight &&
         finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        // Fog: Full terrain if visible to either player, gray if hidden
-        const isVisible = hex.visible.blue === 'full' || hex.visible.red === 'full';
-        drawHex(
-          ctx,
-          finalX,
-          finalY,
-          hexSize,
-          isVisible ? terrainColors[hex.terrain] : '#555',
-          false, // No highlight for simplicity
-          hex,
-          zoom,
-          false // No unit highlight for now
-        );
+        drawHex(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain], false, hex, zoom, false);
 
-        // Draw units using hex.units
+        if (selectedUnitId && hex.units.includes(selectedUnitId)) {
+          const unitHex = hex;
+          hexes.forEach(h => {
+            if (hexDistance(unitHex.q, unitHex.r, h.q, h.r) <= 2) {
+              const hx = h.q * hexWidth * 0.75 + (h.r % 2 === 0 ? 0 : hexWidth * 0.375);
+              const hy = h.r * hexHeight;
+              ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+              ctx.beginPath();
+              for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI / 3) * i + Math.PI / 6;
+                const px = hx + hexSize * Math.cos(angle);
+                const py = hy + hexSize * Math.sin(angle);
+                i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+              }
+              ctx.closePath();
+              ctx.fill();
+            }
+          });
+        }
+
         if (hex.units.length) {
           const hexUnits = units.filter(unit => hex.units.includes(unit.id));
           drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x: finalX, y: finalY }, null);
 
-          // Draw move order if exists (for the first unit in stack)
           const topUnit = hexUnits[0];
           const order = orders.blue[topUnit.id] || orders.red[topUnit.id];
           if (order && order.type === 'move') {
             const destHex = hexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
             const destX = destHex.q * hexWidth * 0.75 + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.375);
             const destY = destHex.r * hexHeight;
-            ctx.strokeStyle = '#ff0'; // Yellow for orders
+            ctx.strokeStyle = '#ff0';
             ctx.lineWidth = 2 / zoom;
-            ctx.setLineDash([5 / zoom, 5 / zoom]); // Dashed line
+            ctx.setLineDash([5 / zoom, 5 / zoom]);
             ctx.beginPath();
             ctx.moveTo(finalX, finalY);
             ctx.lineTo(destX, destY);
             ctx.stroke();
-            ctx.setLineDash([]); // Reset to solid
+            ctx.setLineDash([]);
           }
         }
       }
     });
 
-    // Draw rivers and roads (optional, uncomment if features added to props)
-    // drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset);
-
     ctx.restore();
-  }, [hexes, units, orders, zoom, offset]);
+  }, [hexes, units, orders, zoom, offset, selectedUnitId]);
 
-  return null;
+  return (
+    <canvas
+      ref={canvasRef}
+      width={1000}
+      height={800}
+      onClick={onClick}
+      onWheel={onWheel}
+      onMouseDown={onMouseDown}
+      style={{ display: 'block', cursor: 'grab' }}
+    />
+  );
 }
 
 Map.hexWidth = hexWidth;

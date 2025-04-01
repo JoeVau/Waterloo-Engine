@@ -7670,6 +7670,15 @@
       ]
     },
     {
+      "id": "french_2",
+      "name": "French Unit 2",
+      "team": "blue",
+      "position": [
+        6,
+        6
+      ]
+    },
+    {
       "id": "austrian_1",
       "name": "Austrian Unit 1",
       "team": "red",
