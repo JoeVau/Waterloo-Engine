@@ -19,8 +19,8 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
     ctx.fillStyle = '#6b4e31'; // Dark brown hills
     const hillPositions = [
       { x: x - size * 0.4, y: y - size * 0.1, w: size * 0.4, h: size * 0.3 },
-      { x: x + size * 0.1, y: y - size * 0.2, w: size * 0.5, h: size * 0.4 },
-      { x: x - size * 0.1, y: y + size * 0.2, w: size * 0.3, h: size * 0.3 },
+      { x: x + size * 0.1, y: y - size * 0.2, w: size * 0.5, h: size * 0.4 }
+      //{ x: x - size * 0.1, y: y + size * 0.2, w: size * 0.3, h: size * 0.3 },
     ];
     hillPositions.forEach(hill => {
       ctx.beginPath();
@@ -32,7 +32,7 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
 
   // Woods: green shade + trees
   if (hex.terrain === 'woods') {
-    ctx.fillStyle = '#004d00'; // Dark green shade
+    ctx.fillStyle = '#759456'; // Dark green shade
     ctx.fill();
     ctx.fillStyle = '#006400'; // Tree green
     const treePositions = [
@@ -86,7 +86,7 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
 
   // Border
   ctx.strokeStyle = isHighlighted ? 'yellow' : '#000';
-  ctx.lineWidth = 1 / zoom;
+  ctx.lineWidth = 0.1 / zoom;
   ctx.stroke();
 
   // Coordinates
