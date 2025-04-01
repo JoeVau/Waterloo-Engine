@@ -1,5 +1,5 @@
 export function loadMap(mapData) {
-  const { gridSize, hexes: mapHexes, units } = mapData;
+  const { gridSize, hexes: mapHexes, units, features } = mapData;
   const hexes = [];
   for (let q = 0; q < gridSize; q++) {
     for (let r = 0; r < gridSize; r++) {
@@ -10,6 +10,7 @@ export function loadMap(mapData) {
         r,
         terrain: hexData.terrain,
         units: [],
+        road: hexData.road || false, // Add road flag
       });
     }
   }
@@ -19,7 +20,15 @@ export function loadMap(mapData) {
     if (hex) hex.units.push(unit.id);
   });
 
-  return { hexes, units };
+  if (features && features.roads) {
+    features.roads.forEach(road => {
+      road.path.forEach(([q, r]) => {
+        const hex = hexes.find(h => h.q === q && h.r === r);
+        if (hex) hex.road = true;
+      });
+    });
+  }
+  return { hexes, units, features };
 }
 
 export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset) {

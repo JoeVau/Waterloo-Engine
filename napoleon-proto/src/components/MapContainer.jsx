@@ -8,6 +8,7 @@ function MapContainer() {
   const canvasRef = useRef(null);
   const [hexes, setHexes] = useState([]);
   const [units, setUnits] = useState([]);
+  const [features, setFeatures] = useState(null);
   const [turn, setTurn] = useState(1);
   const [currentPlayer, setCurrentPlayer] = useState('blue');
   const [orders, setOrders] = useState({ blue: {}, red: {} });
@@ -17,9 +18,11 @@ function MapContainer() {
   const [selectedUnitId, setSelectedUnitId] = useState(null);
 
   useEffect(() => {
-    const { hexes: loadedHexes, units: loadedUnits } = loadMap(italianCampaign);
+    const { hexes: loadedHexes, units: loadedUnits, features: loadedFeatures } = loadMap(italianCampaign);
+    console.log('Loaded features:', loadedFeatures);
     setHexes(loadedHexes);
     setUnits(loadedUnits);
+    setFeatures(loadedFeatures);
   }, []);
 
   const handleClick = (e) => {
@@ -155,12 +158,15 @@ function MapContainer() {
       selectedUnitId={selectedUnitId}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
+      zoom={zoom}
+      offset={offset}
     >
       <Map
         canvasRef={canvasRef}
         hexes={hexes}
         units={units}
         orders={orders}
+        features={features}
         zoom={zoom}
         offset={offset}
         selectedUnitId={selectedUnitId}

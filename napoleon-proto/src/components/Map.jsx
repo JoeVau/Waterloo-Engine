@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { getHexAtPosition } from '../utils/hexGrid';
-import { drawHex, drawUnits } from '../utils/renderUtils';
+import { drawHex, drawUnits, drawFeatures } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
 
 const hexSize = 8;
@@ -8,12 +8,14 @@ const hexWidth = hexSize * 2; // 16
 const hexHeight = hexSize * Math.sqrt(3); // ~13.856
 
 const terrainColors = {
-  plains: '#ffffff',
+  plains: '#d9e8d9',
   woods: '#008000',
-  hills: '#8b4513',
+  hills: '#d2b48c',
+  crops: '#e6b800',
+  swamps: '#b3cce6',
 };
 
-export default function Map({ canvasRef, hexes, units, orders, zoom, offset, selectedUnitId, onClick, onWheel, onMouseDown }) {
+export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onWheel, onMouseDown }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -27,10 +29,11 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
+    // Draw hexes
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth; // Full width between columns
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5; // Half width for odd rows
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
       const finalX = x + offsetX;
       const finalY = y;
 
@@ -40,10 +43,16 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
         finalY > -offset.y / zoom - hexHeight &&
         finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        drawHex(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain], false, hex, zoom, false);
+        drawHex(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
       }
     });
 
+    // Draw roads (and other features) from features prop
+    if (features) {
+      drawFeatures(ctx, { roads: features.roads }, hexSize, hexWidth, hexHeight, zoom, offset);
+    }
+
+    // Draw highlights and units
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -102,7 +111,7 @@ export default function Map({ canvasRef, hexes, units, orders, zoom, offset, sel
     });
 
     ctx.restore();
-  }, [hexes, units, orders, zoom, offset, selectedUnitId]);
+  }, [hexes, units, orders, features, zoom, offset, selectedUnitId]);
 
   return (
     <canvas

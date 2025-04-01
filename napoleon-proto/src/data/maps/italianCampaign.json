@@ -7143,13 +7143,13 @@
       "terrain": "plains"
     },
     "47,28": {
-      "terrain": "hills"
+      "terrain": "crops"
     },
     "47,29": {
-      "terrain": "plains"
+      "terrain": "crops"
     },
     "47,30": {
-      "terrain": "hills"
+      "terrain": "crops"
     },
     "47,31": {
       "terrain": "plains"
@@ -7296,7 +7296,7 @@
       "terrain": "plains"
     },
     "48,29": {
-      "terrain": "plains"
+      "terrain": "crops"
     },
     "48,30": {
       "terrain": "plains"
@@ -7667,16 +7667,18 @@
       "position": [
         5,
         5
-      ]
+      ],
+      "strength": 5000
     },
     {
       "id": "french_2",
       "name": "French Unit 2",
       "team": "blue",
       "position": [
-        6,
-        6
-      ]
+        8,
+        5
+      ],
+      "strength": 3000
     },
     {
       "id": "austrian_1",
@@ -7685,7 +7687,8 @@
       "position": [
         10,
         10
-      ]
+      ],
+      "strength": 4000
     }
   ]
 }
