@@ -2298,7 +2298,9 @@
       "terrain": "plains"
     },
     "15,15": {
-      "terrain": "plains"
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Amsterdam"
     },
     "15,16": {
       "terrain": "woods"

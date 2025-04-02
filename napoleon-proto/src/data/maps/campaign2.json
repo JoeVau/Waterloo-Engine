@@ -770,7 +770,9 @@
       "terrain": "swamps"
     },
     "5,5": {
-      "terrain": "swamps"
+      "terrain": "swamps",
+      "feature": "city",
+      "name": "Vienna"
     },
     "5,6": {
       "terrain": "swamps"
@@ -7722,6 +7724,38 @@
             2
           ]
         ]
+      }
+    ],
+    "cities": [
+      {
+        "q": 5,
+        "r": 12,
+        "feature": "city",
+        "name": "Brussels"
+      },
+      {
+        "q": 18,
+        "r": 25,
+        "feature": "city",
+        "name": "Paris"
+      },
+      {
+        "q": 32,
+        "r": 8,
+        "feature": "city",
+        "name": "Vienna"
+      },
+      {
+        "q": 45,
+        "r": 38,
+        "feature": "city",
+        "name": "Berlin"
+      },
+      {
+        "q": 22,
+        "r": 47,
+        "feature": "city",
+        "name": "Amsterdam"
       }
     ]
   }

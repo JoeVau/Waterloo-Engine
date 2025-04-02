@@ -8,9 +8,9 @@ export function loadMap(mapData) {
       hexes.push({
         q,
         r,
-        terrain: hexData.terrain,
-        units: [],
-        road: hexData.road || false,
+        ...hexData, // Spread all properties (terrain, feature, name, etc.)
+        units: hexData.units || [], // Default units if not present
+        road: hexData.road || false, // Default road if not present
       });
     }
   }
@@ -40,7 +40,7 @@ export function loadMap(mapData) {
     });
   }
 
-  console.log('Generated roadGraph:', roadGraph); // Debug here
+  console.log('Generated roadGraph:', roadGraph);
   return { hexes, units, features: { roads: roadGraph } };
 }
 
@@ -48,8 +48,8 @@ export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset)
   const adjustedX = (x - offset.x) / zoom;
   const adjustedY = (y - offset.y) / zoom;
   const r = Math.round(adjustedY / hexHeight);
-  const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.5; // Match render offset
-  const q = Math.round((adjustedX - offsetX) / hexWidth); // Full width
+  const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.5;
+  const q = Math.round((adjustedX - offsetX) / hexWidth);
   return hexes.find(h => h.q === q && h.r === r);
 }
 
@@ -66,4 +66,3 @@ export function hexDistance(q1, r1, q2, r2) {
     Math.abs(z1 - z2)
   );
 }
-

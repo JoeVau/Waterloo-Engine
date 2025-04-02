@@ -1539,7 +1539,9 @@
       "terrain": "hills"
     },
     "10,10": {
-      "terrain": "crops"
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Vienna"
     },
     "10,11": {
       "terrain": "woods"
@@ -3234,7 +3236,9 @@
       "terrain": "woods"
     },
     "21,25": {
-      "terrain": "woods"
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Salzburg"
     },
     "21,26": {
       "terrain": "swamps"
