@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition, hexDistance } from '../utils/hexGrid';
-import campaign2 from '../data/maps/italianCampaign.json'; // Switch to campaign2
+import campaign2 from '../data/maps/italianCampaign.json';
 
 function MapContainer() {
   const canvasRef = useRef(null);
@@ -19,7 +19,7 @@ function MapContainer() {
 
   useEffect(() => {
     const { hexes: loadedHexes, units: loadedUnits, features: loadedFeatures } = loadMap(campaign2);
-    console.log('Loaded roadGraph:', loadedFeatures.roads); // Debug
+    console.log('Loaded roadGraph:', loadedFeatures.roads);
     setHexes(loadedHexes);
     setUnits(loadedUnits);
     setFeatures(loadedFeatures);
@@ -86,6 +86,16 @@ function MapContainer() {
     }));
     setZoom(newZoom);
   };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.addEventListener('wheel', handleWheel, { passive: false });
+      return () => {
+        canvas.removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, [zoom, offset]); // Re-run if zoom or offset changes
 
   const handleMouseDown = (e) => {
     const startX = e.clientX;

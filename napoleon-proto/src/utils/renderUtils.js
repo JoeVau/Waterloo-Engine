@@ -121,46 +121,57 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
           const x = Math.sin(seed++) * 10000;
           return Math.floor((x - Math.floor(x)) * max);
         };
-
-        // 20 brick-colored rectangles, non-overlapping, mostly parallel
-        const brickColors = ['#8B4513', '#A0522D', '#CD5C5C', '#D2691E'];
-        const tiles = [];
+        //xx
+        // Draw city tiles with variation and road-like negative space
+        const brickColor = '#8B4513'; // Single color: SaddleBrown
         const tileCount = 20;
-        const tileSize = size * 0.15;
-        const gridWidth = Math.floor(size * 0.8 / tileSize);
-        const gridHeight = Math.ceil(tileCount / gridWidth);
-        const startX = x - size * 0.4;
-        const startY = y - size * 0.4;
 
-        // Generate tile positions in a grid, shuffled by seed
-        const positions = [];
-        for (let gy = 0; gy < gridHeight; gy++) {
-          for (let gx = 0; gx < gridWidth && positions.length < tileCount; gx++) {
-            positions.push({ gx, gy });
+        const tiles = [];
+
+        // Place tiles with seeded random, avoiding overlap and suggesting roads
+        for (let i = 0; i < tileCount; i++) {
+          let attempts = 0;
+          let placed = false;
+          while (!placed && attempts < 50) { // Limit attempts to avoid infinite loop
+            const tileSize = size * (0.1 + rand(11) / 100); // 0.1 to 0.2 range
+            const offsetX = (rand(100) / 100 - 0.5) * size * 0.9; // Wider range within 90% of hex
+            const offsetY = (rand(100) / 100 - 0.5) * size * 0.9;
+            const tx = x + offsetX;
+            const ty = y + offsetY;
+            const rotation = (rand(2) - 0.5) * Math.PI / 12; // ±15° for more variation
+
+            // Check for overlap with existing tiles or road-like gaps
+            const minGap = tileSize * 0.5; // Space for "roads"
+            const overlaps = tiles.some(tile => {
+              const dx = tile.x - tx;
+              const dy = tile.y - ty;
+              return Math.sqrt(dx * dx + dy * dy) < (tileSize + tile.size) * 0.5 + minGap;
+            });
+
+            // Encourage road-like gaps by rejecting tiles too close to center or edges
+            const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+            const isRoadZone = (distFromCenter < size * 0.2 || distFromCenter > size * 0.4) && rand(100) < 30;
+
+            if (!overlaps && !isRoadZone) {
+              tiles.push({ x: tx, y: ty, rotation, size: tileSize });
+              placed = true;
+            }
+            attempts++;
           }
         }
-        for (let i = positions.length - 1; i > 0; i--) {
-          const j = rand(i + 1);
-          [positions[i], positions[j]] = [positions[j], positions[i]];
-        }
 
-        // Draw tiles
-        positions.forEach((pos, i) => {
-          const tx = startX + pos.gx * tileSize * 1.1;
-          const ty = startY + pos.gy * tileSize * 1.1;
-          const rotation = (rand(2) - 0.5) * Math.PI / 16;
-
+        // Draw the tiles
+        tiles.forEach(tile => {
           ctx.save();
-          ctx.translate(tx + tileSize / 2, ty + tileSize / 2);
-          ctx.rotate(rotation);
-          ctx.fillStyle = brickColors[i % brickColors.length];
-          ctx.fillRect(-tileSize / 2, -tileSize / 2, tileSize, tileSize);
+          ctx.translate(tile.x, tile.y);
+          ctx.rotate(tile.rotation);
+          ctx.fillStyle = brickColor;
+          ctx.fillRect(-tile.size / 2, -tile.size / 2, tile.size, tile.size);
           ctx.restore();
         });
-
         // City name above center with white border
         if (hex.name) {
-          const fontSize = 12 / zoom;
+          const fontSize = 18 / zoom;
           ctx.font = `${fontSize}px 'Times New Roman'`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
