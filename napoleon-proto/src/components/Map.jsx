@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { getHexAtPosition } from '../utils/hexGrid';
-import { drawHex, drawUnits, drawFeatures } from '../utils/renderUtils';
+import { drawHexBase, drawHexName, drawUnits, drawFeatures } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
 
 const hexSize = 8;
@@ -29,7 +28,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Draw hexes
+    // Pass 1: Draw terrain, features, roads, and units
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -43,29 +42,8 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
         finalY > -offset.y / zoom - hexHeight &&
         finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        drawHex(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
-      }
-    });
+        drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
 
-    // Draw roads (and other features) from features prop
-    if (features) {
-      drawFeatures(ctx, { roads: features.roads }, hexSize, hexWidth, hexHeight, zoom, offset);
-    }
-
-    // Draw highlights and units
-    hexes.forEach(hex => {
-      const x = hex.q * hexWidth;
-      const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
-      const finalX = x + offsetX;
-      const finalY = y;
-
-      if (
-        finalX > -offset.x / zoom - hexWidth &&
-        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
-        finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.y / zoom + visibleHeight + hexHeight
-      ) {
         if (selectedUnitId && hex.units.includes(selectedUnitId)) {
           const unitHex = hex;
           hexes.forEach(h => {
@@ -110,6 +88,28 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     });
 
+    if (features) {
+      drawFeatures(ctx, { roads: features.roads }, hexSize, hexWidth, hexHeight, zoom, offset);
+    }
+
+    // Pass 2: Draw names above everything
+    hexes.forEach(hex => {
+      const x = hex.q * hexWidth;
+      const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
+      if (
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
+      ) {
+        drawHexName(ctx, finalX, finalY, hexSize, hex, zoom);
+      }
+    });
+
     ctx.restore();
   }, [hexes, units, orders, features, zoom, offset, selectedUnitId]);
 
@@ -128,4 +128,3 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
 
 Map.hexWidth = hexWidth;
 Map.hexHeight = hexHeight;
-Map.getHexAtPosition = getHexAtPosition;

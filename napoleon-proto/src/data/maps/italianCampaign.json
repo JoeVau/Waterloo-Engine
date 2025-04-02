@@ -278,7 +278,7 @@
     "1,41": {
       "terrain": "hills",
       "feature": "city",
-      "name": "City B"
+      "name": "Berlin"
     },
     "1,42": {
       "terrain": "hills"
@@ -1488,7 +1488,7 @@
     "9,43": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City F"
+      "name": "Frankfurt"
     },
     "9,44": {
       "terrain": "hills"
@@ -3548,7 +3548,7 @@
     "23,27": {
       "terrain": "crops",
       "feature": "city",
-      "name": "City D"
+      "name": "Munich"
     },
     "23,28": {
       "terrain": "crops"
@@ -3577,7 +3577,7 @@
     "23,36": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City G"
+      "name": "Augsburg"
     },
     "23,37": {
       "terrain": "woods"
@@ -4974,7 +4974,7 @@
     "33,1": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City C"
+      "name": "Ulm"
     },
     "33,2": {
       "terrain": "plains"
@@ -5051,7 +5051,7 @@
     "33,26": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City E"
+      "name": "Paris"
     },
     "33,27": {
       "terrain": "crops"
@@ -6526,7 +6526,7 @@
     "43,17": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City A"
+      "name": "Arnhem"
     },
     "43,18": {
       "terrain": "hills"
@@ -7098,7 +7098,7 @@
     "47,7": {
       "terrain": "woods",
       "feature": "city",
-      "name": "City H"
+      "name": "Rhiems"
     },
     "47,8": {
       "terrain": "woods"

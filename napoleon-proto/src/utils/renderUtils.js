@@ -1,8 +1,5 @@
-export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnitHighlighted) {
-  if (hex.q === 10 && hex.r === 10) {
-    console.log('Hex 10,10:', JSON.stringify(hex, null, 2));
-  }
-
+// Draws terrain and features
+export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnitHighlighted) {
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
     const angle = (Math.PI / 3) * i + Math.PI / 6;
@@ -108,50 +105,35 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
     ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
   }
 
-  // Refactored feature rendering with switch
   if (hex.feature) {
-    if (hex.q === 10 && hex.r === 10) {
-      console.log('Rendering feature at 10,10:', hex.feature);
-    }
     switch (hex.feature) {
       case 'city':
-        // Seed RNG from city name for consistent placement
         let seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         const rand = (max) => {
           const x = Math.sin(seed++) * 10000;
           return Math.floor((x - Math.floor(x)) * max);
         };
-        //xx
-        // Draw city tiles with variation and road-like negative space
-        const brickColor = '#8B4513'; // Single color: SaddleBrown
+        const brickColor = '#8B4513';
         const tileCount = 20;
-
         const tiles = [];
-
-        // Place tiles with seeded random, avoiding overlap and suggesting roads
         for (let i = 0; i < tileCount; i++) {
           let attempts = 0;
           let placed = false;
-          while (!placed && attempts < 50) { // Limit attempts to avoid infinite loop
-            const tileSize = size * (0.1 + rand(11) / 100); // 0.1 to 0.2 range
-            const offsetX = (rand(100) / 100 - 0.5) * size * 0.9; // Wider range within 90% of hex
+          while (!placed && attempts < 50) {
+            const tileSize = size * (0.15 + rand(11) / 100);
+            const offsetX = (rand(100) / 100 - 0.5) * size * 0.9;
             const offsetY = (rand(100) / 100 - 0.5) * size * 0.9;
             const tx = x + offsetX;
             const ty = y + offsetY;
-            const rotation = (rand(2) - 0.5) * Math.PI / 12; // ±15° for more variation
-
-            // Check for overlap with existing tiles or road-like gaps
-            const minGap = tileSize * 0.5; // Space for "roads"
+            const rotation = (rand(2) - 0.5) * Math.PI / 12;
+            const minGap = tileSize * 0.5;
             const overlaps = tiles.some(tile => {
               const dx = tile.x - tx;
               const dy = tile.y - ty;
               return Math.sqrt(dx * dx + dy * dy) < (tileSize + tile.size) * 0.5 + minGap;
             });
-
-            // Encourage road-like gaps by rejecting tiles too close to center or edges
             const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
             const isRoadZone = (distFromCenter < size * 0.2 || distFromCenter > size * 0.4) && rand(100) < 30;
-
             if (!overlaps && !isRoadZone) {
               tiles.push({ x: tx, y: ty, rotation, size: tileSize });
               placed = true;
@@ -159,8 +141,6 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
             attempts++;
           }
         }
-
-        // Draw the tiles
         tiles.forEach(tile => {
           ctx.save();
           ctx.translate(tile.x, tile.y);
@@ -169,28 +149,10 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
           ctx.fillRect(-tile.size / 2, -tile.size / 2, tile.size, tile.size);
           ctx.restore();
         });
-        // City name above center with white border
-        if (hex.name) {
-          const fontSize = 18 / zoom;
-          ctx.font = `${fontSize}px 'Times New Roman'`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          const textX = x;
-          const textY = y - size * 0.4;
-
-          // White border (outline)
-          ctx.strokeStyle = '#fff'; // White outline
-          ctx.lineWidth = 2 / zoom; // Thin, scales with zoom
-          ctx.lineJoin = 'round'; // Smooth edges
-          ctx.strokeText(hex.name, textX, textY);
-
-          // Black fill
-          ctx.fillStyle = '#000';
-          ctx.fillText(hex.name, textX, textY);
-        }
         break;
+
       case 'river':
-        ctx.fillStyle = '#00f'; // Blue circle
+        ctx.fillStyle = '#00f';
         ctx.beginPath();
         ctx.arc(x, y, size * 0.4, 0, Math.PI * 2);
         ctx.fill();
@@ -200,6 +162,26 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
         console.warn(`Unknown feature type: ${hex.feature} at ${hex.q},${hex.r}`);
         break;
     }
+  }
+}
+
+// Draws names only
+export function drawHexName(ctx, x, y, size, hex, zoom) {
+  if (hex.feature === 'city' && hex.name) {
+    const fontSize = 18 / zoom;
+    ctx.font = `${fontSize}px 'Times New Roman'`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    const textX = x;
+    const textY = y - size * 0.4;
+
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2 / zoom;
+    ctx.lineJoin = 'round';
+    ctx.strokeText(hex.name, textX, textY);
+
+    ctx.fillStyle = '#000';
+    ctx.fillText(hex.name, textX, textY);
   }
 }
 
