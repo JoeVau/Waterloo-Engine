@@ -50,36 +50,59 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
 
   // Crops: yellow + brown rectangles
   if (hex.terrain === 'crops') {
-    ctx.fillStyle = '#e6b800'; // Yellow base
+    // Pale green background
+    ctx.fillStyle = '#d9e8d9'; // Light, soft green base
     ctx.fill();
-    ctx.fillStyle = '#8b5a2b'; // Brown patches
-    const cropRects = [
-      { x: x - size * 0.4, y: y - size * 0.2, w: size * 0.3, h: size * 0.1 },
-      { x: x + size * 0.2, y: y, w: size * 0.2, h: size * 0.15 },
-      { x: x - size * 0.1, y: y + size * 0.2, w: size * 0.25, h: size * 0.1 },
+
+    // Splotchy wheat-colored squares with green borders, spread out
+    ctx.strokeStyle = '#2f4f2f'; // Dark green for rectangle outlines
+    ctx.lineWidth = 0.5 / zoom; // Thin, consistent outline
+    const wheatShades = [
+      '#e6d8a8', // Light wheat
+      '#d2c68a', // Medium wheat
+      '#bfa86b', // Darker wheat
     ];
-    cropRects.forEach(rect => {
-      ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    const splotchPositions = [
+      { x: x - size * 0.5, y: y - size * 0.4, s: size * 0.25 }, // Top-left
+      { x: x + size * 0.35, y: y - size * 0.35, s: size * 0.38 }, // Top-right
+      { x: x - size * 0.45, y: y + size * 0.3, s: size * 0.25 }, // Bottom-left
+      { x: x + size * 0.4, y: y + size * 0.25, s: size * 0.22 }, // Bottom-right
+      { x: x - size * 0.2, y: y - size * 0.15, s: size * 0.28 }, // Near top-center
+      { x: x + size * 0.15, y: y + size * 0.1, s: size * 0.31 }, // Near bottom-center
+    ];
+    splotchPositions.forEach((pos, i) => {
+      ctx.fillStyle = wheatShades[i % wheatShades.length]; // Cycle through shades
+      ctx.fillRect(pos.x, pos.y, pos.s, pos.s); // Fill square
+      ctx.strokeRect(pos.x, pos.y, pos.s, pos.s); // Green border
     });
   }
 
-  // Swamps: light blue + blue lines
   if (hex.terrain === 'swamps') {
-    ctx.fillStyle = '#89c7a0';
+    // Light pale green background
+    ctx.fillStyle = '#b8d8b8'; // Soft, washed-out green
     ctx.fill();
-    ctx.strokeStyle = '#0000ff'; // Blue lines
-    ctx.lineWidth = 0.5 / zoom;
-    const swampLines = [
-      { x1: x - size * 0.5, y1: y - size * 0.2, x2: x + size * 0.5, y2: y - size * 0.2 },
-      { x1: x - size * 0.4, y1: y, x2: x + size * 0.4, y2: y },
-      { x1: x - size * 0.5, y1: y + size * 0.3, x2: x + size * 0.5, y2: y + size * 0.3 },
+
+    // Tiny blue "-" characters for marsh effect
+    ctx.fillStyle = '#4682b4'; // Steel blue, 90s muted tone
+    ctx.font = `${size * 0.8 / zoom}px monospace`; // Small, fixed-width for retro feel
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const dashPositions = [
+      { x: x - size * 0.3, y: y - size * 0.2 },
+      { x: x + size * 0.2, y: y - size * 0.1 },
+      { x: x - size * 0.1, y: y + size * 0.3 },
+      { x: x + size * 0.3, y: y + size * 0.2 },
+      { x: x + size * 0.1, y: y + size * 0.4 },
+      { x: x + size * 0.3, y: y + size * 0.55 },
     ];
-    swampLines.forEach(line => {
-      ctx.beginPath();
-      ctx.moveTo(line.x1, line.y1);
-      ctx.lineTo(line.x2, line.y2);
-      ctx.stroke();
+    dashPositions.forEach(pos => {
+      ctx.fillText('__', pos.x, pos.y);
     });
+
+    // Rough outline for that board game map edge
+    ctx.strokeStyle = '#6b8e23'; // Olive green, subtle contrast
+    ctx.lineWidth = 0.5 / zoom; // Thin but visible
+    ctx.stroke();
   }
 
   // Border
