@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition, hexDistance } from '../utils/hexGrid';
-import italianCampaign from '../data/maps/italianCampaign.json';
+import campaign2 from '../data/maps/italianCampaign.json'; // Switch to campaign2
 
 function MapContainer() {
   const canvasRef = useRef(null);
@@ -18,8 +18,8 @@ function MapContainer() {
   const [selectedUnitId, setSelectedUnitId] = useState(null);
 
   useEffect(() => {
-    const { hexes: loadedHexes, units: loadedUnits, features: loadedFeatures } = loadMap(italianCampaign);
-    console.log('Loaded features:', loadedFeatures);
+    const { hexes: loadedHexes, units: loadedUnits, features: loadedFeatures } = loadMap(campaign2);
+    console.log('Loaded roadGraph:', loadedFeatures.roads); // Debug
     setHexes(loadedHexes);
     setUnits(loadedUnits);
     setFeatures(loadedFeatures);
@@ -37,19 +37,13 @@ function MapContainer() {
     if (selectedHex && clickedHex.q === selectedHex[0] && clickedHex.r === selectedHex[1]) {
       setSelectedHex(null);
       setSelectedUnitId(null);
-      setOrders(prev => ({
-        ...prev,
-        [currentPlayer]: {},
-      }));
+      setOrders(prev => ({ ...prev, [currentPlayer]: {} }));
       return;
     }
 
     setSelectedHex([clickedHex.q, clickedHex.r]);
     setSelectedUnitId(null);
-    setOrders(prev => ({
-      ...prev,
-      [currentPlayer]: {},
-    }));
+    setOrders(prev => ({ ...prev, [currentPlayer]: {} }));
 
     if (clickedHex.units.length && !selectedUnitId) return;
 
@@ -70,10 +64,7 @@ function MapContainer() {
     const unit = units.find(u => u.id === unitId);
     if (unit && unit.team === currentPlayer && !orders[unit.team][unit.id]) {
       setSelectedUnitId(unitId);
-      setOrders(prev => ({
-        ...prev,
-        [unit.team]: { [unitId]: null },
-      }));
+      setOrders(prev => ({ ...prev, [unit.team]: { [unitId]: null } }));
     }
   };
 

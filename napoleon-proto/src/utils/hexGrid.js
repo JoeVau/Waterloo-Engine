@@ -10,7 +10,7 @@ export function loadMap(mapData) {
         r,
         terrain: hexData.terrain,
         units: [],
-        road: hexData.road || false, // Add road flag
+        road: hexData.road || false,
       });
     }
   }
@@ -20,15 +20,28 @@ export function loadMap(mapData) {
     if (hex) hex.units.push(unit.id);
   });
 
+  const roadGraph = {};
   if (features && features.roads) {
     features.roads.forEach(road => {
-      road.path.forEach(([q, r]) => {
-        const hex = hexes.find(h => h.q === q && h.r === r);
-        if (hex) hex.road = true;
-      });
+      for (let i = 0; i < road.path.length - 1; i++) {
+        const [q1, r1] = road.path[i];
+        const [q2, r2] = road.path[i + 1];
+        const key1 = `${q1},${r1}`;
+        const key2 = `${q2},${r2}`;
+        const hex1 = hexes.find(h => h.q === q1 && h.r === r1);
+        const hex2 = hexes.find(h => h.q === q2 && h.r === r2);
+        if (hex1) hex1.road = true;
+        if (hex2) hex2.road = true;
+        roadGraph[key1] = roadGraph[key1] || [];
+        roadGraph[key2] = roadGraph[key2] || [];
+        if (!roadGraph[key1].includes(key2)) roadGraph[key1].push(key2);
+        if (!roadGraph[key2].includes(key1)) roadGraph[key2].push(key1);
+      }
     });
   }
-  return { hexes, units, features };
+
+  console.log('Generated roadGraph:', roadGraph); // Debug here
+  return { hexes, units, features: { roads: roadGraph } };
 }
 
 export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset) {
@@ -53,3 +66,4 @@ export function hexDistance(q1, r1, q2, r2) {
     Math.abs(z1 - z2)
   );
 }
+

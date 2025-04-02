@@ -12,7 +12,6 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
   ctx.fillStyle = color;
   ctx.fill();
 
-
   if (hex.terrain === 'hills') {
     ctx.fillStyle = '#d2b48c'; // Light brown base
     ctx.fill();
@@ -20,7 +19,6 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
     const hillPositions = [
       { x: x - size * 0.4, y: y - size * 0.1, w: size * 0.4, h: size * 0.3 },
       { x: x + size * 0.1, y: y - size * 0.2, w: size * 0.5, h: size * 0.4 }
-      //{ x: x - size * 0.1, y: y + size * 0.2, w: size * 0.3, h: size * 0.3 },
     ];
     hillPositions.forEach(hill => {
       ctx.beginPath();
@@ -67,7 +65,7 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
 
   // Swamps: light blue + blue lines
   if (hex.terrain === 'swamps') {
-    ctx.fillStyle = '#b3cce6'; // Light blue base
+    ctx.fillStyle = '#89c7a0';
     ctx.fill();
     ctx.strokeStyle = '#0000ff'; // Blue lines
     ctx.lineWidth = 0.5 / zoom;
@@ -89,12 +87,14 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
   ctx.lineWidth = 0.1 / zoom;
   ctx.stroke();
 
-  // Coordinates
-  ctx.fillStyle = '#000';
-  ctx.font = `${6 / zoom}px Arial`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
+  // Coordinates—show only when zoomed in (e.g., zoom >= 2)
+  if (zoom >= 2) {
+    ctx.fillStyle = '#000';
+    ctx.font = `${6 / zoom}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
+  }
 
   // Features (city, river)
   if (hex.feature) {
@@ -123,29 +123,38 @@ export function drawHex(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnit
 
 export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset) {
   const hexToPixel = (q, r) => {
-    const x = q * hexWidth * 0.75;
+    const x = q * hexWidth;
     const y = r * hexHeight;
-    const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.375;
+    const offsetX = r % 2 === 0 ? 0 : hexWidth * 0.5; // Odd-r shift
     return { x: x + offsetX, y };
   };
 
   if (features.roads) {
-    features.roads.forEach(road => {
-      const path = road.path;
-      if (path.length < 2) return;
-      ctx.beginPath();
-      ctx.strokeStyle = '#666';
-      ctx.lineWidth = 2 / zoom;
-      for (let i = 0; i < path.length; i++) {
-        const [q, r] = path[i];
-        const { x, y } = hexToPixel(q, r);
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+    Object.entries(features.roads).forEach(([key, neighbors]) => {
+      const [q1, r1] = key.split(',').map(Number);
+      const { x: x1, y: y1 } = hexToPixel(q1, r1);
+      neighbors.forEach(neighbor => {
+        const [q2, r2] = neighbor.split(',').map(Number);
+        if (q1 < q2 || (q1 === q2 && r1 < r2)) { // Dedupe
+          const { x: x2, y: y2 } = hexToPixel(q2, r2);
+          ctx.beginPath();
+          ctx.strokeStyle = '#996633';
+          ctx.lineWidth = 2 / zoom;
+          ctx.moveTo(x1, y1);
+
+          // Add a sine-like curve with control points
+          const midX = (x1 + x2) / 2;
+          const midY = (y1 + y2) / 2;
+          const waveAmp = hexSize * 0.5 / zoom; // Small wave, scales with zoom
+          const cp1X = midX - waveAmp;
+          const cp1Y = midY + waveAmp * Math.sin((x1 - x2) * 0.1); // Sine wiggle
+          const cp2X = midX + waveAmp;
+          const cp2Y = midY - waveAmp * Math.sin((x1 - x2) * 0.1);
+
+          ctx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, x2, y2);
+          ctx.stroke();
         }
-      }
-      ctx.stroke();
+      });
     });
   }
 }
