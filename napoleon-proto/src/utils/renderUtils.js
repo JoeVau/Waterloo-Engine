@@ -225,14 +225,73 @@ export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, 
 export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, position, selectedUnitId) {
   units.forEach(unit => {
     const { x, y } = position;
-    ctx.fillStyle = unit.team === 'blue' ? '#0000ff' : '#ff0000';
+    const counterWidth = hexSize * 1.8; // Wider rectangle
+    const counterHeight = hexSize * 0.8; // Keep height proportional
+
+    // NATO Infantry Symbol: Wider rectangle with lighter team color background
+    ctx.fillStyle = unit.team === 'blue' ? '#6666ff' : '#ff6666';
+    ctx.fillRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
+
+    // Thin black border
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1 / zoom;
+    ctx.strokeRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
+
+    // Draw the "X" with thin black lines
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1 / zoom;
     ctx.beginPath();
-    ctx.arc(x, y, hexSize * 0.5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.font = `${10 / zoom}px Arial`;
+    ctx.moveTo(x - counterWidth / 2, y - counterHeight / 2);
+    ctx.lineTo(x + counterWidth / 2, y + counterHeight / 2);
+    ctx.moveTo(x + counterWidth / 2, y - counterHeight / 2);
+    ctx.lineTo(x - counterWidth / 2, y + counterHeight / 2);
+    ctx.stroke();
+
+    // Text shadow background for rank symbol (XX)
+    const rankText = 'XX'; // Division
+    ctx.font = `${8 / zoom}px Arial`;
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(unit.name.charAt(0), x, y);
+    ctx.textBaseline = 'bottom';
+    const rankTextWidth = ctx.measureText(rankText).width;
+    const rankTextHeight = 8 / zoom; // Approximate height of text
+    const rankX = x;
+    const rankY = y - counterHeight / 2 - 2 / zoom;
+    // Shadow background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(
+      rankX - rankTextWidth / 2 - 2 / zoom,
+      rankY - rankTextHeight - 2 / zoom,
+      rankTextWidth + 4 / zoom,
+      rankTextHeight + 4 / zoom
+    );
+    // Rank symbol
+    ctx.fillStyle = '#fff'; // White text for contrast
+    ctx.fillText(rankText, rankX, rankY);
+
+    // Text shadow background for unit name
+    const nameText = unit.name;
+    ctx.textBaseline = 'top';
+    const nameTextWidth = ctx.measureText(nameText).width;
+    const nameTextHeight = 8 / zoom;
+    const nameX = x;
+    const nameY = y + counterHeight / 2 + 2 / zoom;
+    // Shadow background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(
+      nameX - nameTextWidth / 2 - 2 / zoom,
+      nameY - 2 / zoom,
+      nameTextWidth + 4 / zoom,
+      nameTextHeight + 4 / zoom
+    );
+    // Unit name
+    ctx.fillStyle = '#fff';
+    ctx.fillText(nameText, nameX, nameY);
+
+    // Highlight if selected
+    if (selectedUnitId === unit.id) {
+      ctx.strokeStyle = '#ff0';
+      ctx.lineWidth = 2 / zoom;
+      ctx.strokeRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
+    }
   });
 }

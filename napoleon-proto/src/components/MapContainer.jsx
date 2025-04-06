@@ -95,7 +95,7 @@ function MapContainer() {
         canvas.removeEventListener('wheel', handleWheel);
       };
     }
-  }, [zoom, offset]); // Re-run if zoom or offset changes
+  }, [zoom, offset, handleWheel]); // Include handleWheel to avoid stale closure
 
   const handleMouseDown = (e) => {
     const startX = e.clientX;
@@ -172,7 +172,6 @@ function MapContainer() {
         offset={offset}
         selectedUnitId={selectedUnitId}
         onClick={handleClick}
-        onWheel={handleWheel}
         onMouseDown={handleMouseDown}
       />
     </Frame>
