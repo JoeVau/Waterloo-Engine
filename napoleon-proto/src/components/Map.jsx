@@ -28,7 +28,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Pass 1: Draw terrain and features
+    // Pass 1: Draw terrain
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -51,10 +51,22 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     }
 
     // Pass 2: Draw range highlights for selected unit
-    hexes.forEach(hex => {
-      if (selectedUnitId && hex.units.includes(selectedUnitId)) {
-        const unitHex = hex;
-        hexes.forEach(h => {
+    if (selectedUnitId) {
+      const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
+      if (unitHex) {
+        // Filter visible hexes first to reduce distance calculations
+        const visibleHexes = hexes.filter(h => {
+          const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
+          const hy = h.r * hexHeight;
+          return (
+            hx > -offset.x / zoom - hexWidth &&
+            hx < -offset.x / zoom + visibleWidth + hexWidth &&
+            hy > -offset.y / zoom - hexHeight &&
+            hy < -offset.y / zoom + visibleHeight + hexHeight
+          );
+        });
+
+        visibleHexes.forEach(h => {
           const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
           console.log(`Checking ${h.q},${h.r} from ${unitHex.q},${unitHex.r}: distance = ${distance}`);
           if (distance <= 2) {
@@ -74,9 +86,9 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
           }
         });
       }
-    });
+    }
 
-    // Pass 3: Draw units (to ensure they're on top of terrain and highlights)
+    // Pass 3: Draw units and order paths
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -113,7 +125,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     });
 
-    // Pass 4: Draw hex names (to ensure they're on top of everything)
+    // Pass 4: Draw hex names
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
