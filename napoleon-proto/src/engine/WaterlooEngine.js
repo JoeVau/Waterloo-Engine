@@ -41,6 +41,7 @@ class WaterlooEngine {
 
   resolveTurn(resolveCombatCallback) {
     let newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
+    const pendingCombats = []; // Track move-induced combats
 
     // Resolve movement first
     ['blue', 'red'].forEach(team => {
@@ -49,10 +50,17 @@ class WaterlooEngine {
           const oldHex = newHexes.find(h => h.units.includes(unitId));
           const newHex = newHexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
           if (oldHex && newHex) {
-            oldHex.units = oldHex.units.filter(id => id !== unitId);
-            newHex.units.push(unitId);
-            const unit = this.state.units.find(u => u.id === unitId);
-            unit.position = order.dest;
+            if (newHex.units.length > 0) {
+              // Conflict: Mark for combat
+              const defenderId = newHex.units[0]; // First unit in hex
+              pendingCombats.push({ attackerId: unitId, defenderId });
+            } else {
+              // Move succeeds
+              oldHex.units = oldHex.units.filter(id => id !== unitId);
+              newHex.units.push(unitId);
+              const unit = this.state.units.find(u => u.id === unitId);
+              unit.position = order.dest;
+            }
           }
         } else if (order.type === 'attack') {
           const unit = this.state.units.find(u => u.id === unitId);
@@ -60,13 +68,27 @@ class WaterlooEngine {
         }
       });
     });
+
+    // Resolve move-induced combats
+    if (resolveCombatCallback && pendingCombats.length > 0) {
+      const { updatedUnits: moveUnits, notifications: moveNotes } = resolveCombatCallback(this.state, pendingCombats);
+      this.state.units = moveUnits;
+      this.state.notifications.push(...moveNotes);
+      newHexes = newHexes.map(h => ({
+        ...h,
+        units: h.units.filter(id => this.state.units.some(u => u.id === id)),
+      }));
+    }
     this.state.hexes = newHexes;
 
-    // Resolve combat after movement
+    // Resolve attack orders
     if (resolveCombatCallback) {
-      const { updatedUnits, notifications } = resolveCombatCallback(this.state);
+      const attackCombats = this.state.units
+        .filter(u => u.pendingAttack)
+        .map(u => ({ attackerId: u.id, defenderId: u.pendingAttack }));
+      const { updatedUnits, notifications } = resolveCombatCallback(this.state, attackCombats);
       this.state.units = updatedUnits;
-      this.state.notifications = notifications;
+      this.state.notifications.push(...notifications);
       this.state.hexes = this.state.hexes.map(h => ({
         ...h,
         units: h.units.filter(id => this.state.units.some(u => u.id === id)),

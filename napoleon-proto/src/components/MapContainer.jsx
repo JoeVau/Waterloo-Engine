@@ -1,3 +1,4 @@
+// src/components/MapContainer.jsx
 import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
@@ -39,8 +40,7 @@ function MapContainer() {
           .find(u => u.team !== unit.team);
 
         if (targetUnit) {
-          const success = engine.issueOrder(prev.selectedUnitId, 'attack', { targetId: targetUnit.id }, validateOrder);
-          if (success) return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] }; // Wait for confirmation
         } else {
           const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
           if (success) return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
@@ -57,6 +57,14 @@ function MapContainer() {
         engine.state.orders[unit.team][unitId] = null;
         return { ...prev, selectedUnitId: unitId };
       }
+      return prev;
+    });
+  };
+
+  const handleConfirmAttack = (unitId, targetId) => {
+    setGameState(prev => {
+      const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
+      if (success) return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
       return prev;
     });
   };
@@ -123,6 +131,7 @@ function MapContainer() {
       notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
+      onConfirmAttack={handleConfirmAttack}
     >
       <Map
         canvasRef={canvasRef}

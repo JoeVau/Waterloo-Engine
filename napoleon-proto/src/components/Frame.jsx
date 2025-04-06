@@ -2,7 +2,7 @@
 import React from 'react';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onConfirmAttack, children }) {
   const selectedHexUnits = selectedHex
     ? units.filter(u => hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.units.includes(u.id))
     : [];
@@ -18,6 +18,11 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
     const targetUnit = units.find(u => u.id === order.targetId);
     return 'Attack ' + (targetUnit ? targetUnit.name : 'Unknown');
   };
+
+  const pendingAttack = selectedUnitId && selectedHex && !orders[currentPlayer][selectedUnitId];
+  const targetUnit = pendingAttack
+    ? selectedHexUnits.find(u => u.team !== currentPlayer)
+    : null;
 
   return (
     <div className="frame-container">
@@ -50,9 +55,20 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
             <p className="sidebar-text">No hex selected</p>
           )}
         <p className="sidebar-text">Order: {getOrderText()}</p>
+        {pendingAttack && targetUnit && (
+          <div className="notification-section">
+            <p className="sidebar-text">Confirm Attack on {targetUnit.name}?</p>
+            <button
+              onClick={() => onConfirmAttack(selectedUnitId, targetUnit.id)}
+              className={buttonClass}
+            >
+              Confirm
+            </button>
+          </div>
+        )}
         {notifications.length > 0 && (
           <div className="notification-section">
-            <p>Notifications:</p>
+            <p className="sidebar-text">Combat Results:</p>
             <ul className="notification-list">
               {notifications.map((note, index) => (
                 <li key={index}>{note}</li>

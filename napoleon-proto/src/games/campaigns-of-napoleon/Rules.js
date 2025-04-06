@@ -25,32 +25,31 @@ export function validateOrder(state, unitId, orderType, params) {
   }
 }
 
-export function resolveCombat(state) {
+export function resolveCombat(state, combats) {
   let updatedUnits = [...state.units];
   const notifications = [];
 
-  updatedUnits.forEach(attacker => {
-    if (attacker.pendingAttack) {
-      const defender = updatedUnits.find(u => u.id === attacker.pendingAttack);
-      if (defender) {
-        const attackerHex = state.hexes.find(h => h.units.includes(attacker.id));
-        const defenderHex = state.hexes.find(h => h.units.includes(defender.id));
-        const stillAdjacent = hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
+  combats.forEach(({ attackerId, defenderId }) => {
+    const attacker = updatedUnits.find(u => u.id === attackerId);
+    const defender = updatedUnits.find(u => u.id === defenderId);
+    if (attacker && defender) {
+      const attackerHex = state.hexes.find(h => h.units.includes(attacker.id));
+      const defenderHex = state.hexes.find(h => h.units.includes(defender.id));
+      const stillAdjacent = !attackerHex || !defenderHex || hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
 
-        if (stillAdjacent) {
-          const coinFlip = Math.random() < 0.5;
-          if (coinFlip) {
-            defender.men = 0;
-            notifications.push(`Your unit ${defender.name} was destroyed by ${attacker.name}`);
-            notifications.push(`${attacker.name} defeated ${defender.name}`);
-          } else {
-            attacker.men = 0;
-            notifications.push(`Your unit ${attacker.name} was destroyed by ${defender.name}`);
-            notifications.push(`${defender.name} defeated ${attacker.name}`);
-          }
+      if (stillAdjacent || attacker.pendingAttack) { // Combat from attack order or move conflict
+        const coinFlip = Math.random() < 0.5;
+        if (coinFlip) {
+          defender.men = 0;
+          notifications.push(`Your unit ${defender.name} was destroyed by ${attacker.name}`);
+          notifications.push(`${attacker.name} defeated ${defender.name}`);
         } else {
-          notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
+          attacker.men = 0;
+          notifications.push(`Your unit ${attacker.name} was destroyed by ${defender.name}`);
+          notifications.push(`${defender.name} defeated ${attacker.name}`);
         }
+      } else if (attacker.pendingAttack) {
+        notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
       }
     }
   });
