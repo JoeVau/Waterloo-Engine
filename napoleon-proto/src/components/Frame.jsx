@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, onEndTurn, onUnitSelect, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, combatResults, onEndTurn, onUnitSelect, children }) {
   const selectedHexUnits = selectedHex
     ? units.filter(u => hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.units.includes(u.id))
     : [];
@@ -60,8 +60,22 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
           <p style={{ margin: '5px 0', color: '#fff' }}>No hex selected</p>
         )}
         <p style={{ margin: '5px 0', color: '#fff' }}>
-          Order: {selectedUnitId && orders[currentPlayer][selectedUnitId] ? `Move to [${orders[currentPlayer][selectedUnitId].dest}]` : 'None'}
+          Order: {selectedUnitId && orders[currentPlayer][selectedUnitId] ? (
+            orders[currentPlayer][selectedUnitId].type === 'move'
+              ? `Move to [${orders[currentPlayer][selectedUnitId].dest}]`
+              : `Attack ${units.find(u => u.id === orders[currentPlayer][selectedUnitId].targetId) ?.name}`
+          ) : 'None'}
         </p>
+        {combatResults.length > 0 && (
+          <div style={{ margin: '10px 0', color: '#fff' }}>
+            <p>Combat Results:</p>
+            <ul style={{ paddingLeft: '20px' }}>
+              {combatResults.map((result, index) => (
+                <li key={index}>{result}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <button
           onClick={() => onEndTurn(currentPlayer)}
           style={{
@@ -80,7 +94,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
           End Turn
         </button>
       </div>
-
       <div style={{ width: '1000px', height: '800px', background: '#ccc' }}>
         {children}
       </div>
