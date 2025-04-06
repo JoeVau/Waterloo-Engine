@@ -1,100 +1,73 @@
+// src/components/Frame.jsx
 import React from 'react';
+import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, combatResults, onEndTurn, onUnitSelect, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, children }) {
   const selectedHexUnits = selectedHex
     ? units.filter(u => hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.units.includes(u.id))
     : [];
 
+  const isBlue = currentPlayer === 'blue';
+  const sidebarClass = `sidebar ${isBlue ? 'sidebar-blue' : 'sidebar-red'}`;
+  const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
+
+  const getOrderText = () => {
+    if (!selectedUnitId || !orders[currentPlayer][selectedUnitId]) return 'Stand';
+    const order = orders[currentPlayer][selectedUnitId];
+    if (order.type === 'move') return 'Move to [' + order.dest + ']';
+    const targetUnit = units.find(u => u.id === order.targetId);
+    return 'Attack ' + (targetUnit ? targetUnit.name : 'Unknown');
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', fontFamily: "'Roboto', sans-serif" }}>
-      <div
-        style={{
-          width: '20%',
-          minWidth: '200px',
-          background: currentPlayer === 'blue' ? 'linear-gradient(to bottom, #bbf, #99f)' : 'linear-gradient(to bottom, #fbb, #f99)',
-          padding: '15px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
-          height: '800px',
-          overflowY: 'auto',
-        }}
-      >
-        <h3 style={{ margin: '0 0 10px 0', color: '#fff' }}>
-          {currentPlayer === 'blue' ? 'Blue Player' : 'Red Player'}
-        </h3>
-        <p style={{ margin: '5px 0', color: '#fff' }}>Turn: {turn}</p>
+    <div className="frame-container">
+      <div className={sidebarClass}>
+        <h3 className="sidebar-title">{isBlue ? 'Blue Player' : 'Red Player'}</h3>
+        <p className="sidebar-text">Turn: {turn}</p>
         {selectedHex ? (
-          <>
-          <p style={{ margin: '5px 0', color: '#fff' }}>
-            Selected Hex: [{selectedHex[0]}, {selectedHex[1]}]
-            </p>
-          <p style={{ margin: '5px 0', color: '#fff' }}>Units:</p>
-          <ul style={{ paddingLeft: '20px', margin: '0 0 10px 0' }}>
-            {selectedHexUnits.map(unit => (
-              <li
-                key={unit.id}
-                onClick={() => onUnitSelect(unit.id)}
-                style={{
-                  cursor: 'pointer',
-                  padding: '5px',
-                  margin: '2px 0',
-                  backgroundColor: unit.id === selectedUnitId ? (currentPlayer === 'blue' ? 'rgba(0, 0, 255, 0.1)' : 'rgba(255, 0, 0, 0.1)') : 'transparent',
-                  borderRadius: '4px',
-                  color: '#fff',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <span>
-                  {unit.name} {unit.id === selectedUnitId ? '(Selected)' : ''}
-                  <br />
-                  <small>
-                    {unit.type === 'infantry' ? 'Infantry' : 'Cavalry'} - {unit.men || 0} Men, {unit.cannons || 0} Cannons, {unit.horses || 0} Horses
+          <React.Fragment>
+            <p className="sidebar-text">Selected Hex: [{selectedHex[0]}, {selectedHex[1]}]</p>
+            <p className="sidebar-text">Units:</p>
+            <ul className="unit-list">
+              {selectedHexUnits.map(unit => (
+                <li
+                  key={unit.id}
+                  onClick={() => onUnitSelect(unit.id)}
+                  className={`unit-item ${unit.id === selectedUnitId ? (isBlue ? 'unit-item-selected-blue' : 'unit-item-selected-red') : ''}`}
+                >
+                  <span>
+                    {unit.name} {unit.id === selectedUnitId ? '(Selected)' : ''}
+                    <br />
+                    <small className="unit-details">
+                      {unit.type === 'infantry' ? 'Infantry' : 'Cavalry'} - {unit.men || 0} Men, {unit.cannons || 0} Cannons, {unit.horses || 0} Horses
                     </small>
-                </span>
-              </li>
-            ))}
-          </ul>
-          </>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </React.Fragment>
         ) : (
-          <p style={{ margin: '5px 0', color: '#fff' }}>No hex selected</p>
-        )}
-        <p style={{ margin: '5px 0', color: '#fff' }}>
-          Order: {selectedUnitId && orders[currentPlayer][selectedUnitId] ? (
-            orders[currentPlayer][selectedUnitId].type === 'move'
-              ? `Move to [${orders[currentPlayer][selectedUnitId].dest}]`
-              : `Attack ${units.find(u => u.id === orders[currentPlayer][selectedUnitId].targetId) ?.name}`
-          ) : 'None'}
-        </p>
-        {combatResults.length > 0 && (
-          <div style={{ margin: '10px 0', color: '#fff' }}>
-            <p>Combat Results:</p>
-            <ul style={{ paddingLeft: '20px' }}>
-              {combatResults.map((result, index) => (
-                <li key={index}>{result}</li>
+            <p className="sidebar-text">No hex selected</p>
+          )}
+        <p className="sidebar-text">Order: {getOrderText()}</p>
+        {notifications.length > 0 && (
+          <div className="notification-section">
+            <p>Notifications:</p>
+            <ul className="notification-list">
+              {notifications.map((note, index) => (
+                <li key={index}>{note}</li>
               ))}
             </ul>
           </div>
         )}
         <button
           onClick={() => onEndTurn(currentPlayer)}
-          style={{
-            backgroundColor: currentPlayer === 'blue' ? '#007bff' : '#dc3545',
-            border: 'none',
-            borderRadius: '4px',
-            padding: '8px 16px',
-            color: '#fff',
-            cursor: 'pointer',
-            width: '100%',
-            transition: 'background-color 0.2s',
-          }}
-          onMouseEnter={e => (e.target.style.backgroundColor = currentPlayer === 'blue' ? '#0056b3' : '#b02a37')}
-          onMouseLeave={e => (e.target.style.backgroundColor = currentPlayer === 'blue' ? '#007bff' : '#dc3545')}
+          className={buttonClass}
         >
           End Turn
         </button>
       </div>
-      <div style={{ width: '1000px', height: '800px', background: '#ccc' }}>
+      <div className="map-area">
         {children}
       </div>
     </div>

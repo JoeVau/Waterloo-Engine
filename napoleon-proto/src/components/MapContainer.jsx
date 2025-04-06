@@ -107,7 +107,7 @@ function MapContainer() {
 
   const handleEndTurn = (player) => {
     if (player !== gameState.currentPlayer) return;
-    engine.endTurn(player, resolveCombat); // Pass combat resolver
+    engine.endTurn(player, resolveCombat);
     setGameState(engine.getState());
   };
 
@@ -120,7 +120,7 @@ function MapContainer() {
       orders={gameState.orders}
       selectedHex={gameState.selectedHex}
       selectedUnitId={gameState.selectedUnitId}
-      combatResults={gameState.combatResults} // Pass results to UI
+      notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
     >

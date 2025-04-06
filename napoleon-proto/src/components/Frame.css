@@ -1,0 +1,101 @@
+/* src/components/Frame.css */
+.frame-container {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidebar {
+  width: 20%;
+  min-width: 200px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  height: 800px;
+  overflow-y: auto;
+}
+
+.sidebar-blue {
+  background: linear-gradient(to bottom, #bbf, #99f);
+}
+
+.sidebar-red {
+  background: linear-gradient(to bottom, #fbb, #f99);
+}
+
+.sidebar-title {
+  margin: 0 0 10px 0;
+  color: #fff;
+}
+
+.sidebar-text {
+  margin: 5px 0;
+  color: #fff;
+}
+
+.unit-list {
+  padding-left: 20px;
+  margin: 0 0 10px 0;
+  list-style: none;
+}
+
+.unit-item {
+  cursor: pointer;
+  padding: 5px;
+  margin: 2px 0;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.unit-item-selected-blue {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+.unit-item-selected-red {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.unit-details {
+  font-size: 0.8em;
+}
+
+.notification-section {
+  margin: 10px 0;
+  color: #fff;
+}
+
+.notification-list {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.end-turn-button {
+  background-color: #007bff; /* Blue default */
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.end-turn-button-red {
+  background-color: #dc3545; /* Red default */
+}
+
+.end-turn-button:hover {
+  background-color: #0056b3; /* Blue hover */
+}
+
+.end-turn-button-red:hover {
+  background-color: #b02a37; /* Red hover */
+}
+
+.map-area {
+  width: 1000px;
+  height: 800px;
+  background: #ccc;
+}

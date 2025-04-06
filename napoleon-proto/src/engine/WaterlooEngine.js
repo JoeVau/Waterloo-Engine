@@ -9,7 +9,7 @@ class WaterlooEngine {
       units,
       features,
       orders: { blue: {}, red: {} },
-      combatResults: [], // Store results for UI
+      notifications: [],
     };
   }
 
@@ -34,17 +34,19 @@ class WaterlooEngine {
       this.state.currentPlayer = 'blue';
       this.state.turn += 1;
       this.state.orders = { blue: {}, red: {} };
-      this.state.combatResults = []; // Reset after turn
+      this.state.notifications = [];
       return true;
     }
   }
 
   resolveTurn(resolveCombatCallback) {
-    const newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
+    let newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
+
+    // Resolve movement first
     ['blue', 'red'].forEach(team => {
       Object.entries(this.state.orders[team]).forEach(([unitId, order]) => {
-        const oldHex = newHexes.find(h => h.units.includes(unitId));
         if (order.type === 'move') {
+          const oldHex = newHexes.find(h => h.units.includes(unitId));
           const newHex = newHexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
           if (oldHex && newHex) {
             oldHex.units = oldHex.units.filter(id => id !== unitId);
@@ -52,12 +54,9 @@ class WaterlooEngine {
             const unit = this.state.units.find(u => u.id === unitId);
             unit.position = order.dest;
           }
-        } else if (order.type === 'fortify') {
-          const unit = this.state.units.find(u => u.id === unitId);
-          unit.fortified = true;
         } else if (order.type === 'attack') {
           const unit = this.state.units.find(u => u.id === unitId);
-          unit.pendingAttack = order.targetId; // Mark for combat
+          unit.pendingAttack = order.targetId;
         }
       });
     });
@@ -65,16 +64,15 @@ class WaterlooEngine {
 
     // Resolve combat after movement
     if (resolveCombatCallback) {
-      const { updatedUnits, results } = resolveCombatCallback(this.state);
+      const { updatedUnits, notifications } = resolveCombatCallback(this.state);
       this.state.units = updatedUnits;
-      this.state.combatResults = results;
+      this.state.notifications = notifications;
       this.state.hexes = this.state.hexes.map(h => ({
         ...h,
         units: h.units.filter(id => this.state.units.some(u => u.id === id)),
       }));
     }
 
-    // Clear pending attacks
     this.state.units.forEach(u => delete u.pendingAttack);
   }
 

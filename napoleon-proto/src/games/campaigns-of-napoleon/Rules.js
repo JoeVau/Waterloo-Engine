@@ -20,8 +20,6 @@ export function validateOrder(state, unitId, orderType, params) {
         targetHex &&
         hexDistance(unitHex.q, unitHex.r, targetHex.q, targetHex.r) === 1
       );
-    case 'fortify':
-      return true;
     default:
       return false;
   }
@@ -29,33 +27,34 @@ export function validateOrder(state, unitId, orderType, params) {
 
 export function resolveCombat(state) {
   let updatedUnits = [...state.units];
-  const results = [];
+  const notifications = [];
 
   updatedUnits.forEach(attacker => {
     if (attacker.pendingAttack) {
       const defender = updatedUnits.find(u => u.id === attacker.pendingAttack);
-      if (defender && defender.men > 0) {
-        const dieRoll = Math.floor(Math.random() * 6) + 1;
-        const attackStrength = attacker.men + dieRoll * 100;
-        const defendStrength = defender.men + dieRoll * 100;
+      if (defender) {
+        const attackerHex = state.hexes.find(h => h.units.includes(attacker.id));
+        const defenderHex = state.hexes.find(h => h.units.includes(defender.id));
+        const stillAdjacent = hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
 
-        let attackerLoss, defenderLoss;
-        if (attackStrength > defendStrength) {
-          attackerLoss = Math.floor(attacker.men * 0.05); // 5%
-          defenderLoss = Math.floor(defender.men * 0.10); // 10%
-          results.push(`${attacker.name} defeated ${defender.name}: ${defenderLoss} vs ${attackerLoss} men lost`);
+        if (stillAdjacent) {
+          const coinFlip = Math.random() < 0.5;
+          if (coinFlip) {
+            defender.men = 0;
+            notifications.push(`Your unit ${defender.name} was destroyed by ${attacker.name}`);
+            notifications.push(`${attacker.name} defeated ${defender.name}`);
+          } else {
+            attacker.men = 0;
+            notifications.push(`Your unit ${attacker.name} was destroyed by ${defender.name}`);
+            notifications.push(`${defender.name} defeated ${attacker.name}`);
+          }
         } else {
-          attackerLoss = Math.floor(attacker.men * 0.10);
-          defenderLoss = Math.floor(defender.men * 0.05);
-          results.push(`${defender.name} repelled ${attacker.name}: ${attackerLoss} vs ${defenderLoss} men lost`);
+          notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
         }
-
-        attacker.men = Math.max(0, attacker.men - attackerLoss);
-        defender.men = Math.max(0, defender.men - defenderLoss);
       }
     }
   });
 
-  updatedUnits = updatedUnits.filter(u => u.men > 0); // Remove destroyed units
-  return { updatedUnits, results };
+  updatedUnits = updatedUnits.filter(u => u.men > 0);
+  return { updatedUnits, notifications };
 }
