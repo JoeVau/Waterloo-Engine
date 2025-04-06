@@ -54,15 +54,13 @@ export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset)
 }
 
 export function hexDistance(q1, r1, q2, r2) {
-  const x1 = q1 - Math.floor(r1 / 2);
-  const x2 = q2 - Math.floor(r2 / 2);
-  const z1 = r1;
-  const z2 = r2;
-  const y1 = -x1 - z1;
-  const y2 = -x2 - z2;
+  const aq1 = q1 - Math.floor(r1 / 2); // Axial q
+  const ar1 = r1;                      // Axial r
+  const aq2 = q2 - Math.floor(r2 / 2);
+  const ar2 = r2;
   return Math.max(
-    Math.abs(x1 - x2),
-    Math.abs(y1 - y2),
-    Math.abs(z1 - z2)
+    Math.abs(aq1 - aq2),
+    Math.abs(ar1 - ar2),
+    Math.abs((aq1 + ar1) - (aq2 + ar2))
   );
 }

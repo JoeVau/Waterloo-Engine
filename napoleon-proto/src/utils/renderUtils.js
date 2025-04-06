@@ -163,6 +163,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
         break;
     }
   }
+
 }
 
 // Draws names only

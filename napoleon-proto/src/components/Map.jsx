@@ -28,7 +28,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Pass 1: Draw terrain, features, roads, and units
+    // Pass 1: Draw terrain, features, roads, and units (keep visibility check here)
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -43,27 +43,6 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
         finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
         drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
-
-        if (selectedUnitId && hex.units.includes(selectedUnitId)) {
-          const unitHex = hex;
-          hexes.forEach(h => {
-            const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
-            if (distance <= 2) {
-              const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
-              const hy = h.r * hexHeight;
-              ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
-              ctx.beginPath();
-              for (let i = 0; i < 6; i++) {
-                const angle = (Math.PI / 3) * i + Math.PI / 6;
-                const px = hx + hexSize * Math.cos(angle);
-                const py = hy + hexSize * Math.sin(angle);
-                i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-              }
-              ctx.closePath();
-              ctx.fill();
-            }
-          });
-        }
 
         if (hex.units.length) {
           const hexUnits = units.filter(unit => hex.units.includes(unit.id));
@@ -88,11 +67,35 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     });
 
+    // Highlighting (moved outside visibility check)
+    if (selectedUnitId) {
+      const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
+      if (unitHex) {
+        hexes.forEach(h => {
+          const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
+          if (distance <= 2) {
+            const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
+            const hy = h.r * hexHeight;
+            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              const angle = (Math.PI / 3) * i + Math.PI / 6;
+              const px = hx + hexSize * Math.cos(angle);
+              const py = hy + hexSize * Math.sin(angle);
+              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+          }
+        });
+      }
+    }
+
     if (features) {
       drawFeatures(ctx, { roads: features.roads }, hexSize, hexWidth, hexHeight, zoom, offset);
     }
 
-    // Pass 2: Draw names above everything
+    // Pass 2: Draw names (keep visibility check)
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
