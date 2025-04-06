@@ -41,28 +41,26 @@ class WaterlooEngine {
 
   resolveTurn(resolveCombatCallback) {
     let newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
-    const pendingCombats = []; // Track move-induced combats
+    const pendingCombats = [];
 
     // Resolve movement first
     ['blue', 'red'].forEach(team => {
-      Object.entries(this.state.orders[team]).forEach(([unitId, order]) => {
-        if (order.type === 'move') {
+      Object.entries(this.state.orders[team] || {}).forEach(([unitId, order]) => {
+        if (order && order.type === 'move') { // Add null check
           const oldHex = newHexes.find(h => h.units.includes(unitId));
           const newHex = newHexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
           if (oldHex && newHex) {
             if (newHex.units.length > 0) {
-              // Conflict: Mark for combat
-              const defenderId = newHex.units[0]; // First unit in hex
+              const defenderId = newHex.units[0];
               pendingCombats.push({ attackerId: unitId, defenderId });
             } else {
-              // Move succeeds
               oldHex.units = oldHex.units.filter(id => id !== unitId);
               newHex.units.push(unitId);
               const unit = this.state.units.find(u => u.id === unitId);
               unit.position = order.dest;
             }
           }
-        } else if (order.type === 'attack') {
+        } else if (order && order.type === 'attack') { // Add null check
           const unit = this.state.units.find(u => u.id === unitId);
           unit.pendingAttack = order.targetId;
         }
