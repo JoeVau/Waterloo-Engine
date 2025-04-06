@@ -35,9 +35,13 @@ export function resolveCombat(state, combats) {
     if (attacker && defender) {
       const attackerHex = state.hexes.find(h => h.units.includes(attacker.id));
       const defenderHex = state.hexes.find(h => h.units.includes(defender.id));
-      const stillAdjacent = !attackerHex || !defenderHex || hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
+      const stillAdjacent = hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
 
-      if (stillAdjacent || attacker.pendingAttack) { // Combat from attack order or move conflict
+      const defenderOrder = state.orders[defender.team] ?.[defender.id];
+      const defenderStands = !defenderOrder || defenderOrder.type === 'stand';
+      const defenderAttacksBack = defenderOrder ?.type === 'attack' && defenderOrder.targetId === attackerId;
+
+      if (stillAdjacent && (defenderStands || defenderAttacksBack)) {
         const coinFlip = Math.random() < 0.5;
         if (coinFlip) {
           defender.men = 0;

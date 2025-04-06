@@ -1,3 +1,4 @@
+// src/components/Map.jsx
 import { useEffect } from 'react';
 import { drawHexBase, drawHexName, drawFeatures, drawUnits } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
@@ -14,7 +15,13 @@ const terrainColors = {
   swamps: '#b3cce6',
 };
 
-export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onWheel, onMouseDown }) {
+function pixelToHex(x, y, size) {
+  const q = (x * Math.sqrt(3)) / 3 / size;
+  const r = (y - x / Math.sqrt(3)) / size;
+  return [Math.round(q), Math.round(r)];
+}
+
+export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onMouseDown }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -28,131 +35,79 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Pass 1: Draw terrain
+    // Draw terrain
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth;
+      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
       const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
-      const finalX = x + offsetX;
-      const finalY = y;
-
       if (
-        finalX > -offset.x / zoom - hexWidth &&
-        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
-        finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.y / zoom + visibleHeight + hexHeight
+        x > -offset.x / zoom - hexWidth &&
+        x < -offset.x / zoom + visibleWidth + hexWidth &&
+        y > -offset.y / zoom - hexHeight &&
+        y < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
+        drawHexBase(ctx, x, y, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
       }
     });
 
-    if (features) {
-      drawFeatures(ctx, { roads: features.roads }, hexSize, hexWidth, hexHeight, zoom, offset);
-    }
-
-    // Pass 2: Draw range highlights for selected unit
-    if (selectedUnitId) {
-      const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
-      if (unitHex) {
-        // Filter visible hexes first to reduce distance calculations
-        const visibleHexes = hexes.filter(h => {
-          const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
-          const hy = h.r * hexHeight;
-          return (
-            hx > -offset.x / zoom - hexWidth &&
-            hx < -offset.x / zoom + visibleWidth + hexWidth &&
-            hy > -offset.y / zoom - hexHeight &&
-            hy < -offset.y / zoom + visibleHeight + hexHeight
-          );
-        });
-
-        visibleHexes.forEach(h => {
-          const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
-          console.log(`Checking ${h.q},${h.r} from ${unitHex.q},${unitHex.r}: distance = ${distance}`);
-          if (distance <= 2) {
-            const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
-            const hy = h.r * hexHeight;
-            console.log(`Highlighting ${h.q},${h.r} at (${hx}, ${hy})`);
-            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+    // Highlight attacked hexes
+    ['blue', 'red'].forEach(team => {
+      Object.entries(orders[team] || {}).forEach(([unitId, order]) => {
+        if (order && order.type === 'attack') { // Add null check
+          const targetUnit = units.find(u => u.id === order.targetId);
+          if (targetUnit) {
+            const targetHex = hexes.find(h => h.units.includes(targetUnit.id));
+            const x = targetHex.q * hexWidth + (targetHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+            const y = targetHex.r * hexHeight;
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2 / zoom;
             ctx.beginPath();
             for (let i = 0; i < 6; i++) {
               const angle = (Math.PI / 3) * i + Math.PI / 6;
-              const px = hx + hexSize * Math.cos(angle);
-              const py = hy + hexSize * Math.sin(angle);
+              const px = x + hexSize * Math.cos(angle);
+              const py = y + hexSize * Math.sin(angle);
               i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
             }
             ctx.closePath();
-            ctx.fill();
+            ctx.stroke();
           }
-        });
-      }
-    }
+        }
+      });
+    });
 
-    // Pass 3: Draw units and order paths
+    // Draw units
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth;
+      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
       const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
-      const finalX = x + offsetX;
-      const finalY = y;
-
       if (
-        finalX > -offset.x / zoom - hexWidth &&
-        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
-        finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.y / zoom + visibleHeight + hexHeight
+        x > -offset.x / zoom - hexWidth &&
+        x < -offset.x / zoom + visibleWidth + hexWidth &&
+        y > -offset.y / zoom - hexHeight &&
+        y < -offset.y / zoom + visibleHeight + hexHeight
       ) {
         if (hex.units.length) {
           const hexUnits = units.filter(unit => hex.units.includes(unit.id));
-          drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x: finalX, y: finalY }, selectedUnitId);
-
-          const topUnit = hexUnits[0];
-          const order = topUnit ? (orders.blue[topUnit.id] || orders.red[topUnit.id]) : null;
-          if (order && order.type === 'move') {
-            const destHex = hexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
-            const destX = destHex.q * hexWidth + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
-            const destY = destHex.r * hexHeight;
-            ctx.strokeStyle = '#ff0';
-            ctx.lineWidth = 2 / zoom;
-            ctx.setLineDash([5 / zoom, 5 / zoom]);
-            ctx.beginPath();
-            ctx.moveTo(finalX, finalY);
-            ctx.lineTo(destX, destY);
-            ctx.stroke();
-            ctx.setLineDash([]);
-          }
+          drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x, y }, selectedUnitId);
         }
-      }
-    });
-
-    // Pass 4: Draw hex names
-    hexes.forEach(hex => {
-      const x = hex.q * hexWidth;
-      const y = hex.r * hexHeight;
-      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
-      const finalX = x + offsetX;
-      const finalY = y;
-
-      if (
-        finalX > -offset.x / zoom - hexWidth &&
-        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
-        finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.y / zoom + visibleHeight + hexHeight
-      ) {
-        drawHexName(ctx, finalX, finalY, hexSize, hex, zoom);
       }
     });
 
     ctx.restore();
   }, [hexes, units, orders, features, zoom, offset, selectedUnitId]);
 
+  const handleClick = (e) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const clickX = (e.clientX - rect.left - offset.x) / zoom;
+    const clickY = (e.clientY - rect.top - offset.y) / zoom;
+    const [q, r] = pixelToHex(clickX, clickY, hexSize);
+    onClick(e);
+  };
+
   return (
     <canvas
       ref={canvasRef}
       width={1000}
       height={800}
-      onClick={onClick}
-      onWheel={onWheel}
+      onClick={handleClick}
       onMouseDown={onMouseDown}
       style={{ display: 'block', cursor: 'grab' }}
     />
