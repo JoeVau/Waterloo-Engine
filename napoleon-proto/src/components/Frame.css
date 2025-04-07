@@ -44,8 +44,8 @@
   border-radius: 4px;
   color: #fff;
   display: flex;
-  flex-direction: column; /* Stack sections vertically */
-  align-items: flex-start; /* Align items to the start (left) */
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .unit-item-selected-blue {
@@ -60,7 +60,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  width: 100%; /* Full width */
+  width: 100%;
 }
 
 .unit-flag {
@@ -69,16 +69,11 @@
   border: 1px solid #000;
 }
 
-.unit-details-container {
-  margin-top: 5px;
-  width: 100%; /* Full width */
-}
-
 .unit-leader-section {
   display: flex;
   align-items: center;
   gap: 4px;
-  width: 100%; /* Full width */
+  width: 100%;
 }
 
 .unit-leader-portrait {
@@ -88,15 +83,46 @@
 }
 
 .unit-type-section {
-  width: 100%; /* Full width */
-}
-
-.unit-strength-section {
-  width: 100%; /* Full width */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .unit-details {
   font-size: 0.8em;
+}
+
+.nato-symbol {
+  display: inline-block;
+  width: 20px; /* Increased width */
+  height: 16px;
+  position: relative;
+  border: 1px solid #fff;
+  overflow: hidden;
+}
+
+.nato-symbol.nato-infantry::before,
+.nato-symbol.nato-infantry::after {
+  content: '';
+  position: absolute;
+  width: 141.42%; /* √2 * 100% to cross the entire diagonal of a 20x16 rectangle */
+  height: 1px;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+}
+
+.nato-symbol.nato-infantry::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nato-symbol.nato-infantry::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.unit-strength-section {
+  width: 100%;
 }
 
 .unit-strength-bar {
@@ -125,7 +151,7 @@
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 100%; /* Full width */
+  width: 100%;
 }
 
 .unit-orders-section {
@@ -133,7 +159,7 @@
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 100%; /* Full width */
+  width: 100%;
 }
 
 .unit-orders-buttons {

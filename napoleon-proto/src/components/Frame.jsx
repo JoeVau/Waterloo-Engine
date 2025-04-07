@@ -39,14 +39,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
     }
   };
 
-  const getNatoSymbol = (type) => {
-    switch (type) {
-      case 'infantry': return 'X';
-      case 'cavalry': return '/';
-      default: return '';
-    }
-  };
-
   const getSkillStars = (skill) => {
     const stars = '⭐'.repeat(skill || 0);
     return stars || 'No Skill';
@@ -102,9 +94,16 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     {/* Type and NATO Symbol */}
                     <div className="unit-type-section">
                       <small className="unit-details">
-                        {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'} |
-                        NATO: {getNatoSymbol(unit.type)}
+                        {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'}
                       </small>
+                      <div className={`nato-symbol nato-infantry`}>
+                        {unit.type === 'infantry' || unit.type === 'cavalry' ? (
+                          <>
+                          <div className="nato-diagonal nato-diagonal-1"></div>
+                            { unit.type === 'infantry' && <div className="nato-diagonal nato-diagonal-2"></div> }
+                          </>
+                        ) : ''} {/* Empty string for invalid types */}
+                      </div>
                     </div>
                     {/* Strength Bar */}
                     <div className="unit-strength-section">
