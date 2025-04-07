@@ -44,7 +44,7 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     {unit.name} {unit.id === selectedUnitId ? '(Selected)' : ''}
                     <br />
                     <small className="unit-details">
-                      {unit.type === 'infantry' ? 'Infantry' : 'Cavalry'} - {unit.men || 0} Men, {unit.cannons || 0} Cannons, {unit.horses || 0} Horses
+                      {unit.type === 'infantry' ? 'Infantry' : 'Cavalry'} - {unit.strength || 0} Men, {unit.horses || 0} Horses, {unit.cannons || 0} Cannons
                     </small>
                   </span>
                 </li>

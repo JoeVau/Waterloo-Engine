@@ -26,6 +26,7 @@ export function validateOrder(state, unitId, orderType, params) {
 }
 
 export function resolveCombat(state, combats) {
+  console.log('Resolving combat with combats:', combats);
   let updatedUnits = [...state.units];
   const notifications = [];
 
@@ -38,26 +39,26 @@ export function resolveCombat(state, combats) {
       const stillAdjacent = hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
 
       const defenderOrder = state.orders[defender.team] ?.[defender.id];
-      const defenderStands = !defenderOrder || defenderOrder.type === 'stand';
+      const defenderStands = !defenderOrder || defenderOrder === null;
       const defenderAttacksBack = defenderOrder ?.type === 'attack' && defenderOrder.targetId === attackerId;
 
       if (stillAdjacent && (defenderStands || defenderAttacksBack)) {
         const coinFlip = Math.random() < 0.5;
         if (coinFlip) {
-          defender.men = 0;
+          defender.strength = 0; // Use strength instead of men
           notifications.push(`Your unit ${defender.name} was destroyed by ${attacker.name}`);
           notifications.push(`${attacker.name} defeated ${defender.name}`);
         } else {
-          attacker.men = 0;
+          attacker.strength = 0; // Use strength instead of men
           notifications.push(`Your unit ${attacker.name} was destroyed by ${defender.name}`);
           notifications.push(`${defender.name} defeated ${attacker.name}`);
         }
-      } else if (attacker.pendingAttack) {
+      } else if (state.orders[state.currentPlayer] ?.[attackerId] ?.type === 'attack') {
         notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
       }
     }
   });
 
-  updatedUnits = updatedUnits.filter(u => u.men > 0);
+  updatedUnits = updatedUnits.filter(u => u.strength > 0); // Filter on strength
   return { updatedUnits, notifications };
 }

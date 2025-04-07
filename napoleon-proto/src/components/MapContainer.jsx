@@ -40,10 +40,13 @@ function MapContainer() {
           .find(u => u.team !== unit.team);
 
         if (targetUnit) {
-          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] }; // Wait for confirmation
+          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] };
         } else {
           const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
-          if (success) return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+          if (success) {
+            console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
+            return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+          }
         }
       }
       return prev;
@@ -62,11 +65,16 @@ function MapContainer() {
   };
 
   const handleConfirmAttack = (unitId, targetId) => {
-    setGameState(prev => {
-      const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
-      if (success) return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
-      return prev;
-    });
+    console.log(`Confirming attack: ${unitId} -> ${targetId}`);
+    const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
+    console.log(`Attack order success: ${success}`);
+    if (success) {
+      setGameState(prev => ({
+        ...engine.getState(),
+        selectedUnitId: null,
+        selectedHex: null,
+      }));
+    }
   };
 
   const handleWheel = (e) => {
@@ -115,7 +123,8 @@ function MapContainer() {
 
   const handleEndTurn = (player) => {
     if (player !== gameState.currentPlayer) return;
-    engine.endTurn(player, resolveCombat);
+    console.log(`Ending turn for ${player}`);
+    engine.endTurn(player, resolveCombat); // Ensure callback is passed
     setGameState(engine.getState());
   };
 
