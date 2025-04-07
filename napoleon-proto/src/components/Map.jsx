@@ -1,4 +1,3 @@
-// src/components/Map.jsx
 import { useEffect } from 'react';
 import { drawHexBase, drawHexName, drawFeatures, drawUnits } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
@@ -15,12 +14,6 @@ const terrainColors = {
   swamps: '#b3cce6',
 };
 
-function pixelToHex(x, y, size) {
-  const q = (x * Math.sqrt(3)) / 3 / size;
-  const r = (y - x / Math.sqrt(3)) / size;
-  return [Math.round(q), Math.round(r)];
-}
-
 export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer }) {
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -35,69 +28,56 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Calculate visibility for current player
-    const visibleHexes = fogOfWar
-      ? hexes.filter(hex => {
-        const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        return friendlyHexes.some(fh => hexDistance(fh.q, fh.r, hex.q, hex.r) <= 2);
-      })
-      : hexes;
-
-    const visibleUnits = fogOfWar
-      ? units.filter(unit => {
-        const unitHex = hexes.find(h => h.units.includes(unit.id));
-        const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        return unit.team === currentPlayer || friendlyHexes.some(fh => hexDistance(fh.q, fh.r, unitHex.q, unitHex.r) <= 2);
-      })
-      : units;
-
-    // Draw terrain
+    // Pass 1: Draw terrain (all hexes, with fog overlay for hidden ones)
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        drawHexBase(ctx, x, y, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
+        // Determine visibility for fog of war
+        let isVisible = !fogOfWar;
+        if (fogOfWar) {
+          const friendlyUnits = units.filter(u => u.team === currentPlayer);
+          isVisible = friendlyUnits.some(unit => {
+            const unitHex = hexes.find(h => h.units.includes(unit.id));
+            if (!unitHex) return false;
+            return hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= 2;
+          });
+        }
+
+        // Draw the hex with terrain color
+        drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
+
+        // Apply fog overlay if not visible
+        if (fogOfWar && !isVisible) {
+          ctx.fillStyle = 'rgba(50, 50, 50, 0.8)'; // Dark grey overlay
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i + Math.PI / 6;
+            const px = finalX + hexSize * Math.cos(angle);
+            const py = finalY + hexSize * Math.sin(angle);
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
       }
     });
 
-    // Apply fog overlay to invisible hexes
-    if (fogOfWar) {
-      hexes.forEach(hex => {
-        const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
-        const y = hex.r * hexHeight;
-        if (
-          x > -offset.x / zoom - hexWidth &&
-          x < -offset.x / zoom + visibleWidth + hexWidth &&
-          y > -offset.y / zoom - hexHeight &&
-          y < -offset.y / zoom + visibleHeight + hexHeight
-        ) {
-          const isVisible = visibleHexes.includes(hex);
-          if (!isVisible) {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Dark transparent overlay
-            ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-              const angle = (Math.PI / 3) * i + Math.PI / 6;
-              const px = x + hexSize * Math.cos(angle);
-              const py = y + hexSize * Math.sin(angle);
-              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-            }
-            ctx.closePath();
-            ctx.fill();
-          }
-        }
-      });
-    }
-
-    // Highlight range for selected unit
+    // Pass 2: Highlight hexes with enemy units within attack range (distance 1) of the selected unit
     if (selectedUnitId) {
-      const unitHex = hexes.find(h => h.units.includes(selectedUnitId));
+      const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
       if (unitHex) {
-        const visibleHexesRange = hexes.filter(h => {
+        const unit = units.find(u => u.id === selectedUnitId);
+        const visibleHexes = hexes.filter(h => {
           const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
           const hy = h.r * hexHeight;
           return (
@@ -108,12 +88,16 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
           );
         });
 
-        visibleHexesRange.forEach(h => {
+        visibleHexes.forEach(h => {
           const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
-          if (distance <= 2) {
+          const hasEnemy = h.units.some(unitId => {
+            const targetUnit = units.find(u => u.id === unitId);
+            return targetUnit && targetUnit.team !== unit.team;
+          });
+          if (distance === 1 && hasEnemy) {
             const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
             const hy = h.r * hexHeight;
-            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
             ctx.beginPath();
             for (let i = 0; i < 6; i++) {
               const angle = (Math.PI / 3) * i + Math.PI / 6;
@@ -128,88 +112,113 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     }
 
-    // Highlight attacked hexes
-    ['blue', 'red'].forEach(team => {
-      Object.entries(orders[team] || {}).forEach(([unitId, order]) => {
-        if (order && order.type === 'attack') {
-          const targetUnit = visibleUnits.find(u => u.id === order.targetId);
-          if (targetUnit) {
-            const targetHex = hexes.find(h => h.units.includes(targetUnit.id));
-            const x = targetHex.q * hexWidth + (targetHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
-            const y = targetHex.r * hexHeight;
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 2 / zoom;
-            ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-              const angle = (Math.PI / 3) * i + Math.PI / 6;
-              const px = x + hexSize * Math.cos(angle);
-              const py = y + hexSize * Math.sin(angle);
-              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-            }
-            ctx.closePath();
-            ctx.stroke();
-          }
+    // Pass 3: Draw features (roads, etc.) only for visible hexes
+    if (features) {
+      const filteredFeatures = { roads: {} };
+      Object.entries(features.roads || {}).forEach(([key, neighbors]) => {
+        const [q, r] = key.split(',').map(Number);
+        let isVisible = !fogOfWar;
+        if (fogOfWar) {
+          const friendlyUnits = units.filter(u => u.team === currentPlayer);
+          isVisible = friendlyUnits.some(unit => {
+            const unitHex = hexes.find(h => h.units.includes(unit.id));
+            if (!unitHex) return false;
+            return hexDistance(unitHex.q, unitHex.r, q, r) <= 2;
+          });
+        }
+        if (isVisible) {
+          filteredFeatures.roads[key] = neighbors;
         }
       });
-    });
+      drawFeatures(ctx, filteredFeatures, hexSize, hexWidth, hexHeight, zoom, offset);
+    }
 
-    // Draw units (only visible ones)
+    // Pass 4: Draw units only for visible hexes
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        if (hex.units.length) {
-          const hexUnits = visibleUnits.filter(unit => hex.units.includes(unit.id));
-          if (hexUnits.length) {
-            drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x, y }, selectedUnitId);
+        let isVisible = !fogOfWar;
+        if (fogOfWar) {
+          const friendlyUnits = units.filter(u => u.team === currentPlayer);
+          isVisible = friendlyUnits.some(unit => {
+            const unitHex = hexes.find(h => h.units.includes(unit.id));
+            if (!unitHex) return false;
+            return hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= 2;
+          });
+        }
+
+        if (isVisible && hex.units.length) {
+          const hexUnits = units.filter(unit => hex.units.includes(unit.id));
+          drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x: finalX, y: finalY }, selectedUnitId);
+
+          const topUnit = hexUnits[0];
+          const order = topUnit ? (orders.blue[topUnit.id] || orders.red[topUnit.id]) : null;
+          if (order && order.type === 'move') {
+            const destHex = hexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
+            const destX = destHex.q * hexWidth + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+            const destY = destHex.r * hexHeight;
+            ctx.strokeStyle = '#ff0';
+            ctx.lineWidth = 2 / zoom;
+            ctx.setLineDash([5 / zoom, 5 / zoom]);
+            ctx.beginPath();
+            ctx.moveTo(finalX, finalY);
+            ctx.lineTo(destX, destY);
+            ctx.stroke();
+            ctx.setLineDash([]);
           }
         }
       }
     });
 
-    // Draw city names
+    // Pass 5: Draw hex names only for visible hexes
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        if (hex.feature === 'city' && hex.name) {
-          drawHexName(ctx, x, y, hexSize, hex, zoom);
+        let isVisible = !fogOfWar;
+        if (fogOfWar) {
+          const friendlyUnits = units.filter(u => u.team === currentPlayer);
+          isVisible = friendlyUnits.some(unit => {
+            const unitHex = hexes.find(h => h.units.includes(unit.id));
+            if (!unitHex) return false;
+            return hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= 2;
+          });
+        }
+
+        if (isVisible) {
+          drawHexName(ctx, finalX, finalY, hexSize, hex, zoom);
         }
       }
     });
-
-    // Draw roads
-    if (features && features.roads) {
-      drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset);
-    }
 
     ctx.restore();
   }, [hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer]);
-
-  const handleClick = (e) => {
-    const rect = canvasRef.current.getBoundingClientRect();
-    const clickX = (e.clientX - rect.left - offset.x) / zoom;
-    const clickY = (e.clientY - rect.top - offset.y) / zoom;
-    const [q, r] = pixelToHex(clickX, clickY, hexSize);
-    onClick(e);
-  };
 
   return (
     <canvas
       ref={canvasRef}
       width={1000}
       height={800}
-      onClick={handleClick}
+      onClick={onClick}
       onMouseDown={onMouseDown}
       style={{ display: 'block', cursor: 'grab' }}
     />

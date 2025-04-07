@@ -39,14 +39,18 @@ function MapContainer() {
           .map(id => prev.units.find(u => u.id === id))
           .find(u => u.team !== unit.team);
 
-        if (targetUnit) {
-          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] };
-        } else {
-          const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
-          if (success) {
+        const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
+        if (success) {
+          if (targetUnit) {
+            console.log(`Combat triggered: ${unit.id} moves to [${clickedHex.q}, ${clickedHex.r}] and engages ${targetUnit.id}`);
+          } else {
             console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
-            return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
           }
+          engine.state.orders[prev.currentPlayer] = engine.state.orders[prev.currentPlayer] || {};
+          engine.state.orders[prev.currentPlayer][prev.selectedUnitId] = { type: 'move', dest: [clickedHex.q, clickedHex.r] };
+          return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+        } else {
+          console.log(`Move order failed for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
         }
       }
       return prev;
@@ -72,19 +76,6 @@ function MapContainer() {
       }
       return prev;
     });
-  };
-
-  const handleConfirmAttack = (unitId, targetId) => {
-    console.log(`Confirming attack: ${unitId} -> ${targetId}`);
-    const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
-    console.log(`Attack order success: ${success}`);
-    if (success) {
-      setGameState(prev => ({
-        ...engine.getState(),
-        selectedUnitId: null,
-        selectedHex: null,
-      }));
-    }
   };
 
   const handleWheel = (e) => {
@@ -135,7 +126,10 @@ function MapContainer() {
     if (player !== gameState.currentPlayer) return;
     console.log(`Ending turn for ${player}`);
     engine.endTurn(player, resolveCombat);
-    setGameState(engine.getState());
+    const newState = engine.getState();
+    console.log('New game state after endTurn:', newState);
+    console.log('Notifications after endTurn:', newState.notifications);
+    setGameState(newState);
   };
 
   const toggleFogOfWar = () => {
@@ -155,8 +149,7 @@ function MapContainer() {
       notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
-      onDeselect={handleDeselect} // Pass the new handler
-      onConfirmAttack={handleConfirmAttack}
+      onDeselect={handleDeselect}
       toggleFogOfWar={toggleFogOfWar}
       fogOfWar={fogOfWar}
     >
