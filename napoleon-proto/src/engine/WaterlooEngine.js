@@ -66,20 +66,20 @@ class WaterlooEngine {
       });
     });
 
-    // Resolve all combats (move-induced and attacks) in one pass
+    // Resolve all combats
     if (resolveCombatCallback && pendingCombats.length > 0) {
       console.log('Pending combats:', pendingCombats);
       const { updatedUnits, notifications } = resolveCombatCallback(this.state, pendingCombats);
       this.state.units = updatedUnits;
       this.state.notifications = notifications;
-      newHexes = newHexes.map(h => ({
+      // Update hexes to reflect retreat changes
+      this.state.hexes = newHexes.map(h => ({
         ...h,
-        units: h.units.filter(id => this.state.units.some(u => u.id === id)),
+        units: updatedUnits.filter(u => u.position[0] === h.q && u.position[1] === h.r).map(u => u.id),
       }));
+    } else {
+      this.state.hexes = newHexes; // Apply movement updates even if no combat
     }
-
-    this.state.hexes = newHexes;
-    this.state.units.forEach(u => delete u.pendingAttack); // Clear after one pass
   }
 
   getState() {

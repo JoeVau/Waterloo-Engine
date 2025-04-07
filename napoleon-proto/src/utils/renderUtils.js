@@ -225,7 +225,7 @@ export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, 
 export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, position, selectedUnitId) {
   units.forEach(unit => {
     const { x, y } = position;
-    const counterWidth = hexSize * 1.8; // Wider rectangle
+    const counterWidth = hexSize * 1.2; // Wider rectangle
     const counterHeight = hexSize * 0.8; // Keep height proportional
 
     // NATO Infantry Symbol: Wider rectangle with lighter team color background

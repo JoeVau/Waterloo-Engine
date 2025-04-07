@@ -2,7 +2,7 @@
 import React from 'react';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onConfirmAttack, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onConfirmAttack, toggleFogOfWar, fogOfWar, children }) {
   const selectedHexUnits = selectedHex
     ? units.filter(u => hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.units.includes(u.id))
     : [];
@@ -81,6 +81,13 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
           className={buttonClass}
         >
           End Turn
+        </button>
+        <button
+          onClick={toggleFogOfWar}
+          className={buttonClass}
+          style={{ marginTop: '10px' }} // Simple spacing
+        >
+          {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
         </button>
       </div>
       <div className="map-area">

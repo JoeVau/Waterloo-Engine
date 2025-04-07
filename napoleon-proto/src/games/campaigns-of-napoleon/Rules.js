@@ -43,15 +43,18 @@ export function resolveCombat(state, combats) {
       const defenderAttacksBack = defenderOrder ?.type === 'attack' && defenderOrder.targetId === attackerId;
 
       if (stillAdjacent && (defenderStands || defenderAttacksBack)) {
-        const coinFlip = Math.random() < 0.5;
-        if (coinFlip) {
-          defender.strength = 0; // Use strength instead of men
-          notifications.push(`Your unit ${defender.name} was destroyed by ${attacker.name}`);
-          notifications.push(`${attacker.name} defeated ${defender.name}`);
+        const roll = Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1; // 2d6
+        console.log(`Combat roll: ${roll}`);
+        if (roll > 7) {
+          // Attacker wins, defender retreats
+          defender.strength = Math.floor(defender.strength * 0.5);
+          notifications.push(`${defender.name} retreated from ${attacker.name} with ${defender.strength} strength remaining`);
+          retreatUnit(defender, attackerHex, state.hexes, notifications);
         } else {
-          attacker.strength = 0; // Use strength instead of men
-          notifications.push(`Your unit ${attacker.name} was destroyed by ${defender.name}`);
-          notifications.push(`${defender.name} defeated ${attacker.name}`);
+          // Defender wins, attacker retreats
+          attacker.strength = Math.floor(attacker.strength * 0.5);
+          notifications.push(`${attacker.name} retreated from ${defender.name} with ${attacker.strength} strength remaining`);
+          retreatUnit(attacker, defenderHex, state.hexes, notifications);
         }
       } else if (state.orders[state.currentPlayer] ?.[attackerId] ?.type === 'attack') {
         notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
@@ -59,6 +62,32 @@ export function resolveCombat(state, combats) {
     }
   });
 
-  updatedUnits = updatedUnits.filter(u => u.strength > 0); // Filter on strength
+  updatedUnits = updatedUnits.filter(u => u.strength > 0);
   return { updatedUnits, notifications };
+}
+
+function retreatUnit(unit, enemyHex, hexes, notifications) {
+  const currentHex = hexes.find(h => h.units.includes(unit.id));
+  console.log(`Retreating ${unit.name} from [${currentHex.q}, ${currentHex.r}] away from enemy at [${enemyHex.q}, ${enemyHex.r}]`);
+
+  const possibleRetreats = hexes.filter(h => {
+    const distFromCurrent = hexDistance(currentHex.q, currentHex.r, h.q, h.r);
+    const distFromEnemy = hexDistance(enemyHex.q, enemyHex.r, h.q, h.r);
+    const isFarther = distFromEnemy > hexDistance(currentHex.q, currentHex.r, enemyHex.q, enemyHex.r);
+    return distFromCurrent === 2 && isFarther && h.units.length === 0;
+  });
+
+  console.log(`Possible retreat hexes:`, possibleRetreats.map(h => `[${h.q}, ${h.r}]`));
+
+  if (possibleRetreats.length > 0) {
+    const retreatHex = possibleRetreats[Math.floor(Math.random() * possibleRetreats.length)];
+    currentHex.units = currentHex.units.filter(id => id !== unit.id);
+    retreatHex.units.push(unit.id);
+    unit.position = [retreatHex.q, retreatHex.r];
+    console.log(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
+    notifications.push(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
+  } else {
+    console.log(`${unit.name} had nowhere to retreat—holding position`);
+    notifications.push(`${unit.name} had nowhere to retreat—holding position`);
+  }
 }

@@ -13,6 +13,7 @@ function MapContainer() {
   const [gameState, setGameState] = useState(engine.getState());
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [fogOfWar, setFogOfWar] = useState(true); // Fog on by default
 
   const handleClick = (e) => {
     const canvas = canvasRef.current;
@@ -124,8 +125,13 @@ function MapContainer() {
   const handleEndTurn = (player) => {
     if (player !== gameState.currentPlayer) return;
     console.log(`Ending turn for ${player}`);
-    engine.endTurn(player, resolveCombat); // Ensure callback is passed
+    engine.endTurn(player, resolveCombat);
     setGameState(engine.getState());
+  };
+
+  const toggleFogOfWar = () => {
+    setFogOfWar(prev => !prev);
+    console.log(`Fog of war toggled to: ${!fogOfWar}`);
   };
 
   return (
@@ -141,6 +147,8 @@ function MapContainer() {
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
       onConfirmAttack={handleConfirmAttack}
+      toggleFogOfWar={toggleFogOfWar} // Pass toggle function
+      fogOfWar={fogOfWar} // Pass fog state
     >
       <Map
         canvasRef={canvasRef}
@@ -153,6 +161,8 @@ function MapContainer() {
         selectedUnitId={gameState.selectedUnitId}
         onClick={handleClick}
         onMouseDown={handleMouseDown}
+        fogOfWar={fogOfWar} // Pass fog state to Map
+        currentPlayer={gameState.currentPlayer} // Pass for visibility check
       />
     </Frame>
   );
