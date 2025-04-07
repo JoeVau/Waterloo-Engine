@@ -7549,6 +7549,16 @@
       "strength": 4339
     },
     {
+      "id": "blue_7",
+      "name": "Blue Unit 7",
+      "team": "blue",
+      "position": [
+        4,
+        10
+      ],
+      "strength": 9000
+    },
+    {
       "id": "red_6",
       "name": "Red Unit 6",
       "team": "red",
