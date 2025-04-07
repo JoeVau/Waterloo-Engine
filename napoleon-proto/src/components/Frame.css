@@ -95,7 +95,7 @@
 
 .nato-symbol {
   display: inline-block;
-  width: 20px; /* Increased width */
+  width: 16px;
   height: 16px;
   position: relative;
   border: 1px solid #fff;
@@ -106,7 +106,7 @@
 .nato-symbol.nato-infantry::after {
   content: '';
   position: absolute;
-  width: 141.42%; /* √2 * 100% to cross the entire diagonal of a 20x16 rectangle */
+  width: 25.6px; /* Fixed diagonal length for a 20x16px rectangle (√(20² + 16²)) */
   height: 1px;
   background-color: #fff;
   top: 50%;
@@ -115,6 +115,23 @@
 }
 
 .nato-symbol.nato-infantry::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nato-symbol.nato-infantry::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* For future cavalry symbol (one diagonal line) */
+.nato-symbol.nato-cavalry::before {
+  content: '';
+  position: absolute;
+  width: 25.6px; /* Same fixed diagonal length */
+  height: 1px;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
