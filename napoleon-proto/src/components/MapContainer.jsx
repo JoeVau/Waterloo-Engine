@@ -1,4 +1,3 @@
-// src/components/MapContainer.jsx
 import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
@@ -13,7 +12,7 @@ function MapContainer() {
   const [gameState, setGameState] = useState(engine.getState());
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [fogOfWar, setFogOfWar] = useState(true); // Fog on by default
+  const [fogOfWar, setFogOfWar] = useState(true);
 
   const handleClick = (e) => {
     const canvas = canvasRef.current;
@@ -60,6 +59,16 @@ function MapContainer() {
       if (unit && unit.team === prev.currentPlayer && !prev.orders[unit.team][unitId]) {
         engine.state.orders[unit.team][unitId] = null;
         return { ...prev, selectedUnitId: unitId };
+      }
+      return prev;
+    });
+  };
+
+  const handleDeselect = () => {
+    setGameState(prev => {
+      if (prev.selectedUnitId) {
+        engine.state.orders[prev.currentPlayer] = {};
+        return { ...prev, selectedUnitId: null, selectedHex: null };
       }
       return prev;
     });
@@ -146,9 +155,10 @@ function MapContainer() {
       notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
+      onDeselect={handleDeselect} // Pass the new handler
       onConfirmAttack={handleConfirmAttack}
-      toggleFogOfWar={toggleFogOfWar} // Pass toggle function
-      fogOfWar={fogOfWar} // Pass fog state
+      toggleFogOfWar={toggleFogOfWar}
+      fogOfWar={fogOfWar}
     >
       <Map
         canvasRef={canvasRef}
@@ -161,8 +171,8 @@ function MapContainer() {
         selectedUnitId={gameState.selectedUnitId}
         onClick={handleClick}
         onMouseDown={handleMouseDown}
-        fogOfWar={fogOfWar} // Pass fog state to Map
-        currentPlayer={gameState.currentPlayer} // Pass for visibility check
+        fogOfWar={fogOfWar}
+        currentPlayer={gameState.currentPlayer}
       />
     </Frame>
   );

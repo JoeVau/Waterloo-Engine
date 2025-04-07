@@ -1,4 +1,3 @@
-/* src/components/Frame.css */
 .frame-container {
   display: flex;
   flex-direction: row;
@@ -45,8 +44,8 @@
   border-radius: 4px;
   color: #fff;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Stack sections vertically */
+  align-items: flex-start; /* Align items to the start (left) */
 }
 
 .unit-item-selected-blue {
@@ -57,7 +56,94 @@
   background-color: rgba(255, 0, 0, 0.1);
 }
 
+.unit-top-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%; /* Full width */
+}
+
+.unit-flag {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #000;
+}
+
+.unit-details-container {
+  margin-top: 5px;
+  width: 100%; /* Full width */
+}
+
+.unit-leader-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%; /* Full width */
+}
+
+.unit-leader-portrait {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #000;
+}
+
+.unit-type-section {
+  width: 100%; /* Full width */
+}
+
+.unit-strength-section {
+  width: 100%; /* Full width */
+}
+
 .unit-details {
+  font-size: 0.8em;
+}
+
+.unit-strength-bar {
+  margin-top: 5px;
+  width: 100%;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 4px;
+  position: relative;
+}
+
+.unit-strength-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.unit-straggler-fill {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  border-radius: 4px;
+}
+
+.unit-expanded-view {
+  margin-top: 5px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  width: 100%; /* Full width */
+}
+
+.unit-orders-section {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  width: 100%; /* Full width */
+}
+
+.unit-orders-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.unit-orders-buttons button {
+  padding: 5px 10px;
   font-size: 0.8em;
 }
 
@@ -72,7 +158,7 @@
 }
 
 .end-turn-button {
-  background-color: #007bff; /* Blue default */
+  background-color: #007bff;
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
@@ -83,15 +169,36 @@
 }
 
 .end-turn-button-red {
-  background-color: #dc3545; /* Red default */
+  background-color: #dc3545;
 }
 
 .end-turn-button:hover {
-  background-color: #0056b3; /* Blue hover */
+  background-color: #0056b3;
 }
 
 .end-turn-button-red:hover {
-  background-color: #b02a37; /* Red hover */
+  background-color: #b02a37;
+}
+
+.debug-section {
+  margin-top: 20px;
+  border-top: 1px solid #fff;
+  padding-top: 10px;
+}
+
+.debug-toggle-button {
+  background-color: #666;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.debug-content {
+  margin-top: 10px;
 }
 
 .map-area {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onConfirmAttack, toggleFogOfWar, fogOfWar, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, onConfirmAttack, toggleFogOfWar, fogOfWar, children }) {
   const [isDebugOpen, setIsDebugOpen] = useState(false);
 
   const selectedHexUnits = selectedHex
@@ -47,6 +47,11 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
     }
   };
 
+  const getSkillStars = (skill) => {
+    const stars = '⭐'.repeat(skill || 0);
+    return stars || 'No Skill';
+  };
+
   return (
     <div className="frame-container">
       <div className={sidebarClass}>
@@ -70,82 +75,117 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     onClick={() => onUnitSelect(unit.id)}
                     className={`unit-item ${unit.id === selectedUnitId ? (isBlue ? 'unit-item-selected-blue' : 'unit-item-selected-red') : ''}`}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      {/* Flag Image */}
+                    {/* Top Row: Flag and Unit Name */}
+                    <div className="unit-top-row">
                       <img
                         src={getFlagImage(unit.team)}
                         alt={`${unit.team} flag`}
-                        style={{ width: '16px', height: '16px', border: '1px solid #000' }}
-                        onError={(e) => (e.target.src = '/assets/default.png')}
+                        className="unit-flag"
+                        onError={(e) => (e.target.src = '/assets/grass.png')}
                       />
-                      {/* Leader Portrait */}
-                      <img
-                        src={unit.leaderPortrait || '/assets/leader.jpg'}
-                        alt={`${unit.leader || 'Leader'} portrait`}
-                        style={{ width: '24px', height: '24px', border: '1px solid #000' }}
-                        onError={(e) => (e.target.src = '/assets/leader.jpg')}
-                      />
-                      {/* Unit Info */}
-                      <div style={{ flex: 1 }}>
-                        <span>
-                          {unit.name} {unit.id === selectedUnitId ? '(Selected)' : ''}
-                          {' '}
-                          <span style={{ fontSize: '0.8em', fontWeight: 'bold' }}>
-                            {getNatoSymbol(unit.type)}
-                          </span>
-                        </span>
-                        <br />
+                      <span>{unit.name} {unit.id === selectedUnitId ? '(Selected)' : ''}</span>
+                    </div>
+                    {/* Leader Section */}
+                    {unit.leader ? (
+                      <div className="unit-leader-section">
+                        <img
+                          src={unit.leaderPortrait || '/assets/leader.jpg'}
+                          alt={`${unit.leader || 'Leader'} portrait`}
+                          className="unit-leader-portrait"
+                          onError={(e) => (e.target.src = '/assets/leader.jpg')}
+                        />
+                        <small className="unit-details">Led by {unit.leader}</small>
+                      </div>
+                    ) : (
+                        <small className="unit-details">No Leader</small>
+                      )}
+                    {/* Type and NATO Symbol */}
+                    <div className="unit-type-section">
+                      <small className="unit-details">
+                        {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'} |
+                        NATO: {getNatoSymbol(unit.type)}
+                      </small>
+                    </div>
+                    {/* Strength Bar */}
+                    <div className="unit-strength-section">
+                      <div className="unit-strength-bar">
+                        <div
+                          className="unit-strength-fill"
+                          style={{
+                            width: `${strengthPercentage}%`,
+                            backgroundColor: unit.team === 'blue' ? '#007bff' : '#dc3545',
+                          }}
+                        />
+                        <div
+                          className="unit-straggler-fill"
+                          style={{
+                            width: `${stragglerPercentage}%`,
+                            backgroundColor: unit.team === 'blue' ? 'rgba(0, 123, 255, 0.3)' : 'rgba(220, 53, 69, 0.3)',
+                          }}
+                        />
+                      </div>
+                      <small className="unit-details">
+                        Strength: {currentStrength} / {fullStrength}
+                      </small>
+                    </div>
+                    {/* Expanded View for Selected Unit */}
+                    {unit.id === selectedUnitId && (
+                      <div className="unit-expanded-view">
                         <small className="unit-details">
-                          {unit.leader ? `Led by ${unit.leader}` : 'No Leader'} |
-                          {unit.type === 'infantry' ? ' Infantry' : ' Cavalry'} |
-                          Morale: {unit.stats ?.morale || 0}% |
-                          Exp: {unit.stats ?.experience || 0}
-                        </small>
-                        {/* Strength Bar */}
-                        <div style={{ marginTop: '5px', width: '100%', height: '8px', backgroundColor: '#ccc', borderRadius: '4px', position: 'relative' }}>
-                          <div
-                            style={{
-                              width: `${strengthPercentage}%`,
-                              height: '100%',
-                              backgroundColor: unit.team === 'blue' ? '#007bff' : '#dc3545',
-                              borderRadius: '4px',
-                            }}
-                          />
-                          <div
-                            style={{
-                              width: `${stragglerPercentage}%`,
-                              height: '100%',
-                              backgroundColor: unit.team === 'blue' ? 'rgba(0, 123, 255, 0.3)' : 'rgba(220, 53, 69, 0.3)',
-                              position: 'absolute',
-                              top: 0,
-                              left: `${strengthPercentage}%`,
-                              borderRadius: '4px',
-                            }}
-                          />
-                        </div>
-                        <small className="unit-details">
-                          Strength: {currentStrength} / {fullStrength}
+                          {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'} |
+                          Horses: {unit.horses || 0} |
+                          Guns: {unit.guns || 0} |
+                          Fatigue: {unit.fatigue || 0}% |
+                          Supplies: {unit.supplies || 0}% |
+                          Skill: {getSkillStars(unit.skill)}
                         </small>
                       </div>
-                    </div>
+                    )}
+                    {/* Orders Section */}
                     {unit.id === selectedUnitId && (
-                      <div style={{ display: 'flex', gap: '5px' }}>
-                        <button
-                          onClick={() => onUnitSelect(unit.id)}
-                          className={buttonClass}
-                          style={{ padding: '5px 10px', fontSize: '0.8em' }}
-                        >
-                          Move
-                        </button>
-                        {pendingAttack && targetUnit && (
+                      <div className="unit-orders-section">
+                        <p className="sidebar-text">Orders for Selected Unit:</p>
+                        <p className="sidebar-text">{getOrderText()}</p>
+                        <div className="unit-orders-buttons">
                           <button
-                            onClick={() => onConfirmAttack(selectedUnitId, targetUnit.id)}
+                            onClick={() => onUnitSelect(selectedUnitId)}
                             className={buttonClass}
-                            style={{ padding: '5px 10px', fontSize: '0.8em' }}
                           >
-                            Attack
+                            Move
                           </button>
-                        )}
+                          {pendingAttack && targetUnit && (
+                            <button
+                              onClick={() => onConfirmAttack(selectedUnitId, targetUnit.id)}
+                              className={buttonClass}
+                            >
+                              Attack
+                            </button>
+                          )}
+                          <button className={buttonClass} disabled>
+                            Forced March
+                          </button>
+                          <button className={buttonClass} disabled>
+                            Fortify
+                          </button>
+                          <button className={buttonClass} disabled>
+                            Forage
+                          </button>
+                          <button className={buttonClass} disabled>
+                            Scouting
+                          </button>
+                          <button className={buttonClass} disabled>
+                            Screening
+                          </button>
+                          <button className={buttonClass} disabled>
+                            Pickets
+                          </button>
+                          <button
+                            onClick={onDeselect}
+                            className={buttonClass}
+                          >
+                            Deselect
+                          </button>
+                        </div>
                       </div>
                     )}
                   </li>
@@ -156,7 +196,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         ) : (
             <p className="sidebar-text">No hex selected</p>
           )}
-        <p className="sidebar-text">Order: {getOrderText()}</p>
         {notifications.length > 0 && (
           <div className="notification-section">
             <p className="sidebar-text">Combat Results:</p>
@@ -175,28 +214,18 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         </button>
 
         {/* Debug Section */}
-        <div style={{ marginTop: '20px', borderTop: '1px solid #fff', paddingTop: '10px' }}>
+        <div className="debug-section">
           <button
             onClick={() => setIsDebugOpen(!isDebugOpen)}
-            style={{
-              backgroundColor: '#666',
-              border: 'none',
-              borderRadius: '4px',
-              padding: '8px 16px',
-              color: '#fff',
-              cursor: 'pointer',
-              width: '100%',
-              textAlign: 'center',
-            }}
+            className="debug-toggle-button"
           >
             {isDebugOpen ? 'Hide Debug' : 'Show Debug'}
           </button>
           {isDebugOpen && (
-            <div style={{ marginTop: '10px' }}>
+            <div className="debug-content">
               <button
                 onClick={toggleFogOfWar}
                 className={buttonClass}
-                style={{ width: '100%' }}
               >
                 {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
               </button>
