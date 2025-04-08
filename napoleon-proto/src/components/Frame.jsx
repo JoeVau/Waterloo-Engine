@@ -1,7 +1,8 @@
+// src/components/Frame.jsx
 import React, { useState, useEffect } from 'react';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, onScoutOrder, children }) {
   const [isDebugOpen, setIsDebugOpen] = useState(false);
   const [isNotificationWindowOpen, setIsNotificationWindowOpen] = useState(false);
   const [lastTurn, setLastTurn] = useState(turn);
@@ -14,7 +15,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
   const sidebarClass = `sidebar ${isBlue ? 'sidebar-blue' : 'sidebar-red'}`;
   const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
 
-  // Show notification window when turn changes and there are notificationss  
   useEffect(() => {
     console.log(`Turn: ${turn}, Last Turn: ${lastTurn}, Notifications:`, notifications);
     if (turn !== lastTurn && notifications.length > 0) {
@@ -28,6 +28,7 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
     if (!unitId || !orders[currentPlayer][unitId]) return 'Stand';
     const order = orders[currentPlayer][unitId];
     if (order.type === 'move') return `Move to [${order.dest[0]}, ${order.dest[1]}]`;
+    if (order.type === 'scout') return `Scouting (Returns Turn ${turn + 1})`;
     return 'Unknown Order';
   };
 
@@ -65,8 +66,8 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
             <p className="sidebar-text">Units:</p>
             <ul className="unit-list">
               {selectedHexUnits.map(unit => {
-                const currentStrength = unit.strength || 0;
-                const fullStrength = unit.fullStrength || currentStrength || 1;
+                const currentStrength = unit.strength - (unit.detachedStrength || 0);
+                const fullStrength = unit.strength || 1;
                 const stragglers = fullStrength - currentStrength;
                 const strengthPercentage = (currentStrength / fullStrength) * 100;
                 const stragglerPercentage = (stragglers / fullStrength) * 100;
@@ -78,7 +79,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     onClick={() => onUnitSelect(unit.id)}
                     className={`unit-item ${unit.id === selectedUnitId ? (isBlue ? 'unit-item-selected-blue' : 'unit-item-selected-red') : ''}`}
                   >
-                    {/* Top Row: Flag, Unit Name, and Order Indicator */}
                     <div className="unit-top-row">
                       <img
                         src={getFlagImage(unit.team)}
@@ -91,7 +91,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         {hasOrder && <span className="order-indicator">📜</span>}
                       </span>
                     </div>
-                    {/* Leader Section */}
                     {unit.leader ? (
                       <div className="unit-leader-section">
                         <img
@@ -105,17 +104,15 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     ) : (
                         <small className="unit-details">No Leader</small>
                       )}
-                    {/* Type and NATO Symbol */}
                     <div className="unit-type-section">
                       <small className="unit-details">
-                        {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'}
+                        {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength - (unit.detachedStrength || 0)) ? 'Cavalry Division' : 'Infantry'}
                       </small>
                       <div className={`nato-symbol nato-infantry`}>
                         <div className="nato-diagonal nato-diagonal-1"></div>
                         {unit.type === 'infantry' && <div className="nato-diagonal nato-diagonal-2"></div>}
                       </div>
                     </div>
-                    {/* Strength Bar */}
                     <div className="unit-strength-section">
                       <div className="unit-strength-bar">
                         <div
@@ -134,10 +131,9 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         />
                       </div>
                       <small className="unit-details">
-                        Strength: {currentStrength} / {fullStrength}
+                        Strength: {currentStrength} / {fullStrength} (Detached: {unit.detachedStrength || 0})
                       </small>
                     </div>
-                    {/* Expanded View for Selected Unit */}
                     {unit.id === selectedUnitId && (
                       <div className="unit-expanded-view">
                         <small className="unit-details">
@@ -150,7 +146,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         </small>
                       </div>
                     )}
-                    {/* Orders Section */}
                     {unit.id === selectedUnitId && (
                       <div className="unit-orders-section">
                         <p className="sidebar-text">Orders for Selected Unit:</p>
@@ -162,24 +157,17 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                           >
                             Move
                           </button>
-                          <button className={buttonClass} disabled>
-                            Forced March
+                          <button className={buttonClass} disabled>Forced March</button>
+                          <button className={buttonClass} disabled>Fortify</button>
+                          <button className={buttonClass} disabled>Forage</button>
+                          <button
+                            onClick={() => onScoutOrder(selectedUnitId)}
+                            className={buttonClass}
+                          >
+                            Scout
                           </button>
-                          <button className={buttonClass} disabled>
-                            Fortify
-                          </button>
-                          <button className={buttonClass} disabled>
-                            Forage
-                          </button>
-                          <button className={buttonClass} disabled>
-                            Scouting
-                          </button>
-                          <button className={buttonClass} disabled>
-                            Screening
-                          </button>
-                          <button className={buttonClass} disabled>
-                            Pickets
-                          </button>
+                          <button className={buttonClass} disabled>Screening</button>
+                          <button className={buttonClass} disabled>Pickets</button>
                           <button
                             onClick={onDeselect}
                             className={buttonClass}
@@ -197,7 +185,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         ) : (
             <p className="sidebar-text">No hex selected</p>
           )}
-        {/* Notification Window */}
         {isNotificationWindowOpen && notifications.length > 0 && (
           <div className="notification-window">
             <div className="notification-window-content">
@@ -222,8 +209,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         >
           End Turn
         </button>
-
-        {/* Debug Section */}
         <div className="debug-section">
           <button
             onClick={() => setIsDebugOpen(!isDebugOpen)}

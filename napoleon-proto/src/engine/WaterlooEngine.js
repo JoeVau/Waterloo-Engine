@@ -1,4 +1,6 @@
 // /engine/WaterlooEngine.js
+import { resolveDetachments } from '../games/campaigns-of-napoleon/Rules'; // Add import
+
 class WaterlooEngine {
   constructor(mapData) {
     const { hexes, units, features } = mapData;
@@ -9,7 +11,9 @@ class WaterlooEngine {
       units,
       features,
       orders: { blue: {}, red: {} },
+      detachments: [],
       notifications: [],
+      losBoost: null,
     };
   }
 
@@ -21,6 +25,23 @@ class WaterlooEngine {
     if (!isValid) return false;
 
     this.state.orders[unit.team][unitId] = { type: orderType, ...params };
+
+    if (orderType === 'scout' && unit.horses > 0) {
+      const detachmentStrength = unit.horses;
+      const detachment = {
+        id: `${unitId}_scout_${this.state.turn}`,
+        divisionId: unitId,
+        strength: detachmentStrength,
+        horses: unit.horses,
+        order: 'scout',
+        returnTurn: this.state.turn + 1,
+      };
+      this.state.detachments.push(detachment);
+      unit.detachedStrength = (unit.detachedStrength || 0) + detachmentStrength;
+      unit.horses = 0;
+      console.log(`Detached scouting unit from ${unit.name}: ${detachmentStrength} strength, ${detachment.horses} horses`);
+    }
+
     return true;
   }
 
@@ -43,7 +64,6 @@ class WaterlooEngine {
     let newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
     const pendingCombats = [];
 
-    // Resolve movement first
     ['blue', 'red'].forEach(team => {
       Object.entries(this.state.orders[team] || {}).forEach(([unitId, order]) => {
         if (order && order.type === 'move') {
@@ -62,24 +82,36 @@ class WaterlooEngine {
           }
         } else if (order && order.type === 'attack') {
           pendingCombats.push({ attackerId: unitId, defenderId: order.targetId });
+        } else if (order && order.type === 'scout') {
+          // Handled by detachments
         }
       });
     });
 
-    // Resolve all combats
+    // Use imported resolveDetachments
+    if (typeof resolveDetachments === 'function') {
+      const { updatedUnits: detachmentUnits, notifications: detachmentNotes } = resolveDetachments(this.state);
+      this.state.units = detachmentUnits;
+      this.state.notifications.push(...detachmentNotes);
+      newHexes = newHexes.map(h => ({
+        ...h,
+        units: detachmentUnits.filter(u => u.position[0] === h.q && u.position[1] === h.r).map(u => u.id),
+      }));
+    }
+
     if (resolveCombatCallback && pendingCombats.length > 0) {
       console.log('Pending combats:', pendingCombats);
       const { updatedUnits, notifications } = resolveCombatCallback(this.state, pendingCombats);
       this.state.units = updatedUnits;
-      this.state.notifications = notifications;
-      // Update hexes to reflect retreat changes
-      this.state.hexes = newHexes.map(h => ({
+      this.state.notifications.push(...notifications);
+      newHexes = newHexes.map(h => ({
         ...h,
         units: updatedUnits.filter(u => u.position[0] === h.q && u.position[1] === h.r).map(u => u.id),
       }));
-    } else {
-      this.state.hexes = newHexes; // Apply movement updates even if no combat
     }
+
+    this.state.hexes = newHexes;
+    this.state.losBoost = null;
   }
 
   getState() {

@@ -1,9 +1,10 @@
+// src/components/MapContainer.jsx
 import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition } from '../utils/hexGrid';
 import WaterlooEngine from '../engine/WaterlooEngine';
-import { validateOrder, resolveCombat } from '../games/campaigns-of-napoleon/Rules';
+import { validateOrder, resolveCombat, resolveDetachments } from '../games/campaigns-of-napoleon/Rules';
 import campaign2 from '../data/maps/italianCampaign.json';
 
 function MapContainer() {
@@ -39,18 +40,14 @@ function MapContainer() {
           .map(id => prev.units.find(u => u.id === id))
           .find(u => u.team !== unit.team);
 
-        const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
-        if (success) {
-          if (targetUnit) {
-            console.log(`Combat triggered: ${unit.id} moves to [${clickedHex.q}, ${clickedHex.r}] and engages ${targetUnit.id}`);
-          } else {
-            console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
-          }
-          engine.state.orders[prev.currentPlayer] = engine.state.orders[prev.currentPlayer] || {};
-          engine.state.orders[prev.currentPlayer][prev.selectedUnitId] = { type: 'move', dest: [clickedHex.q, clickedHex.r] };
-          return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+        if (targetUnit) {
+          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] };
         } else {
-          console.log(`Move order failed for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
+          const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
+          if (success) {
+            console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
+            return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+          }
         }
       }
       return prev;
@@ -68,14 +65,32 @@ function MapContainer() {
     });
   };
 
-  const handleDeselect = () => {
-    setGameState(prev => {
-      if (prev.selectedUnitId) {
-        engine.state.orders[prev.currentPlayer] = {};
-        return { ...prev, selectedUnitId: null, selectedHex: null };
-      }
-      return prev;
-    });
+  const handleConfirmAttack = (unitId, targetId) => {
+    console.log(`Confirming attack: ${unitId} -> ${targetId}`);
+    const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
+    console.log(`Attack order success: ${success}`);
+    if (success) {
+      setGameState(prev => ({
+        ...prev,
+        ...engine.getState(),
+        selectedUnitId: null,
+        selectedHex: null,
+      }));
+    }
+  };
+
+  const handleScoutOrder = (unitId) => {
+    console.log(`Issuing scout order for ${unitId}`);
+    const success = engine.issueOrder(unitId, 'scout', {}, validateOrder);
+    console.log(`Scout order success: ${success}`);
+    if (success) {
+      setGameState(prev => ({
+        ...prev,
+        ...engine.getState(),
+        selectedUnitId: null,
+        selectedHex: null,
+      }));
+    }
   };
 
   const handleWheel = (e) => {
@@ -126,10 +141,10 @@ function MapContainer() {
     if (player !== gameState.currentPlayer) return;
     console.log(`Ending turn for ${player}`);
     engine.endTurn(player, resolveCombat);
-    const newState = engine.getState();
-    console.log('New game state after endTurn:', newState);
-    console.log('Notifications after endTurn:', newState.notifications);
-    setGameState(newState);
+    setGameState(prev => ({
+      ...prev,
+      ...engine.getState(), // Deep merge to preserve losBoost
+    }));
   };
 
   const toggleFogOfWar = () => {
@@ -149,9 +164,10 @@ function MapContainer() {
       notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
-      onDeselect={handleDeselect}
+      onDeselect={() => setGameState(prev => ({ ...prev, selectedUnitId: null }))}
       toggleFogOfWar={toggleFogOfWar}
       fogOfWar={fogOfWar}
+      onScoutOrder={handleScoutOrder}
     >
       <Map
         canvasRef={canvasRef}
@@ -166,6 +182,7 @@ function MapContainer() {
         onMouseDown={handleMouseDown}
         fogOfWar={fogOfWar}
         currentPlayer={gameState.currentPlayer}
+        losBoost={gameState.losBoost}
       />
     </Frame>
   );

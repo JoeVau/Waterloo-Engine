@@ -21,35 +21,32 @@ export function validateOrder(state, unitId, orderType, params) {
         targetHex &&
         hexDistance(unitHex.q, unitHex.r, targetHex.q, targetHex.r) === 1
       );
+    case 'scout':
+      return unit.horses > 0;
     default:
       return false;
   }
 }
 
-function retreatUnit(unit, enemyHex, hexes, notifications) {
-  const currentHex = hexes.find(h => h.units.includes(unit.id));
-  console.log(`Retreating ${unit.name} from [${currentHex.q}, ${currentHex.r}] away from enemy at [${enemyHex.q}, ${enemyHex.r}]`);
+export function resolveDetachments(state) {
+  const notifications = [];
+  let updatedUnits = [...state.units];
+  const activeDetachments = state.detachments.filter(d => d.returnTurn <= state.turn);
 
-  const possibleRetreats = hexes.filter(h => {
-    const distFromCurrent = hexDistance(currentHex.q, currentHex.r, h.q, h.r);
-    const distFromEnemy = hexDistance(enemyHex.q, enemyHex.r, h.q, h.r);
-    const isFarther = distFromEnemy > hexDistance(currentHex.q, currentHex.r, enemyHex.q, enemyHex.r);
-    return distFromCurrent === 2 && isFarther && h.units.length === 0;
+  activeDetachments.forEach(detachment => {
+    console.log("detachment fired"); // Your log
+    const division = updatedUnits.find(u => u.id === detachment.divisionId);
+    if (division) {
+      division.detachedStrength = (division.detachedStrength || 0) - detachment.strength;
+      division.horses += detachment.horses;
+      state.losBoost = 10;
+      console.log(`${division.name} scouting detachment returned: ${detachment.strength} strength, ${detachment.horses} horses, LOS boost: ${state.losBoost}`);
+      notifications.push(`${division.name} scouting detachment returned—LOS boosted to 10 hexes this turn`);
+    }
   });
 
-  console.log(`Possible retreat hexes:`, possibleRetreats.map(h => `[${h.q}, ${h.r}]`));
-
-  if (possibleRetreats.length > 0) {
-    const retreatHex = possibleRetreats[Math.floor(Math.random() * possibleRetreats.length)];
-    currentHex.units = currentHex.units.filter(id => id !== unit.id);
-    retreatHex.units.push(unit.id);
-    unit.position = [retreatHex.q, retreatHex.r];
-    console.log(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
-    notifications.push(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
-  } else {
-    console.log(`${unit.name} had nowhere to retreat—holding position`);
-    notifications.push(`${unit.name} had nowhere to retreat—holding position`);
-  }
+  state.detachments = state.detachments.filter(d => d.returnTurn > state.turn);
+  return { updatedUnits, notifications };
 }
 
 export function resolveCombat(state, combats) {
@@ -70,7 +67,12 @@ export function resolveCombat(state, combats) {
       const defenderAttacksBack = defenderOrder ?.type === 'attack' && defenderOrder.targetId === attackerId;
 
       if (stillAdjacent && (defenderStands || defenderAttacksBack)) {
-        const result = getCombatResult(attacker, defender);
+        const effectiveAttackerStrength = attacker.strength - (attacker.detachedStrength || 0);
+        const effectiveDefenderStrength = defender.strength - (defender.detachedStrength || 0);
+        const result = getCombatResult(
+          { ...attacker, strength: effectiveAttackerStrength },
+          { ...defender, strength: effectiveDefenderStrength }
+        );
         switch (result) {
           case "AE":
             attacker.strength = 0;
@@ -107,4 +109,28 @@ export function resolveCombat(state, combats) {
   return { updatedUnits, notifications };
 }
 
-export default resolveCombat;
+function retreatUnit(unit, enemyHex, hexes, notifications) {
+  const currentHex = hexes.find(h => h.units.includes(unit.id));
+  console.log(`Retreating ${unit.name} from [${currentHex.q}, ${currentHex.r}] away from enemy at [${enemyHex.q}, ${enemyHex.r}]`);
+
+  const possibleRetreats = hexes.filter(h => {
+    const distFromCurrent = hexDistance(currentHex.q, currentHex.r, h.q, h.r);
+    const distFromEnemy = hexDistance(enemyHex.q, enemyHex.r, h.q, h.r);
+    const isFarther = distFromEnemy > hexDistance(currentHex.q, currentHex.r, enemyHex.q, enemyHex.r);
+    return distFromCurrent === 2 && isFarther && h.units.length === 0;
+  });
+
+  console.log(`Possible retreat hexes:`, possibleRetreats.map(h => `[${h.q}, ${h.r}]`));
+
+  if (possibleRetreats.length > 0) {
+    const retreatHex = possibleRetreats[Math.floor(Math.random() * possibleRetreats.length)];
+    currentHex.units = currentHex.units.filter(id => id !== unit.id);
+    retreatHex.units.push(unit.id);
+    unit.position = [retreatHex.q, retreatHex.r];
+    console.log(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
+    notifications.push(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
+  } else {
+    console.log(`${unit.name} had nowhere to retreat—holding position`);
+    notifications.push(`${unit.name} had nowhere to retreat—holding position`);
+  }
+}
