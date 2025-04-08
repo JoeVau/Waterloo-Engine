@@ -1,5 +1,5 @@
 // /engine/WaterlooEngine.js
-import { resolveDetachments } from '../games/campaigns-of-napoleon/Rules'; // Add import
+import { resolveDetachments } from '../games/campaigns-of-napoleon/Rules';
 
 class WaterlooEngine {
   constructor(mapData) {
@@ -13,7 +13,6 @@ class WaterlooEngine {
       orders: { blue: {}, red: {} },
       detachments: [],
       notifications: [],
-      losBoost: null,
     };
   }
 
@@ -30,16 +29,21 @@ class WaterlooEngine {
       const detachmentStrength = unit.horses;
       const detachment = {
         id: `${unitId}_scout_${this.state.turn}`,
-        divisionId: unitId,
+        name: `${unit.name} Scouts`,
+        team: unit.team,
+        position: [...unit.position],
         strength: detachmentStrength,
         horses: unit.horses,
+        divisionId: unitId,
         order: 'scout',
         returnTurn: this.state.turn + 1,
       };
       this.state.detachments.push(detachment);
+      this.state.units.push(detachment);
+      this.state.hexes.find(h => h.q === unit.position[0] && h.r === unit.position[1]).units.push(detachment.id);
       unit.detachedStrength = (unit.detachedStrength || 0) + detachmentStrength;
       unit.horses = 0;
-      console.log(`Detached scouting unit from ${unit.name}: ${detachmentStrength} strength, ${detachment.horses} horses`);
+      console.log(`Detached scouting unit from ${unit.name}: ${detachmentStrength} strength, ${detachment.horses} horses at [${unit.position}]`);
     }
 
     return true;
@@ -88,7 +92,6 @@ class WaterlooEngine {
       });
     });
 
-    // Use imported resolveDetachments
     if (typeof resolveDetachments === 'function') {
       const { updatedUnits: detachmentUnits, notifications: detachmentNotes } = resolveDetachments(this.state);
       this.state.units = detachmentUnits;
@@ -111,7 +114,6 @@ class WaterlooEngine {
     }
 
     this.state.hexes = newHexes;
-    this.state.losBoost = null;
   }
 
   getState() {

@@ -35,13 +35,18 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Calculate visibility with losBoost
-    const losRange = losBoost || 2;
-    console.log(`Current LOS range: ${losRange}`);
+    // Calculate visibility—3 hexes for scouts, 2 for divisions
     const visibleHexes = fogOfWar
       ? hexes.filter(hex => {
-        const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        return friendlyHexes.some(fh => hexDistance(fh.q, fh.r, hex.q, hex.r) <= losRange);
+        const friendlyHexes = hexes.filter(h => h.units.some(id => {
+          const unit = units.find(u => u.id === id);
+          return unit ?.team === currentPlayer;
+        }));
+        return friendlyHexes.some(fh => {
+          const unit = units.find(u => u.position[0] === fh.q && u.position[1] === fh.r && u.team === currentPlayer);
+          const range = unit && unit.order === 'scout' ? 3 : 2; // 3 for scouts, 2 for divisions
+          return hexDistance(fh.q, fh.r, hex.q, hex.r) <= range;
+        });
       })
       : hexes;
 
@@ -49,7 +54,8 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       ? units.filter(unit => {
         const unitHex = hexes.find(h => h.units.includes(unit.id));
         const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        return unit.team === currentPlayer || friendlyHexes.some(fh => hexDistance(fh.q, fh.r, unitHex.q, unitHex.r) <= losRange);
+        const range = unit.order === 'scout' ? 3 : 2; // Scouts extend LOS
+        return unit.team === currentPlayer || friendlyHexes.some(fh => hexDistance(fh.q, fh.r, unitHex.q, unitHex.r) <= range);
       })
       : units;
 
@@ -212,7 +218,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       width={1000}
       height={800}
       onClick={handleClick}
-      onMouseDown={onMouseDown} // Use prop, not undefined function
+      onMouseDown={onMouseDown}
       style={{ display: 'block', cursor: 'grab' }}
     />
   );
