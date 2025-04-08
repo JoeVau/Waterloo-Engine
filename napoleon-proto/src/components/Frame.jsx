@@ -14,7 +14,7 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
   const sidebarClass = `sidebar ${isBlue ? 'sidebar-blue' : 'sidebar-red'}`;
   const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
 
-  // Show notification window when turn changes and there are notifications
+  // Show notification window when turn changes and there are notificationss  
   useEffect(() => {
     console.log(`Turn: ${turn}, Last Turn: ${lastTurn}, Notifications:`, notifications);
     if (turn !== lastTurn && notifications.length > 0) {
