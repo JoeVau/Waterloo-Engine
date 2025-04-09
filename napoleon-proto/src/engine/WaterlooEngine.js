@@ -114,6 +114,10 @@ class WaterlooEngine {
     }
 
     this.state.hexes = newHexes;
+    // Reset losBoost for all divisions
+    this.state.units.forEach(unit => {
+      if (!unit.order) unit.losBoost = null; // Only reset for divisions, not detachments
+    });
   }
 
   getState() {

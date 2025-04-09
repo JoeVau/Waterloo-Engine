@@ -44,7 +44,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
         }));
         return friendlyHexes.some(fh => {
           const unit = units.find(u => u.position[0] === fh.q && u.position[1] === fh.r && u.team === currentPlayer);
-          const range = unit && unit.order === 'scout' ? 3 : 2; // 3 for scouts, 2 for divisions
+          const range = unit.losBoost !== undefined && unit.losBoost !== null ? unit.losBoost : (unit.order === 'scout' ? 3 : 2);
           return hexDistance(fh.q, fh.r, hex.q, hex.r) <= range;
         });
       })
@@ -54,7 +54,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       ? units.filter(unit => {
         const unitHex = hexes.find(h => h.units.includes(unit.id));
         const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        const range = unit.order === 'scout' ? 3 : 2; // Scouts extend LOS
+        const range = unit.losBoost !== undefined && unit.losBoost !== null ? unit.losBoost : (unit.order === 'scout' ? 3 : 2);
         return unit.team === currentPlayer || friendlyHexes.some(fh => hexDistance(fh.q, fh.r, unitHex.q, unitHex.r) <= range);
       })
       : units;

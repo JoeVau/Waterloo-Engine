@@ -34,13 +34,15 @@ export function resolveDetachments(state) {
   const activeDetachments = state.detachments.filter(d => d.returnTurn <= state.turn);
 
   activeDetachments.forEach(detachment => {
-    console.log("detachment fired");
+
     const division = updatedUnits.find(u => u.id === detachment.divisionId);
+    console.log("detachment fired", division);
     if (division) {
       division.detachedStrength = (division.detachedStrength || 0) - detachment.strength;
       division.horses += detachment.horses;
-      console.log(`${division.name} scouting detachment returned: ${detachment.strength} strength, ${detachment.horses} horses`);
-      notifications.push(`${division.name} scouting detachment returned`);
+      state.losBoost = 10; // Boost division LOS on return
+      console.log(`${division.name} scouting detachment returned: ${detachment.strength} strength, ${detachment.horses} horses, LOS boost set to ${state.losBoost}`);
+      notifications.push(`${division.name} scouting detachment returned—LOS boosted to 10 hexes this turn`);
       const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));
       if (detachmentHex) {
         detachmentHex.units = detachmentHex.units.filter(id => id !== detachment.id);
