@@ -1,5 +1,4 @@
-// src/components/Map.jsx
-import { useEffect } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { drawHexBase, drawHexName, drawFeatures, drawUnits } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
 
@@ -15,14 +14,35 @@ const terrainColors = {
   swamps: '#b3cce6',
 };
 
-function pixelToHex(x, y, size) {
-  const q = (x * Math.sqrt(3)) / 3 / size;
-  const r = (y - x / Math.sqrt(3)) / size;
-  return [Math.round(q), Math.round(r)];
-}
+export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer }) {
+  const [shouldRedraw, setShouldRedraw] = useState(true);
 
-export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer, losBoost }) {
+  // Precompute visibility map for fog of war
+  const visibilityMap = useMemo(() => {
+    const map = new Set();
+    if (!fogOfWar) {
+      hexes.forEach(hex => map.add(`${hex.q},${hex.r}`));
+    } else {
+      const friendlyUnits = units.filter(u => u.team === currentPlayer);
+      friendlyUnits.forEach(unit => {
+        const unitHex = hexes.find(h => h.units.includes(unit.id));
+        if (!unitHex) return;
+        hexes.forEach(hex => {
+          if (hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= 2) {
+            map.add(`${hex.q},${hex.r}`);
+          }
+        });
+      });
+    }
+    return map;
+  }, [hexes, units, fogOfWar, currentPlayer]);
+
   useEffect(() => {
+    setShouldRedraw(true); // Trigger redraw when dependencies change
+  }, [hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer]);
+
+  useEffect(() => {
+    if (!shouldRedraw) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -35,77 +55,47 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Calculate visibility—3 hexes for scouts, 2 for divisions
-    const visibleHexes = fogOfWar
-      ? hexes.filter(hex => {
-        const friendlyHexes = hexes.filter(h => h.units.some(id => {
-          const unit = units.find(u => u.id === id);
-          return unit ?.team === currentPlayer;
-        }));
-        return friendlyHexes.some(fh => {
-          const unit = units.find(u => u.position[0] === fh.q && u.position[1] === fh.r && u.team === currentPlayer);
-          const range = unit.losBoost !== undefined && unit.losBoost !== null ? unit.losBoost : (unit.order === 'scout' ? 3 : 2);
-          return hexDistance(fh.q, fh.r, hex.q, hex.r) <= range;
-        });
-      })
-      : hexes;
-
-    const visibleUnits = fogOfWar
-      ? units.filter(unit => {
-        const unitHex = hexes.find(h => h.units.includes(unit.id));
-        const friendlyHexes = hexes.filter(h => h.units.some(id => units.find(u => u.id === id) ?.team === currentPlayer));
-        const range = unit.losBoost !== undefined && unit.losBoost !== null ? unit.losBoost : (unit.order === 'scout' ? 3 : 2);
-        return unit.team === currentPlayer || friendlyHexes.some(fh => hexDistance(fh.q, fh.r, unitHex.q, unitHex.r) <= range);
-      })
-      : units;
-
-    // Draw terrain
+    // Pass 1: Draw terrain (all hexes, with fog overlay for hidden ones)
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        drawHexBase(ctx, x, y, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
+        const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
+
+        // Draw the hex with terrain color
+        drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
+
+        // Apply fog overlay if not visible
+        if (fogOfWar && !isVisible) {
+          ctx.fillStyle = 'rgba(50, 50, 50, 0.8)';
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i + Math.PI / 6;
+            const px = finalX + hexSize * Math.cos(angle);
+            const py = finalY + hexSize * Math.sin(angle);
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
       }
     });
 
-    // Apply fog overlay
-    if (fogOfWar) {
-      hexes.forEach(hex => {
-        const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
-        const y = hex.r * hexHeight;
-        if (
-          x > -offset.x / zoom - hexWidth &&
-          x < -offset.x / zoom + visibleWidth + hexWidth &&
-          y > -offset.y / zoom - hexHeight &&
-          y < -offset.y / zoom + visibleHeight + hexHeight
-        ) {
-          const isVisible = visibleHexes.includes(hex);
-          if (!isVisible) {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-            ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-              const angle = (Math.PI / 3) * i + Math.PI / 6;
-              const px = x + hexSize * Math.cos(angle);
-              const py = y + hexSize * Math.sin(angle);
-              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-            }
-            ctx.closePath();
-            ctx.fill();
-          }
-        }
-      });
-    }
-
-    // Highlight range for selected unit
+    // Pass 2: Highlight hexes with enemy units within attack range (distance 1) of the selected unit
     if (selectedUnitId) {
-      const unitHex = hexes.find(h => h.units.includes(selectedUnitId));
+      const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
       if (unitHex) {
-        const visibleHexesRange = hexes.filter(h => {
+        const unit = units.find(u => u.id === selectedUnitId);
+        const visibleHexes = hexes.filter(h => {
           const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
           const hy = h.r * hexHeight;
           return (
@@ -116,12 +106,16 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
           );
         });
 
-        visibleHexesRange.forEach(h => {
+        visibleHexes.forEach(h => {
           const distance = hexDistance(unitHex.q, unitHex.r, h.q, h.r);
-          if (distance <= 2) {
+          const hasEnemy = h.units.some(unitId => {
+            const targetUnit = units.find(u => u.id === unitId);
+            return targetUnit && targetUnit.team !== unit.team;
+          });
+          if (distance === 1 && hasEnemy) {
             const hx = h.q * hexWidth + (h.r % 2 === 0 ? 0 : hexWidth * 0.5);
             const hy = h.r * hexHeight;
-            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
             ctx.beginPath();
             for (let i = 0; i < 6; i++) {
               const angle = (Math.PI / 3) * i + Math.PI / 6;
@@ -136,88 +130,90 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     }
 
-    // Highlight attacked hexes
-    ['blue', 'red'].forEach(team => {
-      Object.entries(orders[team] || {}).forEach(([unitId, order]) => {
-        if (order && order.type === 'attack') {
-          const targetUnit = visibleUnits.find(u => u.id === order.targetId);
-          if (targetUnit) {
-            const targetHex = hexes.find(h => h.units.includes(targetUnit.id));
-            const x = targetHex.q * hexWidth + (targetHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
-            const y = targetHex.r * hexHeight;
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 2 / zoom;
-            ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-              const angle = (Math.PI / 3) * i + Math.PI / 6;
-              const px = x + hexSize * Math.cos(angle);
-              const py = y + hexSize * Math.sin(angle);
-              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-            }
-            ctx.closePath();
-            ctx.stroke();
-          }
+    // Pass 3: Draw features (roads, etc.) only for visible hexes
+    if (features) {
+      const filteredFeatures = { roads: {} };
+      Object.entries(features.roads || {}).forEach(([key, neighbors]) => {
+        const [q, r] = key.split(',').map(Number);
+        const isVisible = visibilityMap.has(`${q},${r}`);
+        if (isVisible) {
+          filteredFeatures.roads[key] = neighbors;
         }
       });
-    });
+      drawFeatures(ctx, filteredFeatures, hexSize, hexWidth, hexHeight, zoom, offset);
+    }
 
-    // Draw units
+    // Pass 4: Draw units only for visible hexes
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        if (hex.units.length) {
-          const hexUnits = visibleUnits.filter(unit => hex.units.includes(unit.id));
-          if (hexUnits.length) {
-            drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x, y }, selectedUnitId);
+        const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
+
+        if (isVisible && hex.units.length) {
+          const hexUnits = units.filter(unit => hex.units.includes(unit.id));
+          drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x: finalX, y: finalY }, selectedUnitId);
+
+          const topUnit = hexUnits[0];
+          const order = topUnit ? (orders.blue[topUnit.id] || orders.red[topUnit.id]) : null;
+          if (order && order.type === 'move') {
+            const destHex = hexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
+            const destX = destHex.q * hexWidth + (destHex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+            const destY = destHex.r * hexHeight;
+            ctx.strokeStyle = '#ff0';
+            ctx.lineWidth = 2 / zoom;
+            ctx.setLineDash([5 / zoom, 5 / zoom]);
+            ctx.beginPath();
+            ctx.moveTo(finalX, finalY);
+            ctx.lineTo(destX, destY);
+            ctx.stroke();
+            ctx.setLineDash([]);
           }
         }
       }
     });
 
-    // Draw city names
+    // Pass 5: Draw hex names only for visible hexes
     hexes.forEach(hex => {
-      const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+      const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
+      const offsetX = hex.r % 2 === 0 ? 0 : hexWidth * 0.5;
+      const finalX = x + offsetX;
+      const finalY = y;
+
       if (
-        x > -offset.x / zoom - hexWidth &&
-        x < -offset.x / zoom + visibleWidth + hexWidth &&
-        y > -offset.y / zoom - hexHeight &&
-        y < -offset.y / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
+        finalY > -offset.y / zoom - hexHeight &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight
       ) {
-        if (hex.feature === 'city' && hex.name) {
-          drawHexName(ctx, x, y, hexSize, hex, zoom);
+        const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
+
+        if (isVisible) {
+          drawHexName(ctx, finalX, finalY, hexSize, hex, zoom);
         }
       }
     });
 
-    // Draw roads
-    if (features && features.roads) {
-      drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset);
-    }
-
     ctx.restore();
-  }, [hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer, losBoost]);
-
-  const handleClick = (e) => {
-    const rect = canvasRef.current.getBoundingClientRect();
-    const clickX = (e.clientX - rect.left - offset.x) / zoom;
-    const clickY = (e.clientY - rect.top - offset.y) / zoom;
-    const [q, r] = pixelToHex(clickX, clickY, hexSize);
-    onClick(e);
-  };
+    setShouldRedraw(false); // Reset redraw flag
+  }, [shouldRedraw, hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer, visibilityMap]);
 
   return (
     <canvas
       ref={canvasRef}
       width={1000}
       height={800}
-      onClick={handleClick}
+      onClick={onClick}
       onMouseDown={onMouseDown}
       style={{ display: 'block', cursor: 'grab' }}
     />
