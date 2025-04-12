@@ -117,11 +117,11 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
         const buildings = [];
         const avenueAngles = [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3];
         const avenueWidths = [size * 0.16, size * 0.14, size * 0.15];
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 30; i++) {
           let attempts = 0;
           let placed = false;
-          while (!placed && attempts < 50) {
-            const tileWidth = size * (0.05 + rand(14) / 100);
+          while (!placed && attempts < 22) {
+            const tileWidth = size * (0.10 + rand(14) / 100);
             const tileHeight = size * (0.05 + rand(14) / 100);
             const tileSize = Math.max(tileWidth, tileHeight);
             seed += hex.q * hex.r + i; // Seed with coords and index for splotchy placement
@@ -133,14 +133,14 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
             const tx = x + offsetX;
             const ty = y + offsetY;
             const rotation = rand(100) < 65 ? 0 : (rand(2) - 0.5) * Math.PI / 10;
-            const minGap = tileSize * 0.15;
+            const minGap = tileSize * 0.25;
             const overlaps = buildings.some(b => {
               const dx = b.x - tx;
               const dy = b.y - ty;
               return Math.sqrt(dx * dx + dy * dy) < (tileSize + b.size) * 0.5 + minGap;
             });
             const inAvenue = avenueAngles.some((angle, idx) => {
-              const width = avenueWidths[idx];
+              const width = avenueWidths[idx] / 1.5;
               const dx = tx - x;
               const dy = ty - y;
               const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
@@ -168,7 +168,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
         });
         ctx.save();
         seed += hex.q + hex.r;
-        const crossDist = size * (0.2 + rand(50) / 100);
+        const crossDist = size * (0.1 + rand(50) / 100);
         const crossAngle = rand(360) * Math.PI / 180;
         const crossX = x + Math.cos(crossAngle) * crossDist;
         const crossY = y + Math.sin(crossAngle) * crossDist;
