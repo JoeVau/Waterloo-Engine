@@ -17,7 +17,6 @@ const terrainColors = {
 export default function Map({ canvasRef, hexes, units, orders, features = { roads: {} }, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer }) {
   const [shouldRedraw, setShouldRedraw] = useState(true);
 
-  // Cache road hexes
   const roadHexes = useMemo(() => hexes.filter(h => h.road), [hexes]);
 
   const visibilityMap = useMemo(() => {
@@ -66,11 +65,12 @@ export default function Map({ canvasRef, hexes, units, orders, features = { road
       const finalX = x + offsetX;
       const finalY = y;
 
+      // Expanded culling to include hexes near borders
       if (
-        finalX > -offset.x / zoom - hexWidth &&
-        finalX < -offset.x / zoom + visibleWidth + hexWidth &&
-        finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.x / zoom + visibleHeight + hexHeight
+        finalX > -offset.x / zoom - hexWidth * 2 &&
+        finalX < -offset.x / zoom + visibleWidth + hexWidth * 2 &&
+        finalY > -offset.y / zoom - hexHeight * 2 &&
+        finalY < -offset.y / zoom + visibleHeight + hexHeight * 2
       ) {
         const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
 
