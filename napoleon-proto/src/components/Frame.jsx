@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DebugPanel from './DebugPanel';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, clearNotifications, handleScoutOrder, zoom, offset, updateGameState, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, clearNotifications, handleScoutOrder, zoom, offset, updateGameState, paintRoadMode, setPaintRoadMode, children }) {
   const [isDebugOpen, setIsDebugOpen] = useState(false);
 
   const selectedHexUnits = selectedHex
@@ -255,6 +255,8 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
               fogOfWar={fogOfWar}
               toggleFogOfWar={toggleFogOfWar}
               updateGameState={updateGameState}
+              paintRoadMode={paintRoadMode}
+              setPaintRoadMode={setPaintRoadMode}
             />
           )}
         </div>

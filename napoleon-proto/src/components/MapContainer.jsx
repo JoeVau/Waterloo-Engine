@@ -13,9 +13,11 @@ function MapContainer() {
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [fogOfWar, setFogOfWar] = useState(true);
+  const [paintRoadMode, setPaintRoadMode] = useState(null); // null, 'paint', 'erase'
+  const [paintingHexes, setPaintingHexes] = useState(null);
 
   const updateGameState = (newState) => {
-    console.log('Updating game state:', newState); // Debug log
+    console.log('Updating game state:', newState);
     setGameState(prev => {
       const updatedHexes = newState.hexes ? newState.hexes.map(h => ({ ...h, units: [...h.units] })) : prev.hexes;
       const updatedUnits = newState.units ? [...newState.units] : prev.units;
@@ -30,6 +32,7 @@ function MapContainer() {
   };
 
   const handleClick = (e) => {
+    if (paintRoadMode) return; // Disable selection in paint/erase mode
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -73,6 +76,7 @@ function MapContainer() {
   };
 
   const handleUnitSelect = (unitId) => {
+    if (paintRoadMode) return; // Disable unit selection in paint/erase mode
     setGameState(prev => {
       const unit = prev.units.find(u => u.id === unitId);
       if (unit && unit.team === prev.currentPlayer && !prev.orders[unit.team][unitId]) {
@@ -84,6 +88,7 @@ function MapContainer() {
   };
 
   const handleScoutOrder = (unitId) => {
+    if (paintRoadMode) return;
     const unit = gameState.units.find(u => u.id === unitId);
     if (!unit || unit.team !== gameState.currentPlayer || unit.horses <= 0) return;
 
@@ -101,6 +106,7 @@ function MapContainer() {
   };
 
   const handleDeselect = () => {
+    if (paintRoadMode) return;
     setGameState(prev => {
       if (prev.selectedUnitId) {
         engine.state.orders[prev.currentPlayer] = {};
@@ -135,6 +141,25 @@ function MapContainer() {
   }, [zoom, offset]);
 
   const handleMouseDown = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    if (paintRoadMode) {
+      setPaintingHexes(new Set());
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const hex = getHexAtPosition(x, y, gameState.hexes, Map.hexWidth, Map.hexHeight, zoom, offset);
+      if (hex) {
+        setPaintingHexes(prev => {
+          const newSet = new Set(prev);
+          newSet.add(`${hex.q},${hex.r}`);
+          return newSet;
+        });
+      }
+      return;
+    }
+
     const startX = e.clientX;
     const startY = e.clientY;
     const startOffset = { ...offset };
@@ -153,6 +178,57 @@ function MapContainer() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
   };
+
+  const handleMouseMove = (e) => {
+    if (!paintRoadMode || !paintingHexes) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const hex = getHexAtPosition(x, y, gameState.hexes, Map.hexWidth, Map.hexHeight, zoom, offset);
+    if (hex) {
+      setPaintingHexes(prev => {
+        const newSet = new Set(prev);
+        newSet.add(`${hex.q},${hex.r}`);
+        return newSet;
+      });
+      // Batch update on move for smoother preview
+      const updatedHexes = gameState.hexes.map(h => {
+        const key = `${h.q},${h.r}`;
+        if (paintingHexes.has(key)) {
+          return { ...h, road: paintRoadMode === 'paint' ? true : false };
+        }
+        return h;
+      });
+      updateGameState({ hexes: updatedHexes });
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!paintRoadMode || !paintingHexes) return;
+    const updatedHexes = gameState.hexes.map(h => {
+      const key = `${h.q},${h.r}`;
+      if (paintingHexes.has(key)) {
+        return { ...h, road: paintRoadMode === 'paint' ? true : false };
+      }
+      return h;
+    });
+    updateGameState({ hexes: updatedHexes });
+    setPaintingHexes(null);
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [paintRoadMode, paintingHexes, gameState.hexes, zoom, offset]);
 
   const handleEndTurn = (player) => {
     if (player !== gameState.currentPlayer) return;
@@ -194,6 +270,8 @@ function MapContainer() {
       zoom={zoom}
       offset={offset}
       updateGameState={updateGameState}
+      paintRoadMode={paintRoadMode}
+      setPaintRoadMode={setPaintRoadMode}
     >
       <Map
         canvasRef={canvasRef}

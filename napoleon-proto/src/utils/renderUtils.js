@@ -1,3 +1,4 @@
+import { hexDistance } from '../utils/hexGrid';
 // Draws terrain and features
 export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnitHighlighted) {
   ctx.beginPath();
@@ -294,4 +295,33 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
       ctx.strokeRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
     }
   });
+}
+
+export function drawRoads(ctx, hexes, hexSize, hexWidth, hexHeight, zoom, offset) {
+  ctx.beginPath();
+  ctx.strokeStyle = '#996633'; // Brown
+  ctx.lineWidth = 2 / zoom; // Thin, scales with zoom
+
+  hexes.forEach(hex => {
+    if (!hex.road) return;
+    const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
+    const y = hex.r * hexHeight;
+
+    // Check all hexes for adjacency (distance = 1)
+    hexes.forEach(neighbor => {
+      if (!neighbor.road || (hex.q === neighbor.q && hex.r === neighbor.r)) return;
+      if (hexDistance(hex.q, hex.r, neighbor.q, neighbor.r) === 1) {
+        // Dedupe lines: draw only if q < nq || (q === nq && r < nr)
+        if (hex.q < neighbor.q || (hex.q === neighbor.q && hex.r < neighbor.r)) {
+          const nx = neighbor.q * hexWidth + (neighbor.r % 2 === 0 ? 0 : hexWidth * 0.5);
+          const ny = neighbor.r * hexHeight;
+          ctx.moveTo(x, y);
+          ctx.lineTo(nx, ny);
+          console.log(`Drawing road: [${hex.q},${hex.r}] to [${neighbor.q},${neighbor.r}]`); // Debug log
+        }
+      }
+    });
+  });
+
+  ctx.stroke();
 }

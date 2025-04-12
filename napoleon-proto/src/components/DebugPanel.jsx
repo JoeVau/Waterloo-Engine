@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './DebugPanel.css';
 
-function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState }) {
+function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintRoadMode, setPaintRoadMode }) {
   const [editTerrain, setEditTerrain] = useState('');
   const [editCity, setEditCity] = useState(false);
   const [editCityName, setEditCityName] = useState('');
   const [editUnitId, setEditUnitId] = useState('');
   const [editUnitStrength, setEditUnitStrength] = useState(1000);
+  const [editRoad, setEditRoad] = useState('');
 
   const terrainOptions = ['plains', 'woods', 'hills', 'crops', 'swamps'];
 
@@ -14,7 +15,8 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
     if (!selectedHex) return;
     const [q, r] = selectedHex;
 
-    // Create immutable updatedHexes
+    console.log('Applying edits for hex:', [q, r], { editTerrain, editCity, editCityName, editUnitId, editUnitStrength, editRoad });
+
     const updatedHexes = hexes.map(h => {
       if (h.q === q && h.r === r) {
         return {
@@ -22,18 +24,17 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           terrain: editTerrain || h.terrain,
           feature: editCity ? 'city' : undefined,
           name: editCity ? (editCityName || h.name || '') : undefined,
-          units: [...h.units], // Ensure units array is copied
+          road: editRoad !== '' ? editRoad : h.road,
+          units: [...h.units],
         };
       }
-      return { ...h, units: [...h.units] }; // Copy all hexes and units arrays
+      return { ...h, units: [...h.units] };
     });
 
-    // Create immutable updatedUnits
     let updatedUnits = [...units];
     if (editUnitId) {
       const existingUnitIndex = units.findIndex(u => u.id === editUnitId);
       if (existingUnitIndex >= 0) {
-        // Update existing unit
         updatedUnits = [
           ...units.slice(0, existingUnitIndex),
           {
@@ -44,7 +45,6 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           ...units.slice(existingUnitIndex + 1),
         ];
       } else {
-        // Add new unit
         updatedUnits = [
           ...units,
           {
@@ -60,32 +60,34 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
         ];
       }
 
-      // Update hex units to include new unit
       updatedHexes.forEach(h => {
         if (h.q === q && h.r === r) {
           if (!h.units.includes(editUnitId)) {
-            h.units = [...h.units, editUnitId];
+            h.units.push(editUnitId);
           }
         } else if (existingUnitIndex >= 0) {
-          // Remove unit from other hexes if it was moved
           h.units = h.units.filter(id => id !== editUnitId);
         }
       });
     }
 
-    // Call updateGameState with new state
+    console.log('Updated state:', { hexes: updatedHexes.find(h => h.q === q && h.r === r), units: updatedUnits });
     updateGameState({ hexes: updatedHexes, units: updatedUnits });
 
-    // Reset inputs after applying
     setEditTerrain('');
     setEditCity(false);
     setEditCityName('');
     setEditUnitId('');
     setEditUnitStrength(1000);
+    setEditRoad('');
   };
 
   const isBlue = currentPlayer === 'blue';
   const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
+
+  const handlePaintMode = (mode) => {
+    setPaintRoadMode(mode === paintRoadMode ? null : mode); // Toggle mode
+  };
 
   return (
     <div className="debug-panel">
@@ -95,7 +97,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
       >
         {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
       </button>
-      {selectedHex && (
+      {selectedHex && !paintRoadMode && (
         <div className="god-mode-controls">
           <h4>God Mode: Edit Hex [{selectedHex[0]}, {selectedHex[1]}]</h4>
           <label>
@@ -130,6 +132,14 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
             </label>
           )}
           <label>
+            Road:
+            <input
+              type="checkbox"
+              checked={editRoad !== '' ? editRoad : hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.road || false}
+              onChange={(e) => setEditRoad(e.target.checked)}
+            />
+          </label>
+          <label>
             Add/Edit Unit ID:
             <input
               type="text"
@@ -153,12 +163,26 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           <button
             onClick={handleApplyEdits}
             className={buttonClass}
-            disabled={!selectedHex || (!editTerrain && !editCity && !editUnitId)}
+            disabled={!selectedHex || (!editTerrain && !editCity && !editUnitId && editRoad === '')}
           >
             Apply Changes
           </button>
         </div>
       )}
+      <div className="paint-controls">
+        <button
+          onClick={() => handlePaintMode('paint')}
+          className={`${buttonClass} ${paintRoadMode === 'paint' ? 'active' : ''}`}
+        >
+          Paint Road
+        </button>
+        <button
+          onClick={() => handlePaintMode('erase')}
+          className={`${buttonClass} ${paintRoadMode === 'erase' ? 'active' : ''}`}
+        >
+          Erase Road
+        </button>
+      </div>
       <button
         onClick={() => {
           const mapData = {
@@ -170,6 +194,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
                 terrain: h.terrain,
                 feature: h.feature,
                 name: h.name,
+                road: h.road || false,
                 units: h.units || [],
               },
             }), {}),

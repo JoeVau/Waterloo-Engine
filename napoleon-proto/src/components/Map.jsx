@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { drawHexBase, drawHexName, drawFeatures, drawUnits } from '../utils/renderUtils';
+import { drawHexBase, drawHexName, drawFeatures, drawUnits, drawRoads } from '../utils/renderUtils';
 import { hexDistance } from '../utils/hexGrid';
 
 const hexSize = 8;
@@ -14,10 +14,12 @@ const terrainColors = {
   swamps: '#b3cce6',
 };
 
-export default function Map({ canvasRef, hexes, units, orders, features, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer }) {
+export default function Map({ canvasRef, hexes, units, orders, features = { roads: {} }, zoom, offset, selectedUnitId, onClick, onMouseDown, fogOfWar, currentPlayer }) {
   const [shouldRedraw, setShouldRedraw] = useState(true);
 
-  // Precompute visibility map for fog of war
+  // Cache road hexes
+  const roadHexes = useMemo(() => hexes.filter(h => h.road), [hexes]);
+
   const visibilityMap = useMemo(() => {
     const map = new Set();
     if (!fogOfWar) {
@@ -27,7 +29,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       friendlyUnits.forEach(unit => {
         const unitHex = hexes.find(h => h.units.includes(unit.id));
         if (!unitHex) return;
-        const losRange = unit.losBoost || 2; // Default to 2 if no losBoost
+        const losRange = unit.losBoost || 2;
         hexes.forEach(hex => {
           if (hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= losRange) {
             map.add(`${hex.q},${hex.r}`);
@@ -56,7 +58,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     ctx.translate(offset.x, offset.y);
     ctx.scale(zoom, zoom);
 
-    // Pass 1: Draw terrain (all hexes, with fog overlay for hidden ones)
+    // Pass 1: Draw terrain
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -68,14 +70,12 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
         finalX > -offset.x / zoom - hexWidth &&
         finalX < -offset.x / zoom + visibleWidth + hexWidth &&
         finalY > -offset.y / zoom - hexHeight &&
-        finalY < -offset.y / zoom + visibleHeight + hexHeight
+        finalY < -offset.x / zoom + visibleHeight + hexHeight
       ) {
         const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
 
-        // Draw the hex with terrain color
         drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
 
-        // Apply fog overlay if not visible
         if (fogOfWar && !isVisible) {
           ctx.fillStyle = 'rgba(50, 50, 50, 0.8)';
           ctx.beginPath();
@@ -91,7 +91,10 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     });
 
-    // Pass 2: Highlight hexes with enemy units within attack range (distance 1) of the selected unit
+    // Pass 2: Draw roads
+    drawRoads(ctx, roadHexes, hexSize, hexWidth, hexHeight, zoom, offset);
+
+    // Pass 3: Highlight attackable hexes
     if (selectedUnitId) {
       const unitHex = hexes.find(hex => hex.units.includes(selectedUnitId));
       if (unitHex) {
@@ -131,7 +134,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     }
 
-    // Pass 3: Draw features (roads, etc.) only for visible hexes
+    // Pass 4: Draw features (roads, etc.) only for visible hexes
     if (features) {
       const filteredFeatures = { roads: {} };
       Object.entries(features.roads || {}).forEach(([key, neighbors]) => {
@@ -144,7 +147,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       drawFeatures(ctx, filteredFeatures, hexSize, hexWidth, hexHeight, zoom, offset);
     }
 
-    // Pass 4: Draw units only for visible hexes (exclude detachments)
+    // Pass 5: Draw units only for visible hexes (exclude detachments)
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -183,7 +186,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       }
     });
 
-    // Pass 5: Draw hex names only for visible hexes
+    // Pass 6: Draw hex names only for visible hexes
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -207,7 +210,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
 
     ctx.restore();
     setShouldRedraw(false);
-  }, [shouldRedraw, hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer, visibilityMap]);
+  }, [shouldRedraw, hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer, visibilityMap, roadHexes]);
 
   return (
     <canvas

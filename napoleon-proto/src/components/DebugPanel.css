@@ -8,7 +8,7 @@
   .god-mode-controls {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     padding: 10px;
     border-top: 1px solid #ccc;
   }
@@ -23,4 +23,21 @@
   .god-mode-controls input[type="number"],
   .god-mode-controls select {
     width: 150px;
+  }
+  
+  .god-mode-controls input[type="checkbox"] {
+    margin-left: 10px;
+  }
+  
+  .paint-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .paint-controls button {
+    flex: 1;
+  }
+  
+  .paint-controls button.active {
+    background: #0056b3; /* Darker blue when active */
   }

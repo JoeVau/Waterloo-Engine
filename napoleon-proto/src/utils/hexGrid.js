@@ -8,9 +8,9 @@ export function loadMap(mapData) {
       hexes.push({
         q,
         r,
-        ...hexData, // Spread all properties (terrain, feature, name, etc.)
-        units: hexData.units || [], // Default units if not present
-        road: hexData.road || false, // Default road if not present
+        ...hexData,
+        units: hexData.units || [],
+        road: hexData.road || false, // Add road, default false
       });
     }
   }
@@ -54,8 +54,8 @@ export function getHexAtPosition(x, y, hexes, hexWidth, hexHeight, zoom, offset)
 }
 
 export function hexDistance(q1, r1, q2, r2) {
-  const aq1 = q1 - Math.floor(r1 / 2); // Axial q
-  const ar1 = r1;                      // Axial r
+  const aq1 = q1 - Math.floor(r1 / 2);
+  const ar1 = r1;
   const aq2 = q2 - Math.floor(r2 / 2);
   const ar2 = r2;
   return Math.max(
