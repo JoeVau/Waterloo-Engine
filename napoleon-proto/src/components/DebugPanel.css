@@ -1,0 +1,26 @@
+.debug-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .god-mode-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .god-mode-controls label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .god-mode-controls input[type="text"],
+  .god-mode-controls input[type="number"],
+  .god-mode-controls select {
+    width: 150px;
+  }

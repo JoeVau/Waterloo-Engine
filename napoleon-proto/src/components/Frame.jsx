@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import DebugPanel from './DebugPanel';
 import './Frame.css';
 
-function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, clearNotifications, handleScoutOrder, children }) {
+function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selectedUnitId, notifications, onEndTurn, onUnitSelect, onDeselect, toggleFogOfWar, fogOfWar, clearNotifications, handleScoutOrder, zoom, offset, updateGameState, children }) {
   const [isDebugOpen, setIsDebugOpen] = useState(false);
 
   const selectedHexUnits = selectedHex
@@ -74,7 +75,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     onClick={() => onUnitSelect(unit.id)}
                     className={`unit-item ${unit.id === selectedUnitId ? (isBlue ? 'unit-item-selected-blue' : 'unit-item-selected-red') : ''}`}
                   >
-                    {/* Top Row: Flag, Unit Name, and Order Indicator */}
                     <div className="unit-top-row">
                       <img
                         src={getFlagImage(unit.team)}
@@ -88,7 +88,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         {hasOrder && <span className="order-indicator">📜</span>}
                       </span>
                     </div>
-                    {/* Leader Section */}
                     {unit.leader ? (
                       <div className="unit-leader-section">
                         <img
@@ -102,7 +101,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                     ) : (
                         <small className="unit-details">No Leader</small>
                       )}
-                    {/* Type and NATO Symbol */}
                     <div className="unit-type-section">
                       <small className="unit-details">
                         {unit.type === 'cavalry' && (unit.horses || 0) >= (unit.strength || 0) ? 'Cavalry Division' : 'Infantry'}
@@ -112,7 +110,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         {unit.type === 'infantry' && <div className="nato-diagonal nato-diagonal-2"></div>}
                       </div>
                     </div>
-                    {/* Strength Bar */}
                     <div className="unit-strength-section">
                       <div className="unit-strength-bar">
                         <div
@@ -134,7 +131,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         Effective Strength: {currentStrength} / {fullStrength} (Total: {totalStrength})
                       </small>
                     </div>
-                    {/* Expanded View for Selected Unit */}
                     {unit.id === selectedUnitId && (
                       <div className="unit-expanded-view">
                         <small className="unit-details">
@@ -160,7 +156,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
                         )}
                       </div>
                     )}
-                    {/* Orders Section */}
                     {unit.id === selectedUnitId && (
                       <div className="unit-orders-section">
                         <p className="sidebar-text">Orders for Selected Unit:</p>
@@ -211,7 +206,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         ) : (
             <p className="sidebar-text">No hex selected</p>
           )}
-        {/* Notification Section (Always Visible) */}
         <div className="notification-section">
           <h3 className="notification-section-title">Notifications</h3>
           {notifications.length > 0 ? (
@@ -245,8 +239,6 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
         >
           End Turn
         </button>
-
-        {/* Debug Section */}
         <div className="debug-section">
           <button
             onClick={() => setIsDebugOpen(!isDebugOpen)}
@@ -255,14 +247,15 @@ function Frame({ hexes, units, turn, currentPlayer, orders, selectedHex, selecte
             {isDebugOpen ? 'Hide Debug' : 'Show Debug'}
           </button>
           {isDebugOpen && (
-            <div className="debug-content">
-              <button
-                onClick={toggleFogOfWar}
-                className={buttonClass}
-              >
-                {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
-              </button>
-            </div>
+            <DebugPanel
+              hexes={hexes}
+              units={units}
+              selectedHex={selectedHex}
+              currentPlayer={currentPlayer}
+              fogOfWar={fogOfWar}
+              toggleFogOfWar={toggleFogOfWar}
+              updateGameState={updateGameState}
+            />
           )}
         </div>
       </div>

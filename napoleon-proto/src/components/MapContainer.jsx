@@ -14,6 +14,21 @@ function MapContainer() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [fogOfWar, setFogOfWar] = useState(true);
 
+  const updateGameState = (newState) => {
+    console.log('Updating game state:', newState); // Debug log
+    setGameState(prev => {
+      const updatedHexes = newState.hexes ? newState.hexes.map(h => ({ ...h, units: [...h.units] })) : prev.hexes;
+      const updatedUnits = newState.units ? [...newState.units] : prev.units;
+      return {
+        ...prev,
+        hexes: updatedHexes,
+        units: updatedUnits,
+      };
+    });
+    if (newState.hexes) engine.state.hexes = newState.hexes.map(h => ({ ...h, units: [...h.units] }));
+    if (newState.units) engine.state.units = [...newState.units];
+  };
+
   const handleClick = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -176,13 +191,16 @@ function MapContainer() {
       clearNotifications={clearNotifications}
       toggleFogOfWar={toggleFogOfWar}
       fogOfWar={fogOfWar}
+      zoom={zoom}
+      offset={offset}
+      updateGameState={updateGameState}
     >
       <Map
         canvasRef={canvasRef}
         hexes={gameState.hexes}
         units={gameState.units}
         orders={gameState.orders}
-        features={gameState.features}
+        features={{ roads: {} }}
         zoom={zoom}
         offset={offset}
         selectedUnitId={gameState.selectedUnitId}
