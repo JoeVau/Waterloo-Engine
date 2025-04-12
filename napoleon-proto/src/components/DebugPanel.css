@@ -31,13 +31,20 @@
   
   .paint-controls {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    align-items: center;
   }
   
   .paint-controls button {
     flex: 1;
+    min-width: 80px;
   }
   
   .paint-controls button.active {
-    background: #0056b3; /* Darker blue when active */
+    background: #0056b3;
+  }
+  
+  .paint-controls select {
+    width: 100px;
   }

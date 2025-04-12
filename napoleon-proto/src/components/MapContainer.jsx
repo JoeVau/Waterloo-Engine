@@ -13,7 +13,8 @@ function MapContainer() {
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [fogOfWar, setFogOfWar] = useState(true);
-  const [paintRoadMode, setPaintRoadMode] = useState(null); // null, 'paint', 'erase'
+  const [paintMode, setPaintMode] = useState(null); // null, 'road_paint', 'road_erase', 'terrain'
+  const [paintTerrainType, setPaintTerrainType] = useState('plains'); // Selected terrain for painting
   const [paintingHexes, setPaintingHexes] = useState(null);
 
   const updateGameState = (newState) => {
@@ -32,7 +33,7 @@ function MapContainer() {
   };
 
   const handleClick = (e) => {
-    if (paintRoadMode) return; // Disable selection in paint/erase mode
+    if (paintMode) return; // Disable selection in paint modes
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -76,7 +77,7 @@ function MapContainer() {
   };
 
   const handleUnitSelect = (unitId) => {
-    if (paintRoadMode) return; // Disable unit selection in paint/erase mode
+    if (paintMode) return;
     setGameState(prev => {
       const unit = prev.units.find(u => u.id === unitId);
       if (unit && unit.team === prev.currentPlayer && !prev.orders[unit.team][unitId]) {
@@ -88,7 +89,7 @@ function MapContainer() {
   };
 
   const handleScoutOrder = (unitId) => {
-    if (paintRoadMode) return;
+    if (paintMode) return;
     const unit = gameState.units.find(u => u.id === unitId);
     if (!unit || unit.team !== gameState.currentPlayer || unit.horses <= 0) return;
 
@@ -106,7 +107,7 @@ function MapContainer() {
   };
 
   const handleDeselect = () => {
-    if (paintRoadMode) return;
+    if (paintMode) return;
     setGameState(prev => {
       if (prev.selectedUnitId) {
         engine.state.orders[prev.currentPlayer] = {};
@@ -144,7 +145,7 @@ function MapContainer() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    if (paintRoadMode) {
+    if (paintMode) {
       setPaintingHexes(new Set());
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -180,7 +181,7 @@ function MapContainer() {
   };
 
   const handleMouseMove = (e) => {
-    if (!paintRoadMode || !paintingHexes) return;
+    if (!paintMode || !paintingHexes) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -193,11 +194,13 @@ function MapContainer() {
         newSet.add(`${hex.q},${hex.r}`);
         return newSet;
       });
-      // Batch update on move for smoother preview
+      // Batch update for smooth preview
       const updatedHexes = gameState.hexes.map(h => {
         const key = `${h.q},${h.r}`;
         if (paintingHexes.has(key)) {
-          return { ...h, road: paintRoadMode === 'paint' ? true : false };
+          if (paintMode === 'road_paint') return { ...h, road: true };
+          if (paintMode === 'road_erase') return { ...h, road: false };
+          if (paintMode === 'terrain') return { ...h, terrain: paintTerrainType };
         }
         return h;
       });
@@ -206,11 +209,13 @@ function MapContainer() {
   };
 
   const handleMouseUp = () => {
-    if (!paintRoadMode || !paintingHexes) return;
+    if (!paintMode || !paintingHexes) return;
     const updatedHexes = gameState.hexes.map(h => {
       const key = `${h.q},${h.r}`;
       if (paintingHexes.has(key)) {
-        return { ...h, road: paintRoadMode === 'paint' ? true : false };
+        if (paintMode === 'road_paint') return { ...h, road: true };
+        if (paintMode === 'road_erase') return { ...h, road: false };
+        if (paintMode === 'terrain') return { ...h, terrain: paintTerrainType };
       }
       return h;
     });
@@ -228,7 +233,7 @@ function MapContainer() {
         canvas.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [paintRoadMode, paintingHexes, gameState.hexes, zoom, offset]);
+  }, [paintMode, paintingHexes, gameState.hexes, zoom, offset, paintTerrainType]);
 
   const handleEndTurn = (player) => {
     if (player !== gameState.currentPlayer) return;
@@ -270,8 +275,10 @@ function MapContainer() {
       zoom={zoom}
       offset={offset}
       updateGameState={updateGameState}
-      paintRoadMode={paintRoadMode}
-      setPaintRoadMode={setPaintRoadMode}
+      paintMode={paintMode}
+      setPaintMode={setPaintMode}
+      paintTerrainType={paintTerrainType}
+      setPaintTerrainType={setPaintTerrainType}
     >
       <Map
         canvasRef={canvasRef}

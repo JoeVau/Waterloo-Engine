@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './DebugPanel.css';
 
-function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintRoadMode, setPaintRoadMode }) {
+function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintMode, setPaintMode, paintTerrainType, setPaintTerrainType }) {
   const [editTerrain, setEditTerrain] = useState('');
   const [editCity, setEditCity] = useState(false);
   const [editCityName, setEditCityName] = useState('');
@@ -86,7 +86,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
   const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
 
   const handlePaintMode = (mode) => {
-    setPaintRoadMode(mode === paintRoadMode ? null : mode); // Toggle mode
+    setPaintMode(mode === paintMode ? null : mode); // Toggle mode
   };
 
   return (
@@ -97,7 +97,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
       >
         {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
       </button>
-      {selectedHex && !paintRoadMode && (
+      {selectedHex && !paintMode && (
         <div className="god-mode-controls">
           <h4>God Mode: Edit Hex [{selectedHex[0]}, {selectedHex[1]}]</h4>
           <label>
@@ -171,17 +171,35 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
       )}
       <div className="paint-controls">
         <button
-          onClick={() => handlePaintMode('paint')}
-          className={`${buttonClass} ${paintRoadMode === 'paint' ? 'active' : ''}`}
+          onClick={() => handlePaintMode('road_paint')}
+          className={`${buttonClass} ${paintMode === 'road_paint' ? 'active' : ''}`}
         >
           Paint Road
         </button>
         <button
-          onClick={() => handlePaintMode('erase')}
-          className={`${buttonClass} ${paintRoadMode === 'erase' ? 'active' : ''}`}
+          onClick={() => handlePaintMode('road_erase')}
+          className={`${buttonClass} ${paintMode === 'road_erase' ? 'active' : ''}`}
         >
           Erase Road
         </button>
+        <button
+          onClick={() => handlePaintMode('terrain')}
+          className={`${buttonClass} ${paintMode === 'terrain' ? 'active' : ''}`}
+        >
+          Paint Terrain
+        </button>
+        {paintMode === 'terrain' && (
+          <select
+            value={paintTerrainType}
+            onChange={(e) => setPaintTerrainType(e.target.value)}
+          >
+            {terrainOptions.map(t => (
+              <option key={t} value={t}>
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <button
         onClick={() => {
