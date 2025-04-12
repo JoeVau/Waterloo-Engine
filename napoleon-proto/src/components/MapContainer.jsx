@@ -1,10 +1,9 @@
-// src/components/MapContainer.jsx
 import { useRef, useState, useEffect } from 'react';
 import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition } from '../utils/hexGrid';
 import WaterlooEngine from '../engine/WaterlooEngine';
-import { validateOrder, resolveCombat, resolveDetachments } from '../games/campaigns-of-napoleon/Rules';
+import { validateOrder, resolveCombat } from '../games/campaigns-of-napoleon/Rules';
 import campaign2 from '../data/maps/italianCampaign.json';
 
 function MapContainer() {
@@ -40,14 +39,18 @@ function MapContainer() {
           .map(id => prev.units.find(u => u.id === id))
           .find(u => u.team !== unit.team);
 
-        if (targetUnit) {
-          return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] };
-        } else {
-          const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
-          if (success) {
+        const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
+        if (success) {
+          if (targetUnit) {
+            console.log(`Combat triggered: ${unit.id} moves to [${clickedHex.q}, ${clickedHex.r}] and engages ${targetUnit.id}`);
+          } else {
             console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
-            return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
           }
+          engine.state.orders[prev.currentPlayer] = engine.state.orders[prev.currentPlayer] || {};
+          engine.state.orders[prev.currentPlayer][prev.selectedUnitId] = { type: 'move', dest: [clickedHex.q, clickedHex.r] };
+          return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
+        } else {
+          console.log(`Move order failed for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
         }
       }
       return prev;
@@ -65,32 +68,31 @@ function MapContainer() {
     });
   };
 
-  const handleConfirmAttack = (unitId, targetId) => {
-    console.log(`Confirming attack: ${unitId} -> ${targetId}`);
-    const success = engine.issueOrder(unitId, 'attack', { targetId }, validateOrder);
-    console.log(`Attack order success: ${success}`);
+  const handleScoutOrder = (unitId) => {
+    const unit = gameState.units.find(u => u.id === unitId);
+    if (!unit || unit.team !== gameState.currentPlayer || unit.horses <= 0) return;
+
+    const success = engine.issueOrder(unitId, 'scout', {}, validateOrder);
     if (success) {
+      console.log(`Scout order issued for ${unitId}`);
       setGameState(prev => ({
-        ...prev,
         ...engine.getState(),
         selectedUnitId: null,
         selectedHex: null,
       }));
+    } else {
+      console.log(`Scout order failed for ${unitId}`);
     }
   };
 
-  const handleScoutOrder = (unitId) => {
-    console.log(`Issuing scout order for ${unitId}`);
-    const success = engine.issueOrder(unitId, 'scout', {}, validateOrder);
-    console.log(`Scout order success: ${success}`);
-    if (success) {
-      setGameState(prev => ({
-        ...prev,
-        ...engine.getState(),
-        selectedUnitId: null,
-        selectedHex: null,
-      }));
-    }
+  const handleDeselect = () => {
+    setGameState(prev => {
+      if (prev.selectedUnitId) {
+        engine.state.orders[prev.currentPlayer] = {};
+        return { ...prev, selectedUnitId: null, selectedHex: null };
+      }
+      return prev;
+    });
   };
 
   const handleWheel = (e) => {
@@ -141,10 +143,15 @@ function MapContainer() {
     if (player !== gameState.currentPlayer) return;
     console.log(`Ending turn for ${player}`);
     engine.endTurn(player, resolveCombat);
-    setGameState(prev => ({
-      ...prev,
-      ...engine.getState(), // Deep merge to preserve losBoost
-    }));
+    const newState = engine.getState();
+    console.log('New game state after endTurn:', newState);
+    console.log('Notifications after endTurn:', newState.notifications);
+    setGameState(newState);
+  };
+
+  const clearNotifications = () => {
+    engine.state.notifications = [];
+    setGameState(prev => ({ ...prev, notifications: [] }));
   };
 
   const toggleFogOfWar = () => {
@@ -164,10 +171,11 @@ function MapContainer() {
       notifications={gameState.notifications}
       onEndTurn={handleEndTurn}
       onUnitSelect={handleUnitSelect}
-      onDeselect={() => setGameState(prev => ({ ...prev, selectedUnitId: null }))}
+      onDeselect={handleDeselect}
+      handleScoutOrder={handleScoutOrder}
+      clearNotifications={clearNotifications}
       toggleFogOfWar={toggleFogOfWar}
       fogOfWar={fogOfWar}
-      onScoutOrder={handleScoutOrder}
     >
       <Map
         canvasRef={canvasRef}
@@ -182,7 +190,6 @@ function MapContainer() {
         onMouseDown={handleMouseDown}
         fogOfWar={fogOfWar}
         currentPlayer={gameState.currentPlayer}
-        losBoost={gameState.losBoost}
       />
     </Frame>
   );

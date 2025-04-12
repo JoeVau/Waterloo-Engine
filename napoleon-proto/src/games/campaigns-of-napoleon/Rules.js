@@ -40,7 +40,7 @@ export function resolveDetachments(state) {
     if (division) {
       division.detachedStrength = (division.detachedStrength || 0) - detachment.strength;
       division.horses += detachment.horses;
-      state.losBoost = 10; // Boost division LOS on return
+      division.losBoost = 10; // Boost division LOS on return
       console.log(`${division.name} scouting detachment returned: ${detachment.strength} strength, ${detachment.horses} horses, LOS boost set to ${state.losBoost}`);
       notifications.push(`${division.name} scouting detachment returned—LOS boosted to 10 hexes this turn`);
       const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));

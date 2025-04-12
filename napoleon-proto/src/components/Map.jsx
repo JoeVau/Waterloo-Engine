@@ -23,12 +23,13 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     if (!fogOfWar) {
       hexes.forEach(hex => map.add(`${hex.q},${hex.r}`));
     } else {
-      const friendlyUnits = units.filter(u => u.team === currentPlayer);
+      const friendlyUnits = units.filter(u => u.team === currentPlayer && !u.divisionId);
       friendlyUnits.forEach(unit => {
         const unitHex = hexes.find(h => h.units.includes(unit.id));
         if (!unitHex) return;
+        const losRange = unit.losBoost || 2; // Default to 2 if no losBoost
         hexes.forEach(hex => {
-          if (hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= 2) {
+          if (hexDistance(unitHex.q, unitHex.r, hex.q, hex.r) <= losRange) {
             map.add(`${hex.q},${hex.r}`);
           }
         });
@@ -38,7 +39,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
   }, [hexes, units, fogOfWar, currentPlayer]);
 
   useEffect(() => {
-    setShouldRedraw(true); // Trigger redraw when dependencies change
+    setShouldRedraw(true);
   }, [hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer]);
 
   useEffect(() => {
@@ -143,7 +144,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
       drawFeatures(ctx, filteredFeatures, hexSize, hexWidth, hexHeight, zoom, offset);
     }
 
-    // Pass 4: Draw units only for visible hexes
+    // Pass 4: Draw units only for visible hexes (exclude detachments)
     hexes.forEach(hex => {
       const x = hex.q * hexWidth;
       const y = hex.r * hexHeight;
@@ -160,7 +161,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
         const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
 
         if (isVisible && hex.units.length) {
-          const hexUnits = units.filter(unit => hex.units.includes(unit.id));
+          const hexUnits = units.filter(unit => hex.units.includes(unit.id) && !unit.divisionId);
           drawUnits(ctx, hexUnits, hexSize, hexWidth, hexHeight, zoom, { x: finalX, y: finalY }, selectedUnitId);
 
           const topUnit = hexUnits[0];
@@ -205,7 +206,7 @@ export default function Map({ canvasRef, hexes, units, orders, features, zoom, o
     });
 
     ctx.restore();
-    setShouldRedraw(false); // Reset redraw flag
+    setShouldRedraw(false);
   }, [shouldRedraw, hexes, units, orders, features, zoom, offset, selectedUnitId, fogOfWar, currentPlayer, visibilityMap]);
 
   return (

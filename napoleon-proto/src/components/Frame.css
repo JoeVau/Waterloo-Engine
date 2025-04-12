@@ -75,6 +75,11 @@
   font-size: 0.8em;
 }
 
+.detachment-indicator {
+  margin-left: 4px;
+  font-size: 0.8em;
+}
+
 .unit-leader-section {
   display: flex;
   align-items: center;
@@ -101,7 +106,7 @@
 
 .nato-symbol {
   display: inline-block;
-  width: 16px;
+  width: 20px;
   height: 16px;
   position: relative;
   border: 1px solid #fff;
@@ -174,6 +179,27 @@
   width: 100%;
 }
 
+.detachment-details {
+  margin-top: 5px;
+}
+
+.detachment-details-title {
+  font-size: 0.9em;
+  color: #fff;
+  margin: 5px 0;
+}
+
+.detachment-list {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.detachment-item {
+  font-size: 0.8em;
+  color: #fff;
+  margin: 2px 0;
+}
+
 .unit-orders-section {
   margin-top: 10px;
   padding: 10px;
@@ -193,48 +219,40 @@
   font-size: 0.8em;
 }
 
-.notification-window {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
+.notification-section {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
-.notification-window-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  max-height: 80%;
-  overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.notification-window-title {
+.notification-section-title {
   margin: 0 0 10px 0;
-  font-size: 1.2em;
-  color: #333;
+  font-size: 1.1em;
+  color: #fff;
 }
 
 .notification-list {
   padding-left: 20px;
   list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .notification-item {
   margin: 5px 0;
-  color: #333;
+  color: #fff;
   font-size: 0.9em;
+  display: flex;
+  align-items: center;
 }
 
-.notification-close-button {
+.notification-item-icon {
+  margin-right: 4px;
+  font-size: 1em;
+}
+
+.notification-clear-button {
   background-color: #dc3545;
   border: none;
   border-radius: 4px;
@@ -246,7 +264,7 @@
   transition: background-color 0.2s;
 }
 
-.notification-close-button:hover {
+.notification-clear-button:hover {
   background-color: #b02a37;
 }
 
@@ -298,14 +316,4 @@
   width: 1000px;
   height: 800px;
   background: #ccc;
-}
-
-/* Fade-in animation for notification window */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }

@@ -1,4 +1,3 @@
-// /engine/WaterlooEngine.js
 import { resolveDetachments } from '../games/campaigns-of-napoleon/Rules';
 
 class WaterlooEngine {
@@ -59,7 +58,7 @@ class WaterlooEngine {
       this.state.currentPlayer = 'blue';
       this.state.turn += 1;
       this.state.orders = { blue: {}, red: {} };
-      this.state.notifications = [];
+      // Move notification clearing to after resolveTurn
       return true;
     }
   }
@@ -115,9 +114,10 @@ class WaterlooEngine {
 
     this.state.hexes = newHexes;
     // Reset losBoost for all divisions
+    /*
     this.state.units.forEach(unit => {
       if (!unit.order) unit.losBoost = null; // Only reset for divisions, not detachments
-    });
+    });*/
   }
 
   getState() {
