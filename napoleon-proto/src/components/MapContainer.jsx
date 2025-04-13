@@ -249,8 +249,18 @@ function MapContainer() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const handleMouseMoveEvent = (e) => handleMouseMove(e);
-      const handleMouseUpEvent = (e) => handleMouseUp(e);
+      const handleMouseMoveEvent = (e) => {
+        // Only handle mouse move if painting is active
+        if (paintMode && paintingHexes) {
+          handleMouseMove(e);
+        }
+      };
+      const handleMouseUpEvent = (e) => {
+        // Only handle mouse up if painting is active
+        if (paintMode && paintingHexes) {
+          handleMouseUp(e);
+        }
+      };
       canvas.addEventListener('mousemove', handleMouseMoveEvent);
       canvas.addEventListener('mouseup', handleMouseUpEvent);
       return () => {

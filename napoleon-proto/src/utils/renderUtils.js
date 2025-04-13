@@ -363,7 +363,6 @@ export function drawRoads(ctx, hexes, hexSize, hexWidth, hexHeight, zoom, offset
           const ny = neighbor.r * hexHeight;
           ctx.moveTo(x, y);
           ctx.lineTo(nx, ny);
-          console.log(`Drawing road: [${hex.q},${hex.r}] to [${neighbor.q},${neighbor.r}]`); // Debug log
         }
       }
     });
