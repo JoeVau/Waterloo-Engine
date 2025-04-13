@@ -1,4 +1,5 @@
 import { hexDistance } from '../utils/hexGrid';
+
 // Draws terrain and features
 export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnitHighlighted) {
   ctx.beginPath();
@@ -10,13 +11,28 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   }
   ctx.closePath();
 
-  ctx.fillStyle = color;
+  // Adjust base color based on height (0-2)
+  let baseColor = color;
+  if (hex && hex.terrain && hex.height !== undefined) {
+    const height = Math.min(Math.max(hex.height, 0), 2); // Clamp height to 0-2
+    const darkenFactor = 1 - 0.15 * height; // 0: 100%, 1: 85%, 2: 70% brightness
+    if (color.startsWith('#')) {
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      const newR = Math.round(r * darkenFactor);
+      const newG = Math.round(g * darkenFactor);
+      const newB = Math.round(b * darkenFactor);
+      baseColor = `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+    }
+  }
+
+  ctx.fillStyle = baseColor;
   ctx.fill();
 
+  // Terrain-specific features (unchanged, apply over darkened base)
   switch (hex.terrain) {
     case 'hills':
-      ctx.fillStyle = '#d2b48c';
-      ctx.fill();
       ctx.fillStyle = '#6b4e31';
       const hillPositions = [
         { x: x - size * 0.4, y: y - size * 0.1, w: size * 0.4, h: size * 0.3 },
@@ -31,8 +47,6 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       break;
 
     case 'woods':
-      ctx.fillStyle = '#759456';
-      ctx.fill();
       ctx.fillStyle = '#006400';
       const treePositions = [
         { x: x - size * 0.4, y: y - size * 0.2 },
@@ -50,8 +64,6 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       break;
 
     case 'crops':
-      ctx.fillStyle = '#d9e8d9';
-      ctx.fill();
       ctx.strokeStyle = '#2f4f2f';
       ctx.lineWidth = 0.5 / zoom;
       const wheatShades = ['#e6d8a8', '#d2c68a', '#bfa86b'];
@@ -71,8 +83,6 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       break;
 
     case 'swamps':
-      ctx.fillStyle = '#b8d8b8';
-      ctx.fill();
       ctx.fillStyle = '#4682b4';
       ctx.font = `${size * 0.8 / zoom}px monospace`;
       ctx.textAlign = 'center';
@@ -94,6 +104,102 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       break;
   }
 
+  if (hex.feature === 'city') {
+    let seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const rand = (max) => {
+      const x = Math.sin(seed++) * 10000;
+      return Math.floor((x - Math.floor(x)) * max);
+    };
+    const buildings = [];
+    const avenueAngles = [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3];
+    const avenueWidths = [size * 0.16, size * 0.14, size * 0.15];
+    for (let i = 0; i < 30; i++) {
+      let attempts = 0;
+      let placed = false;
+      while (!placed && attempts < 22) {
+        const tileWidth = size * (0.10 + rand(14) / 100);
+        const tileHeight = size * (0.05 + rand(14) / 100);
+        const tileSize = Math.max(tileWidth, tileHeight);
+        seed += hex.q * hex.r + i;
+        const cluster = rand(3);
+        const dist = size * (cluster === 0 ? 0.3 : cluster === 1 ? 0.55 : 0.8) * Math.sqrt(rand(100) / 100);
+        const angle = (rand(180) + (cluster * 120)) * Math.PI / 180;
+        const offsetX = Math.cos(angle) * dist;
+        const offsetY = Math.sin(angle) * dist;
+        const tx = x + offsetX;
+        const ty = y + offsetY;
+        const rotation = rand(100) < 65 ? 0 : (rand(2) - 0.5) * Math.PI / 10;
+        const minGap = tileSize * 0.25;
+        const overlaps = buildings.some(b => {
+          const dx = b.x - tx;
+          const dy = b.y - ty;
+          return Math.sqrt(dx * dx + dy * dy) < (tileSize + b.size) * 0.5 + minGap;
+        });
+        const inAvenue = avenueAngles.some((angle, idx) => {
+          const width = avenueWidths[idx] / 1.5;
+          const dx = tx - x;
+          const dy = ty - y;
+          const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
+          const perp = Math.abs(dx * Math.sin(angle) - dy * Math.cos(angle));
+          return perp < width && proj > -size * 0.5 && proj < size * 0.5;
+        });
+        if (!overlaps && !inAvenue) {
+          const tier = dist < size * 0.35 ? 0 : dist < size * 0.65 ? 1 : 2;
+          buildings.push({ x: tx, y: ty, rotation, width: tileWidth, height: tileHeight, size: tileSize, tier });
+          placed = true;
+        }
+        attempts++;
+      }
+    }
+    buildings.forEach(b => {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.rotation);
+      ctx.fillStyle = b.tier === 0 ? '#8b4513' : b.tier === 1 ? '#a0522d' : '#cd853f';
+      ctx.fillRect(-b.width / 2, -b.height / 2, b.width, b.height);
+      ctx.strokeStyle = '#1c2526';
+      ctx.lineWidth = 0.15;
+      ctx.strokeRect(-b.width / 2, -b.height / 2, b.width, b.height);
+      ctx.restore();
+    });
+
+    // Add old city walls: semi-random polygon around inner tier (dist < size * 0.35)
+    ctx.save();
+    seed += hex.q + hex.r;
+    const numSides = 5 + rand(4); // 5-8 sides
+    const wallRadius = size * 0.4; // Slightly beyond inner tier (dist < 0.35)
+    const wallPoints = [];
+    for (let i = 0; i < numSides; i++) {
+      const angle = (2 * Math.PI * i) / numSides + (rand(20) - 10) * Math.PI / 180; // Random angle offset ±10°
+      const radiusVariation = wallRadius * (0.9 + rand(20) / 100); // ±10% radius variation
+      const px = x + radiusVariation * Math.cos(angle);
+      const py = y + radiusVariation * Math.sin(angle);
+      wallPoints.push({ x: px, y: py });
+    }
+    ctx.beginPath();
+    wallPoints.forEach((p, i) => {
+      i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+    });
+    ctx.closePath();
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 0.2 / zoom; // Thin line, scales with zoom
+    ctx.stroke();
+    ctx.restore();
+
+    // Golden cross
+    ctx.save();
+    seed += hex.q + hex.r;
+    const crossDist = size * (0.1 + rand(50) / 100);
+    const crossAngle = rand(360) * Math.PI / 180;
+    const crossX = x + Math.cos(crossAngle) * crossDist;
+    const crossY = y + Math.sin(crossAngle) * crossDist;
+    ctx.translate(crossX, crossY);
+    ctx.fillStyle = '#ffd700';
+    ctx.font = '4px serif';
+    ctx.fillText('✝', 0, 0);
+    ctx.restore();
+  }
+
   ctx.strokeStyle = isHighlighted ? 'yellow' : '#000';
   ctx.lineWidth = 0.1 / zoom;
   ctx.stroke();
@@ -105,82 +211,6 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
     ctx.textBaseline = 'top';
     ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
   }
-
-  if (hex.feature) {
-    switch (hex.feature) {
-      case 'city':
-        let seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const rand = (max) => {
-          const x = Math.sin(seed++) * 10000;
-          return Math.floor((x - Math.floor(x)) * max);
-        };
-        const buildings = [];
-        const avenueAngles = [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3];
-        const avenueWidths = [size * 0.16, size * 0.14, size * 0.15];
-        for (let i = 0; i < 30; i++) {
-          let attempts = 0;
-          let placed = false;
-          while (!placed && attempts < 22) {
-            const tileWidth = size * (0.10 + rand(14) / 100);
-            const tileHeight = size * (0.05 + rand(14) / 100);
-            const tileSize = Math.max(tileWidth, tileHeight);
-            seed += hex.q * hex.r + i; // Seed with coords and index for splotchy placement
-            const cluster = rand(3);
-            const dist = size * (cluster === 0 ? 0.3 : cluster === 1 ? 0.55 : 0.8) * Math.sqrt(rand(100) / 100);
-            const angle = (rand(180) + (cluster * 120)) * Math.PI / 180;
-            const offsetX = Math.cos(angle) * dist;
-            const offsetY = Math.sin(angle) * dist;
-            const tx = x + offsetX;
-            const ty = y + offsetY;
-            const rotation = rand(100) < 65 ? 0 : (rand(2) - 0.5) * Math.PI / 10;
-            const minGap = tileSize * 0.25;
-            const overlaps = buildings.some(b => {
-              const dx = b.x - tx;
-              const dy = b.y - ty;
-              return Math.sqrt(dx * dx + dy * dy) < (tileSize + b.size) * 0.5 + minGap;
-            });
-            const inAvenue = avenueAngles.some((angle, idx) => {
-              const width = avenueWidths[idx] / 1.5;
-              const dx = tx - x;
-              const dy = ty - y;
-              const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
-              const perp = Math.abs(dx * Math.sin(angle) - dy * Math.cos(angle));
-              return perp < width && proj > -size * 0.5 && proj < size * 0.5;
-            });
-            if (!overlaps && !inAvenue) {
-              const tier = dist < size * 0.35 ? 0 : dist < size * 0.65 ? 1 : 2;
-              buildings.push({ x: tx, y: ty, rotation, width: tileWidth, height: tileHeight, size: tileSize, tier });
-              placed = true;
-            }
-            attempts++;
-          }
-        }
-        buildings.forEach(b => {
-          ctx.save();
-          ctx.translate(b.x, b.y);
-          ctx.rotate(b.rotation);
-          ctx.fillStyle = b.tier === 0 ? '#8b4513' : b.tier === 1 ? '#a0522d' : '#cd853f';
-          ctx.fillRect(-b.width / 2, -b.height / 2, b.width, b.height);
-          ctx.strokeStyle = '#1c2526';
-          ctx.lineWidth = 0.15;
-          ctx.strokeRect(-b.width / 2, -b.height / 2, b.width, b.height);
-          ctx.restore();
-        });
-        ctx.save();
-        seed += hex.q + hex.r;
-        const crossDist = size * (0.1 + rand(50) / 100);
-        const crossAngle = rand(360) * Math.PI / 180;
-        const crossX = x + Math.cos(crossAngle) * crossDist;
-        const crossY = y + Math.sin(crossAngle) * crossDist;
-        ctx.translate(crossX, crossY);
-        ctx.fillStyle = '#ffd700';
-        ctx.font = '4px serif';
-        ctx.fillText('✝', 0, 0);
-        ctx.restore();
-        break;
-    }
-  }
-
 }
 
 // Draws names only

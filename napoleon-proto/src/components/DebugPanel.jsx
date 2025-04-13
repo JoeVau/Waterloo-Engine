@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import './DebugPanel.css';
 
-function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintMode, setPaintMode, paintTerrainType, setPaintTerrainType }) {
+function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintMode, setPaintMode, paintTerrainType, setPaintTerrainType, paintHeightType, setPaintHeightType }) {
   const [editTerrain, setEditTerrain] = useState('');
   const [editCity, setEditCity] = useState(false);
   const [editCityName, setEditCityName] = useState('');
   const [editUnitId, setEditUnitId] = useState('');
   const [editUnitStrength, setEditUnitStrength] = useState(1000);
   const [editRoad, setEditRoad] = useState('');
-
+  const [editHeight, setEditHeight] = useState('');
+  const [localPaintMode, setLocalPaintMode] = useState(paintMode);
   const terrainOptions = ['plains', 'woods', 'hills', 'crops', 'swamps'];
+  const heightOptions = ['0', '1', '2'];
 
   const handleApplyEdits = () => {
     if (!selectedHex) return;
     const [q, r] = selectedHex;
 
-    console.log('Applying edits for hex:', [q, r], { editTerrain, editCity, editCityName, editUnitId, editUnitStrength, editRoad });
+    console.log('Applying edits for hex:', [q, r], { editTerrain, editCity, editCityName, editUnitId, editUnitStrength, editRoad, editHeight });
 
     const updatedHexes = hexes.map(h => {
       if (h.q === q && h.r === r) {
@@ -25,6 +27,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           feature: editCity ? 'city' : undefined,
           name: editCity ? (editCityName || h.name || '') : undefined,
           road: editRoad !== '' ? editRoad : h.road,
+          height: editHeight !== '' ? parseInt(editHeight) : h.height || 0,
           units: [...h.units],
         };
       }
@@ -80,13 +83,16 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
     setEditUnitId('');
     setEditUnitStrength(1000);
     setEditRoad('');
+    setEditHeight('');
   };
 
   const isBlue = currentPlayer === 'blue';
   const buttonClass = `end-turn-button ${isBlue ? '' : 'end-turn-button-red'}`;
 
   const handlePaintMode = (mode) => {
-    setPaintMode(mode === paintMode ? null : mode); // Toggle mode
+    const newMode = mode === localPaintMode ? null : mode;
+    setLocalPaintMode(newMode);
+    setPaintMode(newMode);
   };
 
   return (
@@ -97,7 +103,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
       >
         {fogOfWar ? 'Disable Fog of War' : 'Enable Fog of War'}
       </button>
-      {selectedHex && !paintMode && (
+      {selectedHex && !localPaintMode && (
         <div className="god-mode-controls">
           <h4>God Mode: Edit Hex [{selectedHex[0]}, {selectedHex[1]}]</h4>
           <label>
@@ -140,6 +146,19 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
             />
           </label>
           <label>
+            Height:
+            <select
+              value={editHeight || hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.height || '0'}
+              onChange={(e) => setEditHeight(e.target.value)}
+            >
+              {heightOptions.map(h => (
+                <option key={h} value={h}>
+                  {h === '0' ? 'Low' : h === '1' ? 'Mid' : 'High'}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
             Add/Edit Unit ID:
             <input
               type="text"
@@ -163,7 +182,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           <button
             onClick={handleApplyEdits}
             className={buttonClass}
-            disabled={!selectedHex || (!editTerrain && !editCity && !editUnitId && editRoad === '')}
+            disabled={!selectedHex || (!editTerrain && !editCity && !editUnitId && editRoad === '' && editHeight === '')}
           >
             Apply Changes
           </button>
@@ -172,23 +191,35 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
       <div className="paint-controls">
         <button
           onClick={() => handlePaintMode('road_paint')}
-          className={`${buttonClass} ${paintMode === 'road_paint' ? 'active' : ''}`}
+          className={`${buttonClass} ${localPaintMode === 'road_paint' ? 'active' : ''}`}
         >
           Paint Road
         </button>
         <button
           onClick={() => handlePaintMode('road_erase')}
-          className={`${buttonClass} ${paintMode === 'road_erase' ? 'active' : ''}`}
+          className={`${buttonClass} ${localPaintMode === 'road_erase' ? 'active' : ''}`}
         >
           Erase Road
         </button>
         <button
           onClick={() => handlePaintMode('terrain')}
-          className={`${buttonClass} ${paintMode === 'terrain' ? 'active' : ''}`}
+          className={`${buttonClass} ${localPaintMode === 'terrain' ? 'active' : ''}`}
         >
           Paint Terrain
         </button>
-        {paintMode === 'terrain' && (
+        <button
+          onClick={() => handlePaintMode('height')}
+          className={`${buttonClass} ${localPaintMode === 'height' ? 'active' : ''}`}
+        >
+          Paint Height
+        </button>
+        <button
+          onClick={() => handlePaintMode(null)}
+          className={`${buttonClass} ${localPaintMode === null ? 'active' : ''}`}
+        >
+          Disable Paint
+        </button>
+        {localPaintMode === 'terrain' && (
           <select
             value={paintTerrainType}
             onChange={(e) => setPaintTerrainType(e.target.value)}
@@ -196,6 +227,18 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
             {terrainOptions.map(t => (
               <option key={t} value={t}>
                 {t.charAt(0).toUpperCase() + t.slice(1)}
+              </option>
+            ))}
+          </select>
+        )}
+        {localPaintMode === 'height' && (
+          <select
+            value={paintHeightType}
+            onChange={(e) => setPaintHeightType(e.target.value)}
+          >
+            {heightOptions.map(h => (
+              <option key={h} value={h}>
+                {h === '0' ? 'Low' : h === '1' ? 'Mid' : 'High'}
               </option>
             ))}
           </select>
@@ -213,6 +256,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
                 feature: h.feature,
                 name: h.name,
                 road: h.road || false,
+                height: h.height || 0,
                 units: h.units || [],
               },
             }), {}),

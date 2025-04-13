@@ -10,7 +10,8 @@ export function loadMap(mapData) {
         r,
         ...hexData,
         units: hexData.units || [],
-        road: hexData.road || false, // Add road, default false
+        road: hexData.road || false,
+        height: hexData.height || 0, // Add height, default 0
       });
     }
   }

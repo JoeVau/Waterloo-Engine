@@ -65,7 +65,6 @@ export default function Map({ canvasRef, hexes, units, orders, features = { road
       const finalX = x + offsetX;
       const finalY = y;
 
-      // Expanded culling to include hexes near borders
       if (
         finalX > -offset.x / zoom - hexWidth * 2 &&
         finalX < -offset.x / zoom + visibleWidth + hexWidth * 2 &&
@@ -74,6 +73,7 @@ export default function Map({ canvasRef, hexes, units, orders, features = { road
       ) {
         const isVisible = visibilityMap.has(`${hex.q},${hex.r}`);
 
+        // Pass hex object to drawHexBase to access height
         drawHexBase(ctx, finalX, finalY, hexSize, terrainColors[hex.terrain] || '#ffffff', false, hex, zoom, false);
 
         if (fogOfWar && !isVisible) {
