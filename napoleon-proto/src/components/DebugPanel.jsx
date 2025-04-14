@@ -3,7 +3,7 @@ import './DebugPanel.css';
 
 function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintMode, setPaintMode, paintTerrainType, setPaintTerrainType, paintHeightType, setPaintHeightType }) {
   const [editTerrain, setEditTerrain] = useState('');
-  const [editCity, setEditCity] = useState(false);
+  const [editFeature, setEditFeature] = useState(''); // Changed to handle city/village
   const [editCityName, setEditCityName] = useState('');
   const [editUnitId, setEditUnitId] = useState('');
   const [editUnitStrength, setEditUnitStrength] = useState(1000);
@@ -11,21 +11,22 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
   const [editHeight, setEditHeight] = useState('');
   const [localPaintMode, setLocalPaintMode] = useState(paintMode);
   const terrainOptions = ['plains', 'woods', 'hills', 'crops', 'swamps'];
+  const featureOptions = ['', 'city', 'village']; // Added village
   const heightOptions = ['0', '1', '2'];
 
   const handleApplyEdits = () => {
     if (!selectedHex) return;
     const [q, r] = selectedHex;
 
-    console.log('Applying edits for hex:', [q, r], { editTerrain, editCity, editCityName, editUnitId, editUnitStrength, editRoad, editHeight });
+    console.log('Applying edits for hex:', [q, r], { editTerrain, editFeature, editCityName, editUnitId, editUnitStrength, editRoad, editHeight });
 
     const updatedHexes = hexes.map(h => {
       if (h.q === q && h.r === r) {
         return {
           ...h,
           terrain: editTerrain || h.terrain,
-          feature: editCity ? 'city' : undefined,
-          name: editCity ? (editCityName || h.name || '') : undefined,
+          feature: editFeature || undefined, // Handle city/village/none
+          name: editFeature ? (editCityName || h.name || '') : undefined,
           road: editRoad !== '' ? editRoad : h.road,
           height: editHeight !== '' ? parseInt(editHeight) : h.height || 0,
           units: [...h.units],
@@ -78,7 +79,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
     updateGameState({ hexes: updatedHexes, units: updatedUnits });
 
     setEditTerrain('');
-    setEditCity(false);
+    setEditFeature('');
     setEditCityName('');
     setEditUnitId('');
     setEditUnitStrength(1000);
@@ -120,16 +121,21 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
             </select>
           </label>
           <label>
-            City:
-            <input
-              type="checkbox"
-              checked={editCity || hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.feature === 'city'}
-              onChange={(e) => setEditCity(e.target.checked)}
-            />
+            Feature:
+            <select
+              value={editFeature || hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.feature || ''}
+              onChange={(e) => setEditFeature(e.target.value)}
+            >
+              {featureOptions.map(f => (
+                <option key={f} value={f}>
+                  {f === '' ? 'None' : f.charAt(0).toUpperCase() + f.slice(1)}
+                </option>
+              ))}
+            </select>
           </label>
-          {editCity && (
+          {(editFeature === 'city' || editFeature === 'village') && (
             <label>
-              City Name:
+              Name:
               <input
                 type="text"
                 value={editCityName || hexes.find(h => h.q === selectedHex[0] && h.r === selectedHex[1]) ?.name || ''}
@@ -182,7 +188,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           <button
             onClick={handleApplyEdits}
             className={buttonClass}
-            disabled={!selectedHex || (!editTerrain && !editCity && !editUnitId && editRoad === '' && editHeight === '')}
+            disabled={!selectedHex || (!editTerrain && !editFeature && !editUnitId && editRoad === '' && editHeight === '')}
           >
             Apply Changes
           </button>

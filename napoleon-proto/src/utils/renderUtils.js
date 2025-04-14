@@ -38,8 +38,8 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
         let attempts = 0;
         let placed = false;
         while (!placed && attempts < 10) {
-          const offsetX = (rand(100) - 50) * size / 150; // ±0.5 * size
-          const offsetY = (rand(100) - 50) * size / 150; // ±0.5 * size
+          const offsetX = (rand(120) - 60) * size / 150; // ±0.6 * size
+          const offsetY = (rand(120) - 60) * size / 150; // ±0.6 * size
           const tx = x + offsetX;
           const ty = y + offsetY;
           const hillWidth = size * (0.4 + rand(20) / 100); // ±20%
@@ -149,38 +149,41 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       break;
   }
 
-  if (hex.feature === 'city') {
-    seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const randCity = (max) => {
+  if (hex.feature === 'city' || hex.feature === 'village') {
+    const isVillage = hex.feature === 'village';
+    seed = hex.name ? hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : seed;
+    const randSettlement = (max) => {
       const x = Math.sin(seed++) * 10000;
       return Math.floor((x - Math.floor(x)) * max);
     };
+    const numBuildings = isVillage ? 5 + randSettlement(6) : 30; // 5-10 for village, 30 for city
+    const maxDist = isVillage ? 0.5 : 0.8; // Village: tighter, city: wider
     const buildings = [];
-    const avenueAngles = [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3];
-    const avenueWidths = [size * 0.16, size * 0.14, size * 0.15];
-    for (let i = 0; i < 30; i++) {
+    const avenueAngles = isVillage ? [] : [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3]; // No avenues for village
+    const avenueWidths = isVillage ? [] : [size * 0.16, size * 0.14, size * 0.15];
+    for (let i = 0; i < numBuildings; i++) {
       let attempts = 0;
       let placed = false;
       while (!placed && attempts < 22) {
-        const tileWidth = size * (0.10 + randCity(14) / 100);
-        const tileHeight = size * (0.05 + randCity(14) / 100);
+        const tileWidth = size * (0.08 + randSettlement(10) / 100); // Smaller for village
+        const tileHeight = size * (0.04 + randSettlement(10) / 100);
         const tileSize = Math.max(tileWidth, tileHeight);
         seed += hex.q * hex.r + i;
-        const cluster = randCity(3);
-        const dist = size * (cluster === 0 ? 0.3 : cluster === 1 ? 0.55 : 0.8) * Math.sqrt(randCity(100) / 100);
-        const angle = (randCity(180) + (cluster * 120)) * Math.PI / 180;
+        const cluster = randSettlement(3);
+        const dist = size * (cluster === 0 ? 0.2 : cluster === 1 ? 0.35 : maxDist) * Math.sqrt(randSettlement(100) / 100);
+        const angle = (randSettlement(180) + (cluster * 120)) * Math.PI / 180;
         const offsetX = Math.cos(angle) * dist;
         const offsetY = Math.sin(angle) * dist;
         const tx = x + offsetX;
         const ty = y + offsetY;
-        const rotation = randCity(100) < 65 ? 0 : (randCity(2) - 0.5) * Math.PI / 10;
+        const rotation = randSettlement(100) < 65 ? 0 : (randSettlement(2) - 0.5) * Math.PI / 10;
         const minGap = tileSize * 0.25;
         const overlaps = buildings.some(b => {
           const dx = b.x - tx;
           const dy = b.y - ty;
           return Math.sqrt(dx * dx + dy * dy) < (tileSize + b.size) * 0.5 + minGap;
         });
-        const inAvenue = avenueAngles.some((angle, idx) => {
+        const inAvenue = isVillage ? false : avenueAngles.some((angle, idx) => {
           const width = avenueWidths[idx] / 1.5;
           const dx = tx - x;
           const dy = ty - y;
@@ -189,7 +192,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
           return perp < width && proj > -size * 0.5 && proj < size * 0.5;
         });
         if (!overlaps && !inAvenue) {
-          const tier = dist < size * 0.35 ? 0 : dist < size * 0.65 ? 1 : 2;
+          const tier = dist < size * 0.25 ? 0 : dist < size * 0.4 ? 1 : 2;
           buildings.push({ x: tx, y: ty, rotation, width: tileWidth, height: tileHeight, size: tileSize, tier });
           placed = true;
         }
@@ -208,40 +211,42 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       ctx.restore();
     });
 
-    // Add old city walls: semi-random polygon around inner tier (dist < size * 0.35)
-    ctx.save();
-    seed += hex.q + hex.r;
-    const numSides = 5 + randCity(4); // 5-8 sides
-    const wallRadius = size * 0.7; // Slightly beyond inner tier (dist < 0.35)
-    const wallPoints = [];
-    for (let i = 0; i < numSides; i++) {
-      const angle = (2 * Math.PI * i) / numSides + (randCity(20) - 10) * Math.PI / 180; // Random angle offset ±10°
-      const radiusVariation = wallRadius * (0.9 + randCity(20) / 100); // ±10% radius variation
-      const px = x + radiusVariation * Math.cos(angle);
-      const py = y + radiusVariation * Math.sin(angle);
-      wallPoints.push({ x: px, y: py });
+    // City walls only for cities
+    if (hex.feature === 'city') {
+      ctx.save();
+      seed += hex.q + hex.r;
+      const numSides = 5 + randSettlement(4); // 5-8 sides
+      const wallRadius = size * 0.7; // Slightly beyond inner tier
+      const wallPoints = [];
+      for (let i = 0; i < numSides; i++) {
+        const angle = (2 * Math.PI * i) / numSides + (randSettlement(20) - 10) * Math.PI / 180;
+        const radiusVariation = wallRadius * (0.9 + randSettlement(20) / 100);
+        const px = x + radiusVariation * Math.cos(angle);
+        const py = y + radiusVariation * Math.sin(angle);
+        wallPoints.push({ x: px, y: py });
+      }
+      ctx.beginPath();
+      wallPoints.forEach((p, i) => {
+        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 0.8 / zoom;
+      ctx.stroke();
+      ctx.restore();
     }
-    ctx.beginPath();
-    wallPoints.forEach((p, i) => {
-      i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-    });
-    ctx.closePath();
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 0.8 / zoom; // Thin line, scales with zoom
-    ctx.stroke();
-    ctx.restore();
 
-    // Church 
+    // Golden cross for both
     ctx.save();
     seed += hex.q + hex.r;
-    const crossDist = size * (0.1 + randCity(50) / 100);
-    const crossAngle = randCity(360) * Math.PI / 180;
+    const crossDist = size * (0.1 + randSettlement(50) / 100);
+    const crossAngle = randSettlement(360) * Math.PI / 180;
     const crossX = x + Math.cos(crossAngle) * crossDist;
     const crossY = y + Math.sin(crossAngle) * crossDist;
     ctx.translate(crossX, crossY);
     ctx.fillStyle = '#8b4513';
-    ctx.font = '4px serif';
-    ctx.fillText('✝', 1, 0);
+    ctx.font = isVillage ? '3px serif' : '4px serif'; // Smaller for village
+    ctx.fillText('✝', 0, 0);
     ctx.restore();
   }
 
@@ -258,10 +263,10 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   }
 }
 
-// Draws names only
+// Draws names for cities and villages
 export function drawHexName(ctx, x, y, size, hex, zoom) {
-  if (hex.feature === 'city' && hex.name) {
-    const fontSize = 18 / zoom;
+  if ((hex.feature === 'city' || hex.feature === 'village') && hex.name) {
+    const fontSize = hex.feature === 'village' ? 14 / zoom : 18 / zoom; // Smaller for village
     ctx.font = `${fontSize}px 'Times New Roman'`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
@@ -278,7 +283,7 @@ export function drawHexName(ctx, x, y, size, hex, zoom) {
   }
 }
 
-// drawFeatures and drawUnits remain unchanged (omitted for brevity)
+// Unchanged functions
 export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, offset) {
   const hexToPixel = (q, r) => {
     const x = q * hexWidth;
@@ -317,19 +322,16 @@ export function drawFeatures(ctx, features, hexSize, hexWidth, hexHeight, zoom, 
 export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, position, selectedUnitId) {
   units.forEach(unit => {
     const { x, y } = position;
-    const counterWidth = hexSize * 1.2; // Wider rectangle
-    const counterHeight = hexSize * 0.8; // Keep height proportional
+    const counterWidth = hexSize * 1.2;
+    const counterHeight = hexSize * 0.8;
 
-    // NATO Infantry Symbol: Wider rectangle with lighter team color background
     ctx.fillStyle = unit.team === 'blue' ? '#6666ff' : '#ff6666';
     ctx.fillRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
 
-    // Thin black border
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 1 / zoom;
     ctx.strokeRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
 
-    // Draw the "X" with thin black lines
     if (!unit.hq) {
       ctx.strokeStyle = '#000';
       ctx.lineWidth = 1 / zoom;
@@ -340,16 +342,15 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
       ctx.lineTo(x - counterWidth / 2, y + counterHeight / 2);
       ctx.stroke();
     }
-    // Text shadow background for rank symbol (XX)
-    const rankText = unit.hq ? 'XXXX' : 'XX'; // Division
+
+    const rankText = unit.hq ? 'XXXX' : 'XX';
     ctx.font = `${8 / zoom}px Arial`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
     const rankTextWidth = ctx.measureText(rankText).width;
-    const rankTextHeight = 8 / zoom; // Approximate height of text
+    const rankTextHeight = 8 / zoom;
     const rankX = x;
     const rankY = y - counterHeight / 2 - 2 / zoom;
-    // Shadow background
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(
       rankX - rankTextWidth / 2 - 2 / zoom,
@@ -357,18 +358,15 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
       rankTextWidth + 4 / zoom,
       rankTextHeight + 4 / zoom
     );
-    // Rank symbol
-    ctx.fillStyle = '#fff'; // White text for contrast
+    ctx.fillStyle = '#fff';
     ctx.fillText(rankText, rankX, rankY);
 
-    // Text shadow background for unit name
     const nameText = unit.name;
     ctx.textBaseline = 'top';
     const nameTextWidth = ctx.measureText(nameText).width;
     const nameTextHeight = 8 / zoom;
     const nameX = x;
     const nameY = y + counterHeight / 2 + 2 / zoom;
-    // Shadow background
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(
       nameX - nameTextWidth / 2 - 2 / zoom,
@@ -376,11 +374,9 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
       nameTextWidth + 4 / zoom,
       nameTextHeight + 4 / zoom
     );
-    // Unit name
     ctx.fillStyle = '#fff';
     ctx.fillText(nameText, nameX, nameY);
 
-    // Highlight if selected
     if (selectedUnitId === unit.id) {
       ctx.strokeStyle = '#ff0';
       ctx.lineWidth = 2 / zoom;
@@ -391,19 +387,17 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
 
 export function drawRoads(ctx, hexes, hexSize, hexWidth, hexHeight, zoom, offset) {
   ctx.beginPath();
-  ctx.strokeStyle = '#996633'; // Brown
-  ctx.lineWidth = 2 / zoom; // Thin, scales with zoom
+  ctx.strokeStyle = '#996633';
+  ctx.lineWidth = 2 / zoom;
 
   hexes.forEach(hex => {
     if (!hex.road) return;
     const x = hex.q * hexWidth + (hex.r % 2 === 0 ? 0 : hexWidth * 0.5);
     const y = hex.r * hexHeight;
 
-    // Check all hexes for adjacency (distance = 1)
     hexes.forEach(neighbor => {
       if (!neighbor.road || (hex.q === neighbor.q && hex.r === neighbor.r)) return;
       if (hexDistance(hex.q, hex.r, neighbor.q, neighbor.r) === 1) {
-        // Dedupe lines: draw only if q < nq || (q === nq && r < nr)
         if (hex.q < neighbor.q || (hex.q === neighbor.q && hex.r < neighbor.r)) {
           const nx = neighbor.q * hexWidth + (neighbor.r % 2 === 0 ? 0 : hexWidth * 0.5);
           const ny = neighbor.r * hexHeight;

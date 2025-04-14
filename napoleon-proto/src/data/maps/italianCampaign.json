@@ -552,7 +552,7 @@
       "terrain": "hills",
       "feature": "city",
       "name": "Berlin",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -669,6 +669,8 @@
       "road": false,
       "height": 1,
       "units": [
+        "blue_hq",
+        "blue_hq",
         "blue_hq"
       ]
     },
@@ -771,7 +773,7 @@
     "2,27": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "2,28": {
@@ -854,13 +856,13 @@
     },
     "2,41": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "2,42": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -1059,37 +1061,37 @@
     "3,25": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "3,26": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "3,27": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "3,28": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "3,29": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "3,30": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "3,31": {
@@ -1160,7 +1162,7 @@
     },
     "3,42": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -1272,6 +1274,10 @@
       "height": 1,
       "units": [
         "blue_2",
+        "blue_7",
+        "blue_2",
+        "blue_7",
+        "blue_2",
         "blue_7"
       ]
     },
@@ -1280,6 +1286,8 @@
       "road": false,
       "height": 1,
       "units": [
+        "red_6",
+        "red_6",
         "red_6"
       ]
     },
@@ -1382,25 +1390,25 @@
     "4,28": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "4,29": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "4,30": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "4,31": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "4,32": {
@@ -1465,7 +1473,7 @@
     },
     "4,42": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -1688,43 +1696,43 @@
     "5,29": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "5,30": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "5,31": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "5,32": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "5,33": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "5,34": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "5,35": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "5,36": {
@@ -1765,7 +1773,7 @@
     },
     "5,42": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2006,7 +2014,7 @@
     "6,32": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "6,33": {
@@ -2059,19 +2067,19 @@
     },
     "6,41": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "6,42": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "6,43": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2347,13 +2355,13 @@
     },
     "7,39": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "7,40": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2371,7 +2379,7 @@
     },
     "7,43": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2384,13 +2392,13 @@
     "7,45": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "7,46": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "7,47": {
@@ -2527,7 +2535,7 @@
     },
     "8,19": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2539,7 +2547,7 @@
     },
     "8,21": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2588,7 +2596,7 @@
     "8,29": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "8,30": {
@@ -2635,13 +2643,13 @@
     },
     "8,37": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "8,38": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2671,7 +2679,7 @@
     },
     "8,43": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2684,13 +2692,13 @@
     "8,45": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "8,46": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "8,47": {
@@ -2815,13 +2823,15 @@
     },
     "9,17": {
       "terrain": "crops",
+      "feature": "village",
+      "name": "Warve",
       "road": true,
       "height": 0,
       "units": []
     },
     "9,18": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2833,7 +2843,7 @@
     },
     "9,20": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2846,14 +2856,14 @@
     "9,22": {
       "terrain": "plains",
       "feature": "city",
-      "name": "City J",
-      "road": false,
+      "name": "Tours",
+      "road": true,
       "height": 0,
       "units": []
     },
     "9,23": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2913,7 +2923,7 @@
     },
     "9,33": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2925,13 +2935,13 @@
     },
     "9,35": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "9,36": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2975,7 +2985,7 @@
       "terrain": "plains",
       "feature": "city",
       "name": "Frankfurt",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -2988,13 +2998,13 @@
     "9,45": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "9,46": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "9,47": {
@@ -3163,14 +3173,14 @@
     },
     "10,24": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "10,25": {
       "terrain": "plains",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 2,
       "units": []
     },
     "10,26": {
@@ -3205,13 +3215,13 @@
     },
     "10,31": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "10,32": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3223,7 +3233,9 @@
     },
     "10,34": {
       "terrain": "crops",
-      "road": false,
+      "feature": "village",
+      "name": "Namur",
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3242,7 +3254,7 @@
     "10,37": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "10,38": {
@@ -3254,7 +3266,7 @@
     "10,39": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "10,40": {
@@ -3277,7 +3289,7 @@
     },
     "10,43": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3290,7 +3302,7 @@
     "10,45": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "10,46": {
@@ -3470,18 +3482,18 @@
     "11,25": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "11,26": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "11,27": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3493,13 +3505,13 @@
     },
     "11,29": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "11,30": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3542,13 +3554,13 @@
     "11,37": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "11,38": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "11,39": {
@@ -3577,20 +3589,20 @@
     },
     "11,43": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "11,44": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "11,45": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "11,46": {
@@ -3715,7 +3727,7 @@
     },
     "12,16": {
       "terrain": "swamps",
-      "road": true,
+      "road": false,
       "height": 0,
       "units": []
     },
@@ -3727,7 +3739,7 @@
     },
     "12,18": {
       "terrain": "plains",
-      "road": true,
+      "road": false,
       "height": 0,
       "units": []
     },
@@ -3752,19 +3764,19 @@
     "12,22": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,23": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,24": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,25": {
@@ -3781,13 +3793,15 @@
     },
     "12,27": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "12,28": {
       "terrain": "woods",
-      "road": false,
+      "feature": "village",
+      "name": "Bastone",
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3842,13 +3856,13 @@
     "12,37": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "12,38": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,39": {
@@ -3871,7 +3885,7 @@
     },
     "12,42": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -3884,13 +3898,13 @@
     "12,44": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,45": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "12,46": {
@@ -3976,6 +3990,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "blue_5",
+        "blue_5",
         "blue_5"
       ]
     },
@@ -4059,25 +4075,25 @@
     },
     "13,23": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "13,24": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "13,25": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "13,26": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4126,25 +4142,25 @@
     "13,34": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "13,35": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "13,36": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "13,37": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "13,38": {
@@ -4167,13 +4183,13 @@
     },
     "13,41": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "13,42": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4353,7 +4369,7 @@
     },
     "14,22": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4426,19 +4442,19 @@
     "14,34": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "14,35": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "14,36": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "14,37": {
@@ -4467,7 +4483,7 @@
     },
     "14,41": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4635,7 +4651,7 @@
     },
     "15,19": {
       "terrain": "crops",
-      "road": true,
+      "road": false,
       "height": 0,
       "units": []
     },
@@ -4671,7 +4687,7 @@
     },
     "15,25": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4726,7 +4742,7 @@
     "15,34": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "15,35": {
@@ -4738,7 +4754,7 @@
     "15,36": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "15,37": {
@@ -4761,7 +4777,7 @@
     },
     "15,40": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -4798,13 +4814,13 @@
     "15,46": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "15,47": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "15,48": {
@@ -5014,19 +5030,19 @@
     "16,32": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "16,33": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "16,34": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "16,35": {
@@ -5055,13 +5071,13 @@
     },
     "16,39": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "16,40": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -5098,13 +5114,13 @@
     "16,46": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "16,47": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "16,48": {
@@ -5277,7 +5293,7 @@
     },
     "17,26": {
       "terrain": "swamps",
-      "road": true,
+      "road": false,
       "height": 0,
       "units": []
     },
@@ -5320,13 +5336,13 @@
     "17,33": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "17,34": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "17,35": {
@@ -5355,7 +5371,7 @@
     },
     "17,39": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -5398,19 +5414,19 @@
     "17,46": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "17,47": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "17,48": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "17,49": {
@@ -5541,7 +5557,7 @@
     },
     "18,20": {
       "terrain": "plains",
-      "road": true,
+      "road": false,
       "height": 0,
       "units": []
     },
@@ -5553,8 +5569,8 @@
     },
     "18,22": {
       "terrain": "crops",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 2,
       "units": []
     },
     "18,23": {
@@ -5592,6 +5608,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "blue_1",
+        "blue_1",
         "blue_1"
       ]
     },
@@ -5610,19 +5628,19 @@
     "18,31": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "18,32": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "18,33": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "18,34": {
@@ -5651,7 +5669,7 @@
     },
     "18,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -5706,7 +5724,7 @@
     "18,47": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "18,48": {
@@ -5855,13 +5873,13 @@
     },
     "19,22": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "19,23": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -5945,13 +5963,13 @@
     },
     "19,37": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "19,38": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -5966,6 +5984,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "blue_4",
+        "blue_4",
         "blue_4"
       ]
     },
@@ -6169,13 +6189,13 @@
     },
     "20,24": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "20,25": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6212,13 +6232,13 @@
     "20,31": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "20,32": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "20,33": {
@@ -6247,7 +6267,7 @@
     },
     "20,37": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6430,6 +6450,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "blue_3",
+        "blue_3",
         "blue_3"
       ]
     },
@@ -6479,7 +6501,7 @@
       "terrain": "plains",
       "feature": "city",
       "name": "Salzburg",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6516,7 +6538,7 @@
     "21,31": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "21,32": {
@@ -6551,7 +6573,7 @@
     },
     "21,37": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6642,13 +6664,13 @@
     "22,2": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "22,3": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "22,4": {
@@ -6785,13 +6807,13 @@
     },
     "22,26": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "22,27": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6816,7 +6838,7 @@
     "22,31": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "22,32": {
@@ -6845,7 +6867,7 @@
     },
     "22,36": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -6950,19 +6972,19 @@
     "23,3": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "23,4": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "23,5": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "23,6": {
@@ -6979,13 +7001,13 @@
     },
     "23,8": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "23,9": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7015,7 +7037,7 @@
     },
     "23,14": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7082,20 +7104,20 @@
     "23,25": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "23,26": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "23,27": {
       "terrain": "crops",
       "feature": "city",
       "name": "Munich",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7143,7 +7165,7 @@
     },
     "23,35": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7151,7 +7173,7 @@
       "terrain": "plains",
       "feature": "city",
       "name": "Augsburg",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7254,31 +7276,31 @@
     "24,3": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,4": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,5": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,6": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,7": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "24,8": {
@@ -7295,13 +7317,13 @@
     },
     "24,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "24,11": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7319,7 +7341,7 @@
     },
     "24,14": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7386,13 +7408,13 @@
     "24,25": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,26": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "24,27": {
@@ -7403,13 +7425,13 @@
     },
     "24,28": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "24,29": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7421,7 +7443,7 @@
     },
     "24,31": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7433,13 +7455,13 @@
     },
     "24,33": {
       "terrain": "plains",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 1,
       "units": []
     },
     "24,34": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7451,13 +7473,13 @@
     },
     "24,36": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "24,37": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7554,7 +7576,7 @@
     "25,3": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,4": {
@@ -7566,42 +7588,42 @@
     "25,5": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,6": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,7": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "25,8": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "25,9": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "25,11": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7619,7 +7641,7 @@
     },
     "25,14": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7680,19 +7702,19 @@
     "25,24": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,25": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,26": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,27": {
@@ -7709,32 +7731,32 @@
     },
     "25,29": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "25,30": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "25,31": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,32": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "25,33": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "25,34": {
@@ -7757,7 +7779,7 @@
     },
     "25,37": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7872,36 +7894,36 @@
     "26,6": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,7": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,8": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "26,9": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,10": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,11": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7913,13 +7935,13 @@
     },
     "26,13": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "26,14": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -7980,55 +8002,55 @@
     "26,24": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,25": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,26": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,27": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,28": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,29": {
       "terrain": "crops",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 1,
       "units": []
     },
     "26,30": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,31": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,32": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,33": {
@@ -8046,7 +8068,7 @@
     "26,35": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "26,36": {
@@ -8057,7 +8079,7 @@
     },
     "26,37": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8201,13 +8223,13 @@
     },
     "27,11": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "27,12": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8256,61 +8278,61 @@
     "27,20": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,21": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,22": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,23": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,24": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,25": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "27,26": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,27": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "27,28": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,29": {
       "terrain": "plains",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 2,
       "units": []
     },
     "27,30": {
@@ -8322,19 +8344,19 @@
     "27,31": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,32": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,33": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,34": {
@@ -8352,24 +8374,24 @@
     "27,36": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,37": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "27,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "27,39": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8501,7 +8523,7 @@
     },
     "28,11": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8538,97 +8560,97 @@
     "28,17": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,18": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,19": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,20": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,21": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,22": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,23": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,24": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,25": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,26": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,27": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,28": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "28,29": {
       "terrain": "hills",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 2,
       "units": []
     },
     "28,30": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,31": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,32": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,33": {
@@ -8640,7 +8662,7 @@
     "28,34": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,35": {
@@ -8652,7 +8674,7 @@
     "28,36": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "28,37": {
@@ -8675,13 +8697,13 @@
     },
     "28,40": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "28,41": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8801,7 +8823,7 @@
     },
     "29,11": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -8832,91 +8854,91 @@
     "29,16": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,17": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,18": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,19": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,20": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,21": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,22": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,23": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,24": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,25": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,26": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,27": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,28": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,29": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "29,30": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,31": {
@@ -8928,7 +8950,7 @@
     "29,32": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "29,33": {
@@ -8964,13 +8986,13 @@
     "29,38": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,39": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "29,40": {
@@ -8987,7 +9009,7 @@
     },
     "29,42": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9101,7 +9123,7 @@
     },
     "30,11": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9114,19 +9136,19 @@
     "30,13": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,14": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,15": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,16": {
@@ -9138,61 +9160,61 @@
     "30,17": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,18": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,19": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,20": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,21": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,22": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,23": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,24": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,25": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,26": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "30,27": {
@@ -9209,7 +9231,7 @@
     },
     "30,29": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9270,24 +9292,24 @@
     "30,39": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,40": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "30,41": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "30,42": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9302,6 +9324,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "red_2",
+        "red_2",
         "red_2"
       ]
     },
@@ -9403,7 +9427,7 @@
     },
     "31,11": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9416,25 +9440,25 @@
     "31,13": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,14": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "31,15": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,16": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "31,17": {
@@ -9452,19 +9476,19 @@
     "31,19": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,20": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,21": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,22": {
@@ -9476,13 +9500,13 @@
     "31,23": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,24": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,25": {
@@ -9494,7 +9518,7 @@
     "31,26": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "31,27": {
@@ -9511,7 +9535,7 @@
     },
     "31,29": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9583,7 +9607,7 @@
     },
     "31,41": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9703,14 +9727,14 @@
     },
     "32,11": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "32,12": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,13": {
@@ -9722,19 +9746,19 @@
     "32,14": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "32,15": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,16": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,17": {
@@ -9752,25 +9776,25 @@
     "32,19": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,20": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,21": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,22": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,23": {
@@ -9794,12 +9818,12 @@
     "32,26": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "32,27": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9811,7 +9835,7 @@
     },
     "32,29": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9883,7 +9907,7 @@
     },
     "32,41": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -9999,13 +10023,13 @@
     },
     "33,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "33,11": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10024,7 +10048,7 @@
     "33,14": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "33,15": {
@@ -10042,13 +10066,13 @@
     "33,17": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "33,18": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "33,19": {
@@ -10066,13 +10090,13 @@
     "33,21": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "33,22": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "33,23": {
@@ -10089,7 +10113,7 @@
     },
     "33,25": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10097,7 +10121,7 @@
       "terrain": "plains",
       "feature": "city",
       "name": "Paris",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10109,7 +10133,7 @@
     },
     "33,28": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10187,7 +10211,7 @@
     },
     "33,41": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10301,7 +10325,7 @@
     },
     "34,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10379,13 +10403,13 @@
     },
     "34,23": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "34,24": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10487,7 +10511,7 @@
     },
     "34,41": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10601,7 +10625,7 @@
     },
     "35,10": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10656,13 +10680,13 @@
     "35,19": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "35,20": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "35,21": {
@@ -10679,7 +10703,7 @@
     },
     "35,23": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10775,13 +10799,13 @@
     },
     "35,39": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "35,40": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10800,7 +10824,7 @@
     "35,43": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "35,44": {
@@ -10824,7 +10848,7 @@
     "35,47": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "35,48": {
@@ -10836,7 +10860,7 @@
     "35,49": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "36,0": {
@@ -10901,7 +10925,7 @@
     },
     "36,10": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -10956,7 +10980,7 @@
     "36,19": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "36,20": {
@@ -10973,7 +10997,7 @@
     },
     "36,22": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11069,14 +11093,14 @@
     },
     "36,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "36,39": {
       "terrain": "woods",
-      "road": false,
-      "height": 0,
+      "road": true,
+      "height": 1,
       "units": []
     },
     "36,40": {
@@ -11088,31 +11112,31 @@
     "36,41": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "36,42": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "36,43": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "36,44": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "36,45": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "36,46": {
@@ -11124,19 +11148,19 @@
     "36,47": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "36,48": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "36,49": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,0": {
@@ -11186,6 +11210,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "red_5",
+        "red_5",
         "red_5"
       ]
     },
@@ -11203,7 +11229,7 @@
     },
     "37,10": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11269,13 +11295,13 @@
     },
     "37,21": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "37,22": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11330,13 +11356,13 @@
     "37,31": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,32": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "37,33": {
@@ -11371,7 +11397,7 @@
     },
     "37,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11384,7 +11410,7 @@
     "37,40": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,41": {
@@ -11402,25 +11428,25 @@
     "37,43": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,44": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "37,45": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 2,
       "units": []
     },
     "37,46": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,47": {
@@ -11432,7 +11458,7 @@
     "37,48": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "37,49": {
@@ -11503,7 +11529,7 @@
     },
     "38,10": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11518,6 +11544,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "red_3",
+        "red_3",
         "red_3"
       ]
     },
@@ -11571,7 +11599,7 @@
     },
     "38,21": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11626,7 +11654,7 @@
     "38,30": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,31": {
@@ -11638,7 +11666,7 @@
     "38,32": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,33": {
@@ -11673,7 +11701,7 @@
     },
     "38,38": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11710,25 +11738,25 @@
     "38,44": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,45": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,46": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,47": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "38,48": {
@@ -11805,7 +11833,7 @@
     },
     "39,10": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11871,7 +11899,7 @@
     },
     "39,21": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11973,7 +12001,7 @@
     },
     "39,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -11982,6 +12010,8 @@
       "road": false,
       "height": 0,
       "units": [
+        "red_4",
+        "red_4",
         "red_4"
       ]
     },
@@ -12012,7 +12042,7 @@
     "39,44": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "39,45": {
@@ -12030,13 +12060,13 @@
     "39,47": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "39,48": {
       "terrain": "woods",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "39,49": {
@@ -12107,7 +12137,7 @@
     },
     "40,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12167,7 +12197,7 @@
     },
     "40,20": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12210,25 +12240,25 @@
     "40,27": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "40,28": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "40,29": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "40,30": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "40,31": {
@@ -12275,7 +12305,7 @@
     },
     "40,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12312,7 +12342,7 @@
     "40,44": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "40,45": {
@@ -12407,7 +12437,7 @@
     },
     "41,10": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12461,13 +12491,13 @@
     },
     "41,19": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "41,20": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12498,25 +12528,25 @@
     "41,25": {
       "terrain": "crops",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,26": {
       "terrain": "hills",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,27": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,28": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,29": {
@@ -12575,7 +12605,7 @@
     },
     "41,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12606,7 +12636,7 @@
     "41,43": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,44": {
@@ -12618,7 +12648,7 @@
     "41,45": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "41,46": {
@@ -12707,7 +12737,7 @@
     },
     "42,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12755,7 +12785,7 @@
     },
     "42,18": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12798,7 +12828,7 @@
     "42,25": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "42,26": {
@@ -12875,7 +12905,7 @@
     },
     "42,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -12912,7 +12942,7 @@
     "42,44": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "42,45": {
@@ -13007,7 +13037,7 @@
     },
     "43,10": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13051,13 +13081,13 @@
       "terrain": "plains",
       "feature": "city",
       "name": "Arnhem",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "43,18": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13088,13 +13118,13 @@
     "43,23": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "43,24": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "43,25": {
@@ -13177,7 +13207,7 @@
     },
     "43,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13208,13 +13238,13 @@
     "43,43": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "43,44": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "43,45": {
@@ -13303,13 +13333,13 @@
     },
     "44,9": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "44,10": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13339,13 +13369,13 @@
     },
     "44,15": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "44,16": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13382,7 +13412,7 @@
     "44,22": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "44,23": {
@@ -13394,7 +13424,7 @@
     "44,24": {
       "terrain": "swamps",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "44,25": {
@@ -13477,7 +13507,7 @@
     },
     "44,38": {
       "terrain": "hills",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13514,7 +13544,7 @@
     "44,44": {
       "terrain": "plains",
       "road": false,
-      "height": 0,
+      "height": 1,
       "units": []
     },
     "44,45": {
@@ -13603,7 +13633,7 @@
     },
     "45,9": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13627,19 +13657,19 @@
     },
     "45,13": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "45,14": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "45,15": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13777,7 +13807,7 @@
     },
     "45,38": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13897,13 +13927,13 @@
     },
     "46,8": {
       "terrain": "swamps",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "46,9": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -13915,13 +13945,13 @@
     },
     "46,11": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "46,12": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -14077,7 +14107,7 @@
     },
     "46,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -14193,25 +14223,25 @@
       "terrain": "woods",
       "feature": "city",
       "name": "Rhiems",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "47,8": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "47,9": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
     "47,10": {
       "terrain": "woods",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -14376,12 +14406,14 @@
       "road": false,
       "height": 0,
       "units": [
+        "red_1",
+        "red_1",
         "red_1"
       ]
     },
     "47,38": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -14681,7 +14713,7 @@
     },
     "48,38": {
       "terrain": "crops",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
@@ -14981,7 +15013,7 @@
     },
     "49,38": {
       "terrain": "plains",
-      "road": false,
+      "road": true,
       "height": 0,
       "units": []
     },
