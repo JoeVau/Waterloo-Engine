@@ -11,26 +11,18 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   }
   ctx.closePath();
 
-  // Adjust base color based on height (0-2)
-  let baseColor = color;
-  if (hex && hex.terrain && hex.height !== undefined) {
-    const height = Math.min(Math.max(hex.height, 0), 2); // Clamp height to 0-2
-    const darkenFactor = 1 - 0.15 * height; // 0: 100%, 1: 85%, 2: 70% brightness
-    if (color.startsWith('#')) {
-      const r = parseInt(color.slice(1, 3), 16);
-      const g = parseInt(color.slice(3, 5), 16);
-      const b = parseInt(color.slice(5, 7), 16);
-      const newR = Math.round(r * darkenFactor);
-      const newG = Math.round(g * darkenFactor);
-      const newB = Math.round(b * darkenFactor);
-      baseColor = `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
-    }
-  }
+  // Elevation gradient for all hexes based on height
+  const heightColors = {
+    0: '#e6f0e6', // Low: Light green, flat plains
+    1: '#b3c9b3', // Mid: Mid green-gray, gentle rise
+    2: '#809b80'  // High: Darker green-gray, rugged
+  };
+  const baseColor = hex && hex.height !== undefined ? heightColors[Math.min(Math.max(hex.height, 0), 2)] : '#e6f0e6';
 
   ctx.fillStyle = baseColor;
   ctx.fill();
 
-  // Terrain-specific features (unchanged, apply over darkened base)
+  // Terrain-specific features (overlay on elevation background)
   switch (hex.terrain) {
     case 'hills':
       ctx.fillStyle = '#6b4e31';

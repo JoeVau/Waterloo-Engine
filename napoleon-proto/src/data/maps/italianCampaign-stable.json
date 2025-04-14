@@ -1,0 +1,7928 @@
+{
+  "name": "Campaign 2",
+  "gridSize": 50,
+  "hexes": {
+    "0,0": {
+      "terrain": "woods"
+    },
+    "0,1": {
+      "terrain": "woods"
+    },
+    "0,2": {
+      "terrain": "crops"
+    },
+    "0,3": {
+      "terrain": "swamps"
+    },
+    "0,4": {
+      "terrain": "plains"
+    },
+    "0,5": {
+      "terrain": "plains"
+    },
+    "0,6": {
+      "terrain": "hills"
+    },
+    "0,7": {
+      "terrain": "crops"
+    },
+    "0,8": {
+      "terrain": "crops"
+    },
+    "0,9": {
+      "terrain": "crops"
+    },
+    "0,10": {
+      "terrain": "crops"
+    },
+    "0,11": {
+      "terrain": "crops"
+    },
+    "0,12": {
+      "terrain": "crops"
+    },
+    "0,13": {
+      "terrain": "plains"
+    },
+    "0,14": {
+      "terrain": "plains"
+    },
+    "0,15": {
+      "terrain": "hills"
+    },
+    "0,16": {
+      "terrain": "plains"
+    },
+    "0,17": {
+      "terrain": "crops"
+    },
+    "0,18": {
+      "terrain": "plains"
+    },
+    "0,19": {
+      "terrain": "woods"
+    },
+    "0,20": {
+      "terrain": "plains"
+    },
+    "0,21": {
+      "terrain": "crops"
+    },
+    "0,22": {
+      "terrain": "plains"
+    },
+    "0,23": {
+      "terrain": "plains"
+    },
+    "0,24": {
+      "terrain": "plains"
+    },
+    "0,25": {
+      "terrain": "hills"
+    },
+    "0,26": {
+      "terrain": "plains"
+    },
+    "0,27": {
+      "terrain": "plains"
+    },
+    "0,28": {
+      "terrain": "plains"
+    },
+    "0,29": {
+      "terrain": "hills"
+    },
+    "0,30": {
+      "terrain": "plains"
+    },
+    "0,31": {
+      "terrain": "plains"
+    },
+    "0,32": {
+      "terrain": "woods"
+    },
+    "0,33": {
+      "terrain": "plains"
+    },
+    "0,34": {
+      "terrain": "crops"
+    },
+    "0,35": {
+      "terrain": "woods"
+    },
+    "0,36": {
+      "terrain": "plains"
+    },
+    "0,37": {
+      "terrain": "plains"
+    },
+    "0,38": {
+      "terrain": "hills"
+    },
+    "0,39": {
+      "terrain": "plains"
+    },
+    "0,40": {
+      "terrain": "woods"
+    },
+    "0,41": {
+      "terrain": "woods"
+    },
+    "0,42": {
+      "terrain": "woods"
+    },
+    "0,43": {
+      "terrain": "woods"
+    },
+    "0,44": {
+      "terrain": "woods"
+    },
+    "0,45": {
+      "terrain": "woods"
+    },
+    "0,46": {
+      "terrain": "hills"
+    },
+    "0,47": {
+      "terrain": "plains"
+    },
+    "0,48": {
+      "terrain": "plains"
+    },
+    "0,49": {
+      "terrain": "hills"
+    },
+    "1,0": {
+      "terrain": "plains"
+    },
+    "1,1": {
+      "terrain": "plains"
+    },
+    "1,2": {
+      "terrain": "plains"
+    },
+    "1,3": {
+      "terrain": "swamps"
+    },
+    "1,4": {
+      "terrain": "woods"
+    },
+    "1,5": {
+      "terrain": "plains"
+    },
+    "1,6": {
+      "terrain": "hills"
+    },
+    "1,7": {
+      "terrain": "crops"
+    },
+    "1,8": {
+      "terrain": "crops"
+    },
+    "1,9": {
+      "terrain": "crops"
+    },
+    "1,10": {
+      "terrain": "crops"
+    },
+    "1,11": {
+      "terrain": "crops"
+    },
+    "1,12": {
+      "terrain": "plains"
+    },
+    "1,13": {
+      "terrain": "plains"
+    },
+    "1,14": {
+      "terrain": "plains"
+    },
+    "1,15": {
+      "terrain": "plains"
+    },
+    "1,16": {
+      "terrain": "plains"
+    },
+    "1,17": {
+      "terrain": "plains"
+    },
+    "1,18": {
+      "terrain": "woods"
+    },
+    "1,19": {
+      "terrain": "crops"
+    },
+    "1,20": {
+      "terrain": "plains"
+    },
+    "1,21": {
+      "terrain": "hills"
+    },
+    "1,22": {
+      "terrain": "hills"
+    },
+    "1,23": {
+      "terrain": "woods"
+    },
+    "1,24": {
+      "terrain": "woods"
+    },
+    "1,25": {
+      "terrain": "woods"
+    },
+    "1,26": {
+      "terrain": "plains"
+    },
+    "1,27": {
+      "terrain": "plains"
+    },
+    "1,28": {
+      "terrain": "plains"
+    },
+    "1,29": {
+      "terrain": "plains"
+    },
+    "1,30": {
+      "terrain": "woods"
+    },
+    "1,31": {
+      "terrain": "plains"
+    },
+    "1,32": {
+      "terrain": "hills"
+    },
+    "1,33": {
+      "terrain": "plains"
+    },
+    "1,34": {
+      "terrain": "plains"
+    },
+    "1,35": {
+      "terrain": "plains"
+    },
+    "1,36": {
+      "terrain": "plains"
+    },
+    "1,37": {
+      "terrain": "crops"
+    },
+    "1,38": {
+      "terrain": "hills"
+    },
+    "1,39": {
+      "terrain": "hills"
+    },
+    "1,40": {
+      "terrain": "hills"
+    },
+    "1,41": {
+      "terrain": "hills",
+      "feature": "city",
+      "name": "Berlin"
+    },
+    "1,42": {
+      "terrain": "hills"
+    },
+    "1,43": {
+      "terrain": "hills"
+    },
+    "1,44": {
+      "terrain": "woods"
+    },
+    "1,45": {
+      "terrain": "woods"
+    },
+    "1,46": {
+      "terrain": "woods"
+    },
+    "1,47": {
+      "terrain": "plains"
+    },
+    "1,48": {
+      "terrain": "plains"
+    },
+    "1,49": {
+      "terrain": "crops"
+    },
+    "2,0": {
+      "terrain": "woods"
+    },
+    "2,1": {
+      "terrain": "woods"
+    },
+    "2,2": {
+      "terrain": "swamps"
+    },
+    "2,3": {
+      "terrain": "plains"
+    },
+    "2,4": {
+      "terrain": "swamps"
+    },
+    "2,5": {
+      "terrain": "hills"
+    },
+    "2,6": {
+      "terrain": "crops"
+    },
+    "2,7": {
+      "terrain": "crops"
+    },
+    "2,8": {
+      "terrain": "crops"
+    },
+    "2,9": {
+      "terrain": "crops"
+    },
+    "2,10": {
+      "terrain": "crops"
+    },
+    "2,11": {
+      "terrain": "crops"
+    },
+    "2,12": {
+      "terrain": "crops"
+    },
+    "2,13": {
+      "terrain": "plains"
+    },
+    "2,14": {
+      "terrain": "woods"
+    },
+    "2,15": {
+      "terrain": "hills"
+    },
+    "2,16": {
+      "terrain": "hills"
+    },
+    "2,17": {
+      "terrain": "hills"
+    },
+    "2,18": {
+      "terrain": "hills"
+    },
+    "2,19": {
+      "terrain": "hills"
+    },
+    "2,20": {
+      "terrain": "hills"
+    },
+    "2,21": {
+      "terrain": "hills"
+    },
+    "2,22": {
+      "terrain": "plains"
+    },
+    "2,23": {
+      "terrain": "hills"
+    },
+    "2,24": {
+      "terrain": "plains"
+    },
+    "2,25": {
+      "terrain": "woods"
+    },
+    "2,26": {
+      "terrain": "plains"
+    },
+    "2,27": {
+      "terrain": "plains"
+    },
+    "2,28": {
+      "terrain": "woods"
+    },
+    "2,29": {
+      "terrain": "woods"
+    },
+    "2,30": {
+      "terrain": "woods"
+    },
+    "2,31": {
+      "terrain": "plains"
+    },
+    "2,32": {
+      "terrain": "woods"
+    },
+    "2,33": {
+      "terrain": "woods"
+    },
+    "2,34": {
+      "terrain": "woods"
+    },
+    "2,35": {
+      "terrain": "hills"
+    },
+    "2,36": {
+      "terrain": "plains"
+    },
+    "2,37": {
+      "terrain": "plains"
+    },
+    "2,38": {
+      "terrain": "woods"
+    },
+    "2,39": {
+      "terrain": "hills"
+    },
+    "2,40": {
+      "terrain": "hills"
+    },
+    "2,41": {
+      "terrain": "hills"
+    },
+    "2,42": {
+      "terrain": "hills"
+    },
+    "2,43": {
+      "terrain": "hills"
+    },
+    "2,44": {
+      "terrain": "woods"
+    },
+    "2,45": {
+      "terrain": "woods"
+    },
+    "2,46": {
+      "terrain": "plains"
+    },
+    "2,47": {
+      "terrain": "plains"
+    },
+    "2,48": {
+      "terrain": "hills"
+    },
+    "2,49": {
+      "terrain": "plains"
+    },
+    "3,0": {
+      "terrain": "swamps"
+    },
+    "3,1": {
+      "terrain": "plains"
+    },
+    "3,2": {
+      "terrain": "woods"
+    },
+    "3,3": {
+      "terrain": "swamps"
+    },
+    "3,4": {
+      "terrain": "plains"
+    },
+    "3,5": {
+      "terrain": "swamps"
+    },
+    "3,6": {
+      "terrain": "swamps"
+    },
+    "3,7": {
+      "terrain": "swamps"
+    },
+    "3,8": {
+      "terrain": "swamps"
+    },
+    "3,9": {
+      "terrain": "swamps"
+    },
+    "3,10": {
+      "terrain": "crops"
+    },
+    "3,11": {
+      "terrain": "crops"
+    },
+    "3,12": {
+      "terrain": "plains"
+    },
+    "3,13": {
+      "terrain": "crops"
+    },
+    "3,14": {
+      "terrain": "plains"
+    },
+    "3,15": {
+      "terrain": "plains"
+    },
+    "3,16": {
+      "terrain": "woods"
+    },
+    "3,17": {
+      "terrain": "hills"
+    },
+    "3,18": {
+      "terrain": "hills"
+    },
+    "3,19": {
+      "terrain": "hills"
+    },
+    "3,20": {
+      "terrain": "hills"
+    },
+    "3,21": {
+      "terrain": "hills"
+    },
+    "3,22": {
+      "terrain": "plains"
+    },
+    "3,23": {
+      "terrain": "swamps"
+    },
+    "3,24": {
+      "terrain": "swamps"
+    },
+    "3,25": {
+      "terrain": "plains"
+    },
+    "3,26": {
+      "terrain": "plains"
+    },
+    "3,27": {
+      "terrain": "woods"
+    },
+    "3,28": {
+      "terrain": "plains"
+    },
+    "3,29": {
+      "terrain": "woods"
+    },
+    "3,30": {
+      "terrain": "hills"
+    },
+    "3,31": {
+      "terrain": "plains"
+    },
+    "3,32": {
+      "terrain": "plains"
+    },
+    "3,33": {
+      "terrain": "plains"
+    },
+    "3,34": {
+      "terrain": "hills"
+    },
+    "3,35": {
+      "terrain": "plains"
+    },
+    "3,36": {
+      "terrain": "crops"
+    },
+    "3,37": {
+      "terrain": "plains"
+    },
+    "3,38": {
+      "terrain": "plains"
+    },
+    "3,39": {
+      "terrain": "hills"
+    },
+    "3,40": {
+      "terrain": "hills"
+    },
+    "3,41": {
+      "terrain": "hills"
+    },
+    "3,42": {
+      "terrain": "hills"
+    },
+    "3,43": {
+      "terrain": "hills"
+    },
+    "3,44": {
+      "terrain": "woods"
+    },
+    "3,45": {
+      "terrain": "woods"
+    },
+    "3,46": {
+      "terrain": "plains"
+    },
+    "3,47": {
+      "terrain": "crops"
+    },
+    "3,48": {
+      "terrain": "plains"
+    },
+    "3,49": {
+      "terrain": "plains"
+    },
+    "4,0": {
+      "terrain": "plains"
+    },
+    "4,1": {
+      "terrain": "plains"
+    },
+    "4,2": {
+      "terrain": "swamps"
+    },
+    "4,3": {
+      "terrain": "swamps"
+    },
+    "4,4": {
+      "terrain": "swamps"
+    },
+    "4,5": {
+      "terrain": "swamps"
+    },
+    "4,6": {
+      "terrain": "swamps"
+    },
+    "4,7": {
+      "terrain": "swamps"
+    },
+    "4,8": {
+      "terrain": "swamps"
+    },
+    "4,9": {
+      "terrain": "swamps"
+    },
+    "4,10": {
+      "terrain": "crops"
+    },
+    "4,11": {
+      "terrain": "crops"
+    },
+    "4,12": {
+      "terrain": "plains"
+    },
+    "4,13": {
+      "terrain": "plains"
+    },
+    "4,14": {
+      "terrain": "woods"
+    },
+    "4,15": {
+      "terrain": "woods"
+    },
+    "4,16": {
+      "terrain": "plains"
+    },
+    "4,17": {
+      "terrain": "hills"
+    },
+    "4,18": {
+      "terrain": "hills"
+    },
+    "4,19": {
+      "terrain": "hills"
+    },
+    "4,20": {
+      "terrain": "hills"
+    },
+    "4,21": {
+      "terrain": "hills"
+    },
+    "4,22": {
+      "terrain": "plains"
+    },
+    "4,23": {
+      "terrain": "crops"
+    },
+    "4,24": {
+      "terrain": "plains"
+    },
+    "4,25": {
+      "terrain": "plains"
+    },
+    "4,26": {
+      "terrain": "plains"
+    },
+    "4,27": {
+      "terrain": "plains"
+    },
+    "4,28": {
+      "terrain": "plains"
+    },
+    "4,29": {
+      "terrain": "plains"
+    },
+    "4,30": {
+      "terrain": "hills"
+    },
+    "4,31": {
+      "terrain": "woods"
+    },
+    "4,32": {
+      "terrain": "hills"
+    },
+    "4,33": {
+      "terrain": "crops"
+    },
+    "4,34": {
+      "terrain": "plains"
+    },
+    "4,35": {
+      "terrain": "crops"
+    },
+    "4,36": {
+      "terrain": "plains"
+    },
+    "4,37": {
+      "terrain": "plains"
+    },
+    "4,38": {
+      "terrain": "crops"
+    },
+    "4,39": {
+      "terrain": "hills"
+    },
+    "4,40": {
+      "terrain": "hills"
+    },
+    "4,41": {
+      "terrain": "hills"
+    },
+    "4,42": {
+      "terrain": "hills"
+    },
+    "4,43": {
+      "terrain": "hills"
+    },
+    "4,44": {
+      "terrain": "woods"
+    },
+    "4,45": {
+      "terrain": "woods"
+    },
+    "4,46": {
+      "terrain": "woods"
+    },
+    "4,47": {
+      "terrain": "plains"
+    },
+    "4,48": {
+      "terrain": "hills"
+    },
+    "4,49": {
+      "terrain": "plains"
+    },
+    "5,0": {
+      "terrain": "woods"
+    },
+    "5,1": {
+      "terrain": "plains"
+    },
+    "5,2": {
+      "terrain": "swamps"
+    },
+    "5,3": {
+      "terrain": "swamps"
+    },
+    "5,4": {
+      "terrain": "swamps"
+    },
+    "5,5": {
+      "terrain": "swamps"
+    },
+    "5,6": {
+      "terrain": "swamps"
+    },
+    "5,7": {
+      "terrain": "swamps"
+    },
+    "5,8": {
+      "terrain": "swamps"
+    },
+    "5,9": {
+      "terrain": "swamps"
+    },
+    "5,10": {
+      "terrain": "plains"
+    },
+    "5,11": {
+      "terrain": "plains"
+    },
+    "5,12": {
+      "terrain": "woods"
+    },
+    "5,13": {
+      "terrain": "plains"
+    },
+    "5,14": {
+      "terrain": "woods"
+    },
+    "5,15": {
+      "terrain": "plains"
+    },
+    "5,16": {
+      "terrain": "hills"
+    },
+    "5,17": {
+      "terrain": "hills"
+    },
+    "5,18": {
+      "terrain": "hills"
+    },
+    "5,19": {
+      "terrain": "hills"
+    },
+    "5,20": {
+      "terrain": "hills"
+    },
+    "5,21": {
+      "terrain": "hills"
+    },
+    "5,22": {
+      "terrain": "plains"
+    },
+    "5,23": {
+      "terrain": "woods"
+    },
+    "5,24": {
+      "terrain": "plains"
+    },
+    "5,25": {
+      "terrain": "woods"
+    },
+    "5,26": {
+      "terrain": "plains"
+    },
+    "5,27": {
+      "terrain": "woods"
+    },
+    "5,28": {
+      "terrain": "woods"
+    },
+    "5,29": {
+      "terrain": "woods"
+    },
+    "5,30": {
+      "terrain": "woods"
+    },
+    "5,31": {
+      "terrain": "woods"
+    },
+    "5,32": {
+      "terrain": "woods"
+    },
+    "5,33": {
+      "terrain": "plains"
+    },
+    "5,34": {
+      "terrain": "woods"
+    },
+    "5,35": {
+      "terrain": "plains"
+    },
+    "5,36": {
+      "terrain": "plains"
+    },
+    "5,37": {
+      "terrain": "plains"
+    },
+    "5,38": {
+      "terrain": "woods"
+    },
+    "5,39": {
+      "terrain": "hills"
+    },
+    "5,40": {
+      "terrain": "hills"
+    },
+    "5,41": {
+      "terrain": "hills"
+    },
+    "5,42": {
+      "terrain": "hills"
+    },
+    "5,43": {
+      "terrain": "hills"
+    },
+    "5,44": {
+      "terrain": "woods"
+    },
+    "5,45": {
+      "terrain": "woods"
+    },
+    "5,46": {
+      "terrain": "woods"
+    },
+    "5,47": {
+      "terrain": "plains"
+    },
+    "5,48": {
+      "terrain": "swamps"
+    },
+    "5,49": {
+      "terrain": "plains"
+    },
+    "6,0": {
+      "terrain": "crops"
+    },
+    "6,1": {
+      "terrain": "plains"
+    },
+    "6,2": {
+      "terrain": "swamps"
+    },
+    "6,3": {
+      "terrain": "swamps"
+    },
+    "6,4": {
+      "terrain": "swamps"
+    },
+    "6,5": {
+      "terrain": "swamps"
+    },
+    "6,6": {
+      "terrain": "swamps"
+    },
+    "6,7": {
+      "terrain": "swamps"
+    },
+    "6,8": {
+      "terrain": "swamps"
+    },
+    "6,9": {
+      "terrain": "swamps"
+    },
+    "6,10": {
+      "terrain": "plains"
+    },
+    "6,11": {
+      "terrain": "hills"
+    },
+    "6,12": {
+      "terrain": "plains"
+    },
+    "6,13": {
+      "terrain": "plains"
+    },
+    "6,14": {
+      "terrain": "crops"
+    },
+    "6,15": {
+      "terrain": "hills"
+    },
+    "6,16": {
+      "terrain": "plains"
+    },
+    "6,17": {
+      "terrain": "hills"
+    },
+    "6,18": {
+      "terrain": "hills"
+    },
+    "6,19": {
+      "terrain": "hills"
+    },
+    "6,20": {
+      "terrain": "hills"
+    },
+    "6,21": {
+      "terrain": "hills"
+    },
+    "6,22": {
+      "terrain": "plains"
+    },
+    "6,23": {
+      "terrain": "plains"
+    },
+    "6,24": {
+      "terrain": "plains"
+    },
+    "6,25": {
+      "terrain": "woods"
+    },
+    "6,26": {
+      "terrain": "plains"
+    },
+    "6,27": {
+      "terrain": "plains"
+    },
+    "6,28": {
+      "terrain": "woods"
+    },
+    "6,29": {
+      "terrain": "woods"
+    },
+    "6,30": {
+      "terrain": "woods"
+    },
+    "6,31": {
+      "terrain": "woods"
+    },
+    "6,32": {
+      "terrain": "woods"
+    },
+    "6,33": {
+      "terrain": "plains"
+    },
+    "6,34": {
+      "terrain": "plains"
+    },
+    "6,35": {
+      "terrain": "woods"
+    },
+    "6,36": {
+      "terrain": "swamps"
+    },
+    "6,37": {
+      "terrain": "plains"
+    },
+    "6,38": {
+      "terrain": "crops"
+    },
+    "6,39": {
+      "terrain": "hills"
+    },
+    "6,40": {
+      "terrain": "woods"
+    },
+    "6,41": {
+      "terrain": "woods"
+    },
+    "6,42": {
+      "terrain": "woods"
+    },
+    "6,43": {
+      "terrain": "crops"
+    },
+    "6,44": {
+      "terrain": "plains"
+    },
+    "6,45": {
+      "terrain": "plains"
+    },
+    "6,46": {
+      "terrain": "plains"
+    },
+    "6,47": {
+      "terrain": "plains"
+    },
+    "6,48": {
+      "terrain": "plains"
+    },
+    "6,49": {
+      "terrain": "swamps"
+    },
+    "7,0": {
+      "terrain": "plains"
+    },
+    "7,1": {
+      "terrain": "hills"
+    },
+    "7,2": {
+      "terrain": "swamps"
+    },
+    "7,3": {
+      "terrain": "swamps"
+    },
+    "7,4": {
+      "terrain": "swamps"
+    },
+    "7,5": {
+      "terrain": "swamps"
+    },
+    "7,6": {
+      "terrain": "swamps"
+    },
+    "7,7": {
+      "terrain": "swamps"
+    },
+    "7,8": {
+      "terrain": "swamps"
+    },
+    "7,9": {
+      "terrain": "swamps"
+    },
+    "7,10": {
+      "terrain": "plains"
+    },
+    "7,11": {
+      "terrain": "plains"
+    },
+    "7,12": {
+      "terrain": "hills"
+    },
+    "7,13": {
+      "terrain": "hills"
+    },
+    "7,14": {
+      "terrain": "woods"
+    },
+    "7,15": {
+      "terrain": "plains"
+    },
+    "7,16": {
+      "terrain": "crops"
+    },
+    "7,17": {
+      "terrain": "plains"
+    },
+    "7,18": {
+      "terrain": "crops"
+    },
+    "7,19": {
+      "terrain": "plains"
+    },
+    "7,20": {
+      "terrain": "plains"
+    },
+    "7,21": {
+      "terrain": "plains"
+    },
+    "7,22": {
+      "terrain": "plains"
+    },
+    "7,23": {
+      "terrain": "plains"
+    },
+    "7,24": {
+      "terrain": "hills"
+    },
+    "7,25": {
+      "terrain": "plains"
+    },
+    "7,26": {
+      "terrain": "woods"
+    },
+    "7,27": {
+      "terrain": "hills"
+    },
+    "7,28": {
+      "terrain": "woods"
+    },
+    "7,29": {
+      "terrain": "woods"
+    },
+    "7,30": {
+      "terrain": "woods"
+    },
+    "7,31": {
+      "terrain": "woods"
+    },
+    "7,32": {
+      "terrain": "woods"
+    },
+    "7,33": {
+      "terrain": "woods"
+    },
+    "7,34": {
+      "terrain": "hills"
+    },
+    "7,35": {
+      "terrain": "plains"
+    },
+    "7,36": {
+      "terrain": "plains"
+    },
+    "7,37": {
+      "terrain": "woods"
+    },
+    "7,38": {
+      "terrain": "plains"
+    },
+    "7,39": {
+      "terrain": "plains"
+    },
+    "7,40": {
+      "terrain": "hills"
+    },
+    "7,41": {
+      "terrain": "hills"
+    },
+    "7,42": {
+      "terrain": "woods"
+    },
+    "7,43": {
+      "terrain": "woods"
+    },
+    "7,44": {
+      "terrain": "plains"
+    },
+    "7,45": {
+      "terrain": "plains"
+    },
+    "7,46": {
+      "terrain": "woods"
+    },
+    "7,47": {
+      "terrain": "woods"
+    },
+    "7,48": {
+      "terrain": "hills"
+    },
+    "7,49": {
+      "terrain": "plains"
+    },
+    "8,0": {
+      "terrain": "plains"
+    },
+    "8,1": {
+      "terrain": "plains"
+    },
+    "8,2": {
+      "terrain": "swamps"
+    },
+    "8,3": {
+      "terrain": "swamps"
+    },
+    "8,4": {
+      "terrain": "swamps"
+    },
+    "8,5": {
+      "terrain": "swamps"
+    },
+    "8,6": {
+      "terrain": "swamps"
+    },
+    "8,7": {
+      "terrain": "plains"
+    },
+    "8,8": {
+      "terrain": "plains"
+    },
+    "8,9": {
+      "terrain": "hills"
+    },
+    "8,10": {
+      "terrain": "woods"
+    },
+    "8,11": {
+      "terrain": "plains"
+    },
+    "8,12": {
+      "terrain": "plains"
+    },
+    "8,13": {
+      "terrain": "plains"
+    },
+    "8,14": {
+      "terrain": "plains"
+    },
+    "8,15": {
+      "terrain": "woods"
+    },
+    "8,16": {
+      "terrain": "plains"
+    },
+    "8,17": {
+      "terrain": "woods"
+    },
+    "8,18": {
+      "terrain": "woods"
+    },
+    "8,19": {
+      "terrain": "swamps"
+    },
+    "8,20": {
+      "terrain": "plains"
+    },
+    "8,21": {
+      "terrain": "hills"
+    },
+    "8,22": {
+      "terrain": "plains"
+    },
+    "8,23": {
+      "terrain": "hills"
+    },
+    "8,24": {
+      "terrain": "plains"
+    },
+    "8,25": {
+      "terrain": "plains"
+    },
+    "8,26": {
+      "terrain": "plains"
+    },
+    "8,27": {
+      "terrain": "crops"
+    },
+    "8,28": {
+      "terrain": "woods"
+    },
+    "8,29": {
+      "terrain": "woods"
+    },
+    "8,30": {
+      "terrain": "woods"
+    },
+    "8,31": {
+      "terrain": "woods"
+    },
+    "8,32": {
+      "terrain": "woods"
+    },
+    "8,33": {
+      "terrain": "plains"
+    },
+    "8,34": {
+      "terrain": "plains"
+    },
+    "8,35": {
+      "terrain": "woods"
+    },
+    "8,36": {
+      "terrain": "hills"
+    },
+    "8,37": {
+      "terrain": "plains"
+    },
+    "8,38": {
+      "terrain": "woods"
+    },
+    "8,39": {
+      "terrain": "plains"
+    },
+    "8,40": {
+      "terrain": "hills"
+    },
+    "8,41": {
+      "terrain": "plains"
+    },
+    "8,42": {
+      "terrain": "plains"
+    },
+    "8,43": {
+      "terrain": "crops"
+    },
+    "8,44": {
+      "terrain": "woods"
+    },
+    "8,45": {
+      "terrain": "plains"
+    },
+    "8,46": {
+      "terrain": "plains"
+    },
+    "8,47": {
+      "terrain": "plains"
+    },
+    "8,48": {
+      "terrain": "plains"
+    },
+    "8,49": {
+      "terrain": "crops"
+    },
+    "9,0": {
+      "terrain": "crops"
+    },
+    "9,1": {
+      "terrain": "hills"
+    },
+    "9,2": {
+      "terrain": "crops"
+    },
+    "9,3": {
+      "terrain": "plains"
+    },
+    "9,4": {
+      "terrain": "hills"
+    },
+    "9,5": {
+      "terrain": "plains"
+    },
+    "9,6": {
+      "terrain": "woods"
+    },
+    "9,7": {
+      "terrain": "woods"
+    },
+    "9,8": {
+      "terrain": "plains"
+    },
+    "9,9": {
+      "terrain": "plains"
+    },
+    "9,10": {
+      "terrain": "hills"
+    },
+    "9,11": {
+      "terrain": "plains"
+    },
+    "9,12": {
+      "terrain": "plains"
+    },
+    "9,13": {
+      "terrain": "plains"
+    },
+    "9,14": {
+      "terrain": "plains"
+    },
+    "9,15": {
+      "terrain": "plains"
+    },
+    "9,16": {
+      "terrain": "plains"
+    },
+    "9,17": {
+      "terrain": "crops"
+    },
+    "9,18": {
+      "terrain": "plains"
+    },
+    "9,19": {
+      "terrain": "plains"
+    },
+    "9,20": {
+      "terrain": "plains"
+    },
+    "9,21": {
+      "terrain": "plains"
+    },
+    "9,22": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "City J"
+    },
+    "9,23": {
+      "terrain": "crops"
+    },
+    "9,24": {
+      "terrain": "plains"
+    },
+    "9,25": {
+      "terrain": "woods"
+    },
+    "9,26": {
+      "terrain": "hills"
+    },
+    "9,27": {
+      "terrain": "plains"
+    },
+    "9,28": {
+      "terrain": "woods"
+    },
+    "9,29": {
+      "terrain": "woods"
+    },
+    "9,30": {
+      "terrain": "woods"
+    },
+    "9,31": {
+      "terrain": "woods"
+    },
+    "9,32": {
+      "terrain": "woods"
+    },
+    "9,33": {
+      "terrain": "woods"
+    },
+    "9,34": {
+      "terrain": "crops"
+    },
+    "9,35": {
+      "terrain": "woods"
+    },
+    "9,36": {
+      "terrain": "woods"
+    },
+    "9,37": {
+      "terrain": "hills"
+    },
+    "9,38": {
+      "terrain": "plains"
+    },
+    "9,39": {
+      "terrain": "swamps"
+    },
+    "9,40": {
+      "terrain": "woods"
+    },
+    "9,41": {
+      "terrain": "woods"
+    },
+    "9,42": {
+      "terrain": "hills"
+    },
+    "9,43": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Frankfurt"
+    },
+    "9,44": {
+      "terrain": "hills"
+    },
+    "9,45": {
+      "terrain": "woods"
+    },
+    "9,46": {
+      "terrain": "woods"
+    },
+    "9,47": {
+      "terrain": "plains"
+    },
+    "9,48": {
+      "terrain": "plains"
+    },
+    "9,49": {
+      "terrain": "woods"
+    },
+    "10,0": {
+      "terrain": "plains"
+    },
+    "10,1": {
+      "terrain": "swamps"
+    },
+    "10,2": {
+      "terrain": "plains"
+    },
+    "10,3": {
+      "terrain": "hills"
+    },
+    "10,4": {
+      "terrain": "plains"
+    },
+    "10,5": {
+      "terrain": "plains"
+    },
+    "10,6": {
+      "terrain": "plains"
+    },
+    "10,7": {
+      "terrain": "plains"
+    },
+    "10,8": {
+      "terrain": "plains"
+    },
+    "10,9": {
+      "terrain": "hills"
+    },
+    "10,10": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Vienna"
+    },
+    "10,11": {
+      "terrain": "woods"
+    },
+    "10,12": {
+      "terrain": "plains"
+    },
+    "10,13": {
+      "terrain": "woods"
+    },
+    "10,14": {
+      "terrain": "plains"
+    },
+    "10,15": {
+      "terrain": "woods"
+    },
+    "10,16": {
+      "terrain": "hills"
+    },
+    "10,17": {
+      "terrain": "woods"
+    },
+    "10,18": {
+      "terrain": "hills"
+    },
+    "10,19": {
+      "terrain": "plains"
+    },
+    "10,20": {
+      "terrain": "woods"
+    },
+    "10,21": {
+      "terrain": "plains"
+    },
+    "10,22": {
+      "terrain": "hills"
+    },
+    "10,23": {
+      "terrain": "plains"
+    },
+    "10,24": {
+      "terrain": "plains"
+    },
+    "10,25": {
+      "terrain": "plains"
+    },
+    "10,26": {
+      "terrain": "hills"
+    },
+    "10,27": {
+      "terrain": "plains"
+    },
+    "10,28": {
+      "terrain": "hills"
+    },
+    "10,29": {
+      "terrain": "swamps"
+    },
+    "10,30": {
+      "terrain": "hills"
+    },
+    "10,31": {
+      "terrain": "plains"
+    },
+    "10,32": {
+      "terrain": "woods"
+    },
+    "10,33": {
+      "terrain": "hills"
+    },
+    "10,34": {
+      "terrain": "crops"
+    },
+    "10,35": {
+      "terrain": "woods"
+    },
+    "10,36": {
+      "terrain": "plains"
+    },
+    "10,37": {
+      "terrain": "plains"
+    },
+    "10,38": {
+      "terrain": "woods"
+    },
+    "10,39": {
+      "terrain": "plains"
+    },
+    "10,40": {
+      "terrain": "plains"
+    },
+    "10,41": {
+      "terrain": "plains"
+    },
+    "10,42": {
+      "terrain": "woods"
+    },
+    "10,43": {
+      "terrain": "woods"
+    },
+    "10,44": {
+      "terrain": "plains"
+    },
+    "10,45": {
+      "terrain": "woods"
+    },
+    "10,46": {
+      "terrain": "plains"
+    },
+    "10,47": {
+      "terrain": "swamps"
+    },
+    "10,48": {
+      "terrain": "hills"
+    },
+    "10,49": {
+      "terrain": "plains"
+    },
+    "11,0": {
+      "terrain": "crops"
+    },
+    "11,1": {
+      "terrain": "hills"
+    },
+    "11,2": {
+      "terrain": "plains"
+    },
+    "11,3": {
+      "terrain": "hills"
+    },
+    "11,4": {
+      "terrain": "woods"
+    },
+    "11,5": {
+      "terrain": "plains"
+    },
+    "11,6": {
+      "terrain": "woods"
+    },
+    "11,7": {
+      "terrain": "plains"
+    },
+    "11,8": {
+      "terrain": "crops"
+    },
+    "11,9": {
+      "terrain": "plains"
+    },
+    "11,10": {
+      "terrain": "plains"
+    },
+    "11,11": {
+      "terrain": "plains"
+    },
+    "11,12": {
+      "terrain": "plains"
+    },
+    "11,13": {
+      "terrain": "swamps"
+    },
+    "11,14": {
+      "terrain": "plains"
+    },
+    "11,15": {
+      "terrain": "swamps"
+    },
+    "11,16": {
+      "terrain": "plains"
+    },
+    "11,17": {
+      "terrain": "swamps"
+    },
+    "11,18": {
+      "terrain": "plains"
+    },
+    "11,19": {
+      "terrain": "hills"
+    },
+    "11,20": {
+      "terrain": "plains"
+    },
+    "11,21": {
+      "terrain": "woods"
+    },
+    "11,22": {
+      "terrain": "woods"
+    },
+    "11,23": {
+      "terrain": "woods"
+    },
+    "11,24": {
+      "terrain": "hills"
+    },
+    "11,25": {
+      "terrain": "crops"
+    },
+    "11,26": {
+      "terrain": "plains"
+    },
+    "11,27": {
+      "terrain": "woods"
+    },
+    "11,28": {
+      "terrain": "plains"
+    },
+    "11,29": {
+      "terrain": "plains"
+    },
+    "11,30": {
+      "terrain": "crops"
+    },
+    "11,31": {
+      "terrain": "crops"
+    },
+    "11,32": {
+      "terrain": "crops"
+    },
+    "11,33": {
+      "terrain": "crops"
+    },
+    "11,34": {
+      "terrain": "crops"
+    },
+    "11,35": {
+      "terrain": "plains"
+    },
+    "11,36": {
+      "terrain": "crops"
+    },
+    "11,37": {
+      "terrain": "plains"
+    },
+    "11,38": {
+      "terrain": "woods"
+    },
+    "11,39": {
+      "terrain": "plains"
+    },
+    "11,40": {
+      "terrain": "woods"
+    },
+    "11,41": {
+      "terrain": "hills"
+    },
+    "11,42": {
+      "terrain": "woods"
+    },
+    "11,43": {
+      "terrain": "plains"
+    },
+    "11,44": {
+      "terrain": "plains"
+    },
+    "11,45": {
+      "terrain": "plains"
+    },
+    "11,46": {
+      "terrain": "plains"
+    },
+    "11,47": {
+      "terrain": "woods"
+    },
+    "11,48": {
+      "terrain": "woods"
+    },
+    "11,49": {
+      "terrain": "hills"
+    },
+    "12,0": {
+      "terrain": "woods"
+    },
+    "12,1": {
+      "terrain": "plains"
+    },
+    "12,2": {
+      "terrain": "plains"
+    },
+    "12,3": {
+      "terrain": "hills"
+    },
+    "12,4": {
+      "terrain": "plains"
+    },
+    "12,5": {
+      "terrain": "plains"
+    },
+    "12,6": {
+      "terrain": "woods"
+    },
+    "12,7": {
+      "terrain": "plains"
+    },
+    "12,8": {
+      "terrain": "plains"
+    },
+    "12,9": {
+      "terrain": "plains"
+    },
+    "12,10": {
+      "terrain": "woods"
+    },
+    "12,11": {
+      "terrain": "plains"
+    },
+    "12,12": {
+      "terrain": "plains"
+    },
+    "12,13": {
+      "terrain": "crops"
+    },
+    "12,14": {
+      "terrain": "plains"
+    },
+    "12,15": {
+      "terrain": "crops"
+    },
+    "12,16": {
+      "terrain": "swamps"
+    },
+    "12,17": {
+      "terrain": "plains"
+    },
+    "12,18": {
+      "terrain": "plains"
+    },
+    "12,19": {
+      "terrain": "plains"
+    },
+    "12,20": {
+      "terrain": "crops"
+    },
+    "12,21": {
+      "terrain": "plains"
+    },
+    "12,22": {
+      "terrain": "woods"
+    },
+    "12,23": {
+      "terrain": "hills"
+    },
+    "12,24": {
+      "terrain": "plains"
+    },
+    "12,25": {
+      "terrain": "woods"
+    },
+    "12,26": {
+      "terrain": "woods"
+    },
+    "12,27": {
+      "terrain": "plains"
+    },
+    "12,28": {
+      "terrain": "woods"
+    },
+    "12,29": {
+      "terrain": "crops"
+    },
+    "12,30": {
+      "terrain": "crops"
+    },
+    "12,31": {
+      "terrain": "crops"
+    },
+    "12,32": {
+      "terrain": "crops"
+    },
+    "12,33": {
+      "terrain": "crops"
+    },
+    "12,34": {
+      "terrain": "crops"
+    },
+    "12,35": {
+      "terrain": "woods"
+    },
+    "12,36": {
+      "terrain": "woods"
+    },
+    "12,37": {
+      "terrain": "woods"
+    },
+    "12,38": {
+      "terrain": "plains"
+    },
+    "12,39": {
+      "terrain": "plains"
+    },
+    "12,40": {
+      "terrain": "plains"
+    },
+    "12,41": {
+      "terrain": "hills"
+    },
+    "12,42": {
+      "terrain": "swamps"
+    },
+    "12,43": {
+      "terrain": "crops"
+    },
+    "12,44": {
+      "terrain": "hills"
+    },
+    "12,45": {
+      "terrain": "plains"
+    },
+    "12,46": {
+      "terrain": "woods"
+    },
+    "12,47": {
+      "terrain": "plains"
+    },
+    "12,48": {
+      "terrain": "woods"
+    },
+    "12,49": {
+      "terrain": "hills"
+    },
+    "13,0": {
+      "terrain": "swamps"
+    },
+    "13,1": {
+      "terrain": "crops"
+    },
+    "13,2": {
+      "terrain": "plains"
+    },
+    "13,3": {
+      "terrain": "plains"
+    },
+    "13,4": {
+      "terrain": "plains"
+    },
+    "13,5": {
+      "terrain": "plains"
+    },
+    "13,6": {
+      "terrain": "plains"
+    },
+    "13,7": {
+      "terrain": "woods"
+    },
+    "13,8": {
+      "terrain": "plains"
+    },
+    "13,9": {
+      "terrain": "plains"
+    },
+    "13,10": {
+      "terrain": "woods"
+    },
+    "13,11": {
+      "terrain": "crops"
+    },
+    "13,12": {
+      "terrain": "hills"
+    },
+    "13,13": {
+      "terrain": "plains"
+    },
+    "13,14": {
+      "terrain": "plains"
+    },
+    "13,15": {
+      "terrain": "hills"
+    },
+    "13,16": {
+      "terrain": "plains"
+    },
+    "13,17": {
+      "terrain": "plains"
+    },
+    "13,18": {
+      "terrain": "plains"
+    },
+    "13,19": {
+      "terrain": "plains"
+    },
+    "13,20": {
+      "terrain": "plains"
+    },
+    "13,21": {
+      "terrain": "plains"
+    },
+    "13,22": {
+      "terrain": "plains"
+    },
+    "13,23": {
+      "terrain": "plains"
+    },
+    "13,24": {
+      "terrain": "plains"
+    },
+    "13,25": {
+      "terrain": "crops"
+    },
+    "13,26": {
+      "terrain": "woods"
+    },
+    "13,27": {
+      "terrain": "crops"
+    },
+    "13,28": {
+      "terrain": "plains"
+    },
+    "13,29": {
+      "terrain": "hills"
+    },
+    "13,30": {
+      "terrain": "crops"
+    },
+    "13,31": {
+      "terrain": "crops"
+    },
+    "13,32": {
+      "terrain": "crops"
+    },
+    "13,33": {
+      "terrain": "crops"
+    },
+    "13,34": {
+      "terrain": "crops"
+    },
+    "13,35": {
+      "terrain": "plains"
+    },
+    "13,36": {
+      "terrain": "crops"
+    },
+    "13,37": {
+      "terrain": "plains"
+    },
+    "13,38": {
+      "terrain": "plains"
+    },
+    "13,39": {
+      "terrain": "plains"
+    },
+    "13,40": {
+      "terrain": "woods"
+    },
+    "13,41": {
+      "terrain": "woods"
+    },
+    "13,42": {
+      "terrain": "plains"
+    },
+    "13,43": {
+      "terrain": "hills"
+    },
+    "13,44": {
+      "terrain": "plains"
+    },
+    "13,45": {
+      "terrain": "plains"
+    },
+    "13,46": {
+      "terrain": "plains"
+    },
+    "13,47": {
+      "terrain": "crops"
+    },
+    "13,48": {
+      "terrain": "plains"
+    },
+    "13,49": {
+      "terrain": "plains"
+    },
+    "14,0": {
+      "terrain": "plains"
+    },
+    "14,1": {
+      "terrain": "woods"
+    },
+    "14,2": {
+      "terrain": "plains"
+    },
+    "14,3": {
+      "terrain": "crops"
+    },
+    "14,4": {
+      "terrain": "plains"
+    },
+    "14,5": {
+      "terrain": "plains"
+    },
+    "14,6": {
+      "terrain": "hills"
+    },
+    "14,7": {
+      "terrain": "woods"
+    },
+    "14,8": {
+      "terrain": "woods"
+    },
+    "14,9": {
+      "terrain": "plains"
+    },
+    "14,10": {
+      "terrain": "plains"
+    },
+    "14,11": {
+      "terrain": "woods"
+    },
+    "14,12": {
+      "terrain": "plains"
+    },
+    "14,13": {
+      "terrain": "hills"
+    },
+    "14,14": {
+      "terrain": "swamps"
+    },
+    "14,15": {
+      "terrain": "plains"
+    },
+    "14,16": {
+      "terrain": "woods"
+    },
+    "14,17": {
+      "terrain": "crops"
+    },
+    "14,18": {
+      "terrain": "plains"
+    },
+    "14,19": {
+      "terrain": "plains"
+    },
+    "14,20": {
+      "terrain": "plains"
+    },
+    "14,21": {
+      "terrain": "plains"
+    },
+    "14,22": {
+      "terrain": "crops"
+    },
+    "14,23": {
+      "terrain": "plains"
+    },
+    "14,24": {
+      "terrain": "crops"
+    },
+    "14,25": {
+      "terrain": "woods"
+    },
+    "14,26": {
+      "terrain": "hills"
+    },
+    "14,27": {
+      "terrain": "plains"
+    },
+    "14,28": {
+      "terrain": "woods"
+    },
+    "14,29": {
+      "terrain": "crops"
+    },
+    "14,30": {
+      "terrain": "crops"
+    },
+    "14,31": {
+      "terrain": "crops"
+    },
+    "14,32": {
+      "terrain": "crops"
+    },
+    "14,33": {
+      "terrain": "crops"
+    },
+    "14,34": {
+      "terrain": "crops"
+    },
+    "14,35": {
+      "terrain": "woods"
+    },
+    "14,36": {
+      "terrain": "plains"
+    },
+    "14,37": {
+      "terrain": "plains"
+    },
+    "14,38": {
+      "terrain": "hills"
+    },
+    "14,39": {
+      "terrain": "plains"
+    },
+    "14,40": {
+      "terrain": "woods"
+    },
+    "14,41": {
+      "terrain": "plains"
+    },
+    "14,42": {
+      "terrain": "woods"
+    },
+    "14,43": {
+      "terrain": "plains"
+    },
+    "14,44": {
+      "terrain": "hills"
+    },
+    "14,45": {
+      "terrain": "plains"
+    },
+    "14,46": {
+      "terrain": "hills"
+    },
+    "14,47": {
+      "terrain": "hills"
+    },
+    "14,48": {
+      "terrain": "plains"
+    },
+    "14,49": {
+      "terrain": "crops"
+    },
+    "15,0": {
+      "terrain": "plains"
+    },
+    "15,1": {
+      "terrain": "plains"
+    },
+    "15,2": {
+      "terrain": "plains"
+    },
+    "15,3": {
+      "terrain": "woods"
+    },
+    "15,4": {
+      "terrain": "plains"
+    },
+    "15,5": {
+      "terrain": "hills"
+    },
+    "15,6": {
+      "terrain": "plains"
+    },
+    "15,7": {
+      "terrain": "woods"
+    },
+    "15,8": {
+      "terrain": "hills"
+    },
+    "15,9": {
+      "terrain": "hills"
+    },
+    "15,10": {
+      "terrain": "hills"
+    },
+    "15,11": {
+      "terrain": "hills"
+    },
+    "15,12": {
+      "terrain": "hills"
+    },
+    "15,13": {
+      "terrain": "plains"
+    },
+    "15,14": {
+      "terrain": "woods"
+    },
+    "15,15": {
+      "terrain": "plains"
+    },
+    "15,16": {
+      "terrain": "plains"
+    },
+    "15,17": {
+      "terrain": "swamps"
+    },
+    "15,18": {
+      "terrain": "woods"
+    },
+    "15,19": {
+      "terrain": "crops"
+    },
+    "15,20": {
+      "terrain": "plains"
+    },
+    "15,21": {
+      "terrain": "crops"
+    },
+    "15,22": {
+      "terrain": "plains"
+    },
+    "15,23": {
+      "terrain": "woods"
+    },
+    "15,24": {
+      "terrain": "woods"
+    },
+    "15,25": {
+      "terrain": "woods"
+    },
+    "15,26": {
+      "terrain": "crops"
+    },
+    "15,27": {
+      "terrain": "plains"
+    },
+    "15,28": {
+      "terrain": "woods"
+    },
+    "15,29": {
+      "terrain": "plains"
+    },
+    "15,30": {
+      "terrain": "crops"
+    },
+    "15,31": {
+      "terrain": "crops"
+    },
+    "15,32": {
+      "terrain": "crops"
+    },
+    "15,33": {
+      "terrain": "crops"
+    },
+    "15,34": {
+      "terrain": "crops"
+    },
+    "15,35": {
+      "terrain": "plains"
+    },
+    "15,36": {
+      "terrain": "hills"
+    },
+    "15,37": {
+      "terrain": "crops"
+    },
+    "15,38": {
+      "terrain": "crops"
+    },
+    "15,39": {
+      "terrain": "hills"
+    },
+    "15,40": {
+      "terrain": "woods"
+    },
+    "15,41": {
+      "terrain": "woods"
+    },
+    "15,42": {
+      "terrain": "plains"
+    },
+    "15,43": {
+      "terrain": "plains"
+    },
+    "15,44": {
+      "terrain": "woods"
+    },
+    "15,45": {
+      "terrain": "plains"
+    },
+    "15,46": {
+      "terrain": "plains"
+    },
+    "15,47": {
+      "terrain": "plains"
+    },
+    "15,48": {
+      "terrain": "plains"
+    },
+    "15,49": {
+      "terrain": "hills"
+    },
+    "16,0": {
+      "terrain": "crops"
+    },
+    "16,1": {
+      "terrain": "plains"
+    },
+    "16,2": {
+      "terrain": "plains"
+    },
+    "16,3": {
+      "terrain": "hills"
+    },
+    "16,4": {
+      "terrain": "plains"
+    },
+    "16,5": {
+      "terrain": "woods"
+    },
+    "16,6": {
+      "terrain": "woods"
+    },
+    "16,7": {
+      "terrain": "woods"
+    },
+    "16,8": {
+      "terrain": "hills"
+    },
+    "16,9": {
+      "terrain": "hills"
+    },
+    "16,10": {
+      "terrain": "hills"
+    },
+    "16,11": {
+      "terrain": "hills"
+    },
+    "16,12": {
+      "terrain": "hills"
+    },
+    "16,13": {
+      "terrain": "plains"
+    },
+    "16,14": {
+      "terrain": "plains"
+    },
+    "16,15": {
+      "terrain": "plains"
+    },
+    "16,16": {
+      "terrain": "plains"
+    },
+    "16,17": {
+      "terrain": "plains"
+    },
+    "16,18": {
+      "terrain": "crops"
+    },
+    "16,19": {
+      "terrain": "hills"
+    },
+    "16,20": {
+      "terrain": "crops"
+    },
+    "16,21": {
+      "terrain": "plains"
+    },
+    "16,22": {
+      "terrain": "hills"
+    },
+    "16,23": {
+      "terrain": "swamps"
+    },
+    "16,24": {
+      "terrain": "swamps"
+    },
+    "16,25": {
+      "terrain": "plains"
+    },
+    "16,26": {
+      "terrain": "swamps"
+    },
+    "16,27": {
+      "terrain": "hills"
+    },
+    "16,28": {
+      "terrain": "plains"
+    },
+    "16,29": {
+      "terrain": "crops"
+    },
+    "16,30": {
+      "terrain": "hills"
+    },
+    "16,31": {
+      "terrain": "plains"
+    },
+    "16,32": {
+      "terrain": "hills"
+    },
+    "16,33": {
+      "terrain": "plains"
+    },
+    "16,34": {
+      "terrain": "woods"
+    },
+    "16,35": {
+      "terrain": "woods"
+    },
+    "16,36": {
+      "terrain": "plains"
+    },
+    "16,37": {
+      "terrain": "swamps"
+    },
+    "16,38": {
+      "terrain": "hills"
+    },
+    "16,39": {
+      "terrain": "hills"
+    },
+    "16,40": {
+      "terrain": "woods"
+    },
+    "16,41": {
+      "terrain": "woods"
+    },
+    "16,42": {
+      "terrain": "plains"
+    },
+    "16,43": {
+      "terrain": "woods"
+    },
+    "16,44": {
+      "terrain": "hills"
+    },
+    "16,45": {
+      "terrain": "plains"
+    },
+    "16,46": {
+      "terrain": "plains"
+    },
+    "16,47": {
+      "terrain": "plains"
+    },
+    "16,48": {
+      "terrain": "plains"
+    },
+    "16,49": {
+      "terrain": "plains"
+    },
+    "17,0": {
+      "terrain": "plains"
+    },
+    "17,1": {
+      "terrain": "woods"
+    },
+    "17,2": {
+      "terrain": "crops"
+    },
+    "17,3": {
+      "terrain": "plains"
+    },
+    "17,4": {
+      "terrain": "plains"
+    },
+    "17,5": {
+      "terrain": "woods"
+    },
+    "17,6": {
+      "terrain": "woods"
+    },
+    "17,7": {
+      "terrain": "woods"
+    },
+    "17,8": {
+      "terrain": "hills"
+    },
+    "17,9": {
+      "terrain": "hills"
+    },
+    "17,10": {
+      "terrain": "hills"
+    },
+    "17,11": {
+      "terrain": "hills"
+    },
+    "17,12": {
+      "terrain": "hills"
+    },
+    "17,13": {
+      "terrain": "plains"
+    },
+    "17,14": {
+      "terrain": "hills"
+    },
+    "17,15": {
+      "terrain": "swamps"
+    },
+    "17,16": {
+      "terrain": "plains"
+    },
+    "17,17": {
+      "terrain": "swamps"
+    },
+    "17,18": {
+      "terrain": "plains"
+    },
+    "17,19": {
+      "terrain": "hills"
+    },
+    "17,20": {
+      "terrain": "hills"
+    },
+    "17,21": {
+      "terrain": "plains"
+    },
+    "17,22": {
+      "terrain": "crops"
+    },
+    "17,23": {
+      "terrain": "hills"
+    },
+    "17,24": {
+      "terrain": "plains"
+    },
+    "17,25": {
+      "terrain": "crops"
+    },
+    "17,26": {
+      "terrain": "swamps"
+    },
+    "17,27": {
+      "terrain": "swamps"
+    },
+    "17,28": {
+      "terrain": "swamps"
+    },
+    "17,29": {
+      "terrain": "swamps"
+    },
+    "17,30": {
+      "terrain": "swamps"
+    },
+    "17,31": {
+      "terrain": "plains"
+    },
+    "17,32": {
+      "terrain": "crops"
+    },
+    "17,33": {
+      "terrain": "plains"
+    },
+    "17,34": {
+      "terrain": "plains"
+    },
+    "17,35": {
+      "terrain": "plains"
+    },
+    "17,36": {
+      "terrain": "plains"
+    },
+    "17,37": {
+      "terrain": "plains"
+    },
+    "17,38": {
+      "terrain": "crops"
+    },
+    "17,39": {
+      "terrain": "plains"
+    },
+    "17,40": {
+      "terrain": "plains"
+    },
+    "17,41": {
+      "terrain": "hills"
+    },
+    "17,42": {
+      "terrain": "plains"
+    },
+    "17,43": {
+      "terrain": "plains"
+    },
+    "17,44": {
+      "terrain": "hills"
+    },
+    "17,45": {
+      "terrain": "plains"
+    },
+    "17,46": {
+      "terrain": "woods"
+    },
+    "17,47": {
+      "terrain": "plains"
+    },
+    "17,48": {
+      "terrain": "plains"
+    },
+    "17,49": {
+      "terrain": "plains"
+    },
+    "18,0": {
+      "terrain": "crops"
+    },
+    "18,1": {
+      "terrain": "crops"
+    },
+    "18,2": {
+      "terrain": "crops"
+    },
+    "18,3": {
+      "terrain": "crops"
+    },
+    "18,4": {
+      "terrain": "plains"
+    },
+    "18,5": {
+      "terrain": "woods"
+    },
+    "18,6": {
+      "terrain": "woods"
+    },
+    "18,7": {
+      "terrain": "woods"
+    },
+    "18,8": {
+      "terrain": "hills"
+    },
+    "18,9": {
+      "terrain": "hills"
+    },
+    "18,10": {
+      "terrain": "hills"
+    },
+    "18,11": {
+      "terrain": "hills"
+    },
+    "18,12": {
+      "terrain": "hills"
+    },
+    "18,13": {
+      "terrain": "crops"
+    },
+    "18,14": {
+      "terrain": "plains"
+    },
+    "18,15": {
+      "terrain": "woods"
+    },
+    "18,16": {
+      "terrain": "plains"
+    },
+    "18,17": {
+      "terrain": "hills"
+    },
+    "18,18": {
+      "terrain": "woods"
+    },
+    "18,19": {
+      "terrain": "plains"
+    },
+    "18,20": {
+      "terrain": "plains"
+    },
+    "18,21": {
+      "terrain": "plains"
+    },
+    "18,22": {
+      "terrain": "crops"
+    },
+    "18,23": {
+      "terrain": "plains"
+    },
+    "18,24": {
+      "terrain": "woods"
+    },
+    "18,25": {
+      "terrain": "hills"
+    },
+    "18,26": {
+      "terrain": "swamps"
+    },
+    "18,27": {
+      "terrain": "swamps"
+    },
+    "18,28": {
+      "terrain": "swamps"
+    },
+    "18,29": {
+      "terrain": "swamps"
+    },
+    "18,30": {
+      "terrain": "swamps"
+    },
+    "18,31": {
+      "terrain": "crops"
+    },
+    "18,32": {
+      "terrain": "crops"
+    },
+    "18,33": {
+      "terrain": "crops"
+    },
+    "18,34": {
+      "terrain": "crops"
+    },
+    "18,35": {
+      "terrain": "crops"
+    },
+    "18,36": {
+      "terrain": "swamps"
+    },
+    "18,37": {
+      "terrain": "hills"
+    },
+    "18,38": {
+      "terrain": "plains"
+    },
+    "18,39": {
+      "terrain": "plains"
+    },
+    "18,40": {
+      "terrain": "woods"
+    },
+    "18,41": {
+      "terrain": "plains"
+    },
+    "18,42": {
+      "terrain": "hills"
+    },
+    "18,43": {
+      "terrain": "plains"
+    },
+    "18,44": {
+      "terrain": "plains"
+    },
+    "18,45": {
+      "terrain": "hills"
+    },
+    "18,46": {
+      "terrain": "woods"
+    },
+    "18,47": {
+      "terrain": "hills"
+    },
+    "18,48": {
+      "terrain": "woods"
+    },
+    "18,49": {
+      "terrain": "plains"
+    },
+    "19,0": {
+      "terrain": "crops"
+    },
+    "19,1": {
+      "terrain": "crops"
+    },
+    "19,2": {
+      "terrain": "crops"
+    },
+    "19,3": {
+      "terrain": "crops"
+    },
+    "19,4": {
+      "terrain": "woods"
+    },
+    "19,5": {
+      "terrain": "woods"
+    },
+    "19,6": {
+      "terrain": "woods"
+    },
+    "19,7": {
+      "terrain": "woods"
+    },
+    "19,8": {
+      "terrain": "hills"
+    },
+    "19,9": {
+      "terrain": "hills"
+    },
+    "19,10": {
+      "terrain": "hills"
+    },
+    "19,11": {
+      "terrain": "hills"
+    },
+    "19,12": {
+      "terrain": "hills"
+    },
+    "19,13": {
+      "terrain": "hills"
+    },
+    "19,14": {
+      "terrain": "woods"
+    },
+    "19,15": {
+      "terrain": "plains"
+    },
+    "19,16": {
+      "terrain": "plains"
+    },
+    "19,17": {
+      "terrain": "plains"
+    },
+    "19,18": {
+      "terrain": "woods"
+    },
+    "19,19": {
+      "terrain": "hills"
+    },
+    "19,20": {
+      "terrain": "plains"
+    },
+    "19,21": {
+      "terrain": "plains"
+    },
+    "19,22": {
+      "terrain": "woods"
+    },
+    "19,23": {
+      "terrain": "plains"
+    },
+    "19,24": {
+      "terrain": "hills"
+    },
+    "19,25": {
+      "terrain": "swamps"
+    },
+    "19,26": {
+      "terrain": "swamps"
+    },
+    "19,27": {
+      "terrain": "swamps"
+    },
+    "19,28": {
+      "terrain": "swamps"
+    },
+    "19,29": {
+      "terrain": "swamps"
+    },
+    "19,30": {
+      "terrain": "swamps"
+    },
+    "19,31": {
+      "terrain": "crops"
+    },
+    "19,32": {
+      "terrain": "crops"
+    },
+    "19,33": {
+      "terrain": "crops"
+    },
+    "19,34": {
+      "terrain": "crops"
+    },
+    "19,35": {
+      "terrain": "crops"
+    },
+    "19,36": {
+      "terrain": "crops"
+    },
+    "19,37": {
+      "terrain": "woods"
+    },
+    "19,38": {
+      "terrain": "swamps"
+    },
+    "19,39": {
+      "terrain": "plains"
+    },
+    "19,40": {
+      "terrain": "woods"
+    },
+    "19,41": {
+      "terrain": "plains"
+    },
+    "19,42": {
+      "terrain": "hills"
+    },
+    "19,43": {
+      "terrain": "plains"
+    },
+    "19,44": {
+      "terrain": "woods"
+    },
+    "19,45": {
+      "terrain": "swamps"
+    },
+    "19,46": {
+      "terrain": "hills"
+    },
+    "19,47": {
+      "terrain": "hills"
+    },
+    "19,48": {
+      "terrain": "swamps"
+    },
+    "19,49": {
+      "terrain": "plains"
+    },
+    "20,0": {
+      "terrain": "crops"
+    },
+    "20,1": {
+      "terrain": "crops"
+    },
+    "20,2": {
+      "terrain": "crops"
+    },
+    "20,3": {
+      "terrain": "crops"
+    },
+    "20,4": {
+      "terrain": "crops"
+    },
+    "20,5": {
+      "terrain": "woods"
+    },
+    "20,6": {
+      "terrain": "woods"
+    },
+    "20,7": {
+      "terrain": "woods"
+    },
+    "20,8": {
+      "terrain": "woods"
+    },
+    "20,9": {
+      "terrain": "woods"
+    },
+    "20,10": {
+      "terrain": "plains"
+    },
+    "20,11": {
+      "terrain": "plains"
+    },
+    "20,12": {
+      "terrain": "plains"
+    },
+    "20,13": {
+      "terrain": "swamps"
+    },
+    "20,14": {
+      "terrain": "plains"
+    },
+    "20,15": {
+      "terrain": "plains"
+    },
+    "20,16": {
+      "terrain": "crops"
+    },
+    "20,17": {
+      "terrain": "plains"
+    },
+    "20,18": {
+      "terrain": "woods"
+    },
+    "20,19": {
+      "terrain": "plains"
+    },
+    "20,20": {
+      "terrain": "plains"
+    },
+    "20,21": {
+      "terrain": "hills"
+    },
+    "20,22": {
+      "terrain": "plains"
+    },
+    "20,23": {
+      "terrain": "woods"
+    },
+    "20,24": {
+      "terrain": "woods"
+    },
+    "20,25": {
+      "terrain": "hills"
+    },
+    "20,26": {
+      "terrain": "swamps"
+    },
+    "20,27": {
+      "terrain": "swamps"
+    },
+    "20,28": {
+      "terrain": "swamps"
+    },
+    "20,29": {
+      "terrain": "swamps"
+    },
+    "20,30": {
+      "terrain": "swamps"
+    },
+    "20,31": {
+      "terrain": "crops"
+    },
+    "20,32": {
+      "terrain": "crops"
+    },
+    "20,33": {
+      "terrain": "crops"
+    },
+    "20,34": {
+      "terrain": "crops"
+    },
+    "20,35": {
+      "terrain": "crops"
+    },
+    "20,36": {
+      "terrain": "hills"
+    },
+    "20,37": {
+      "terrain": "woods"
+    },
+    "20,38": {
+      "terrain": "plains"
+    },
+    "20,39": {
+      "terrain": "woods"
+    },
+    "20,40": {
+      "terrain": "woods"
+    },
+    "20,41": {
+      "terrain": "plains"
+    },
+    "20,42": {
+      "terrain": "plains"
+    },
+    "20,43": {
+      "terrain": "woods"
+    },
+    "20,44": {
+      "terrain": "crops"
+    },
+    "20,45": {
+      "terrain": "plains"
+    },
+    "20,46": {
+      "terrain": "plains"
+    },
+    "20,47": {
+      "terrain": "hills"
+    },
+    "20,48": {
+      "terrain": "plains"
+    },
+    "20,49": {
+      "terrain": "plains"
+    },
+    "21,0": {
+      "terrain": "crops"
+    },
+    "21,1": {
+      "terrain": "crops"
+    },
+    "21,2": {
+      "terrain": "crops"
+    },
+    "21,3": {
+      "terrain": "crops"
+    },
+    "21,4": {
+      "terrain": "hills"
+    },
+    "21,5": {
+      "terrain": "swamps"
+    },
+    "21,6": {
+      "terrain": "hills"
+    },
+    "21,7": {
+      "terrain": "plains"
+    },
+    "21,8": {
+      "terrain": "hills"
+    },
+    "21,9": {
+      "terrain": "woods"
+    },
+    "21,10": {
+      "terrain": "plains"
+    },
+    "21,11": {
+      "terrain": "swamps"
+    },
+    "21,12": {
+      "terrain": "plains"
+    },
+    "21,13": {
+      "terrain": "woods"
+    },
+    "21,14": {
+      "terrain": "woods"
+    },
+    "21,15": {
+      "terrain": "plains"
+    },
+    "21,16": {
+      "terrain": "woods"
+    },
+    "21,17": {
+      "terrain": "plains"
+    },
+    "21,18": {
+      "terrain": "crops"
+    },
+    "21,19": {
+      "terrain": "hills"
+    },
+    "21,20": {
+      "terrain": "crops"
+    },
+    "21,21": {
+      "terrain": "plains"
+    },
+    "21,22": {
+      "terrain": "woods"
+    },
+    "21,23": {
+      "terrain": "woods"
+    },
+    "21,24": {
+      "terrain": "woods"
+    },
+    "21,25": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Salzburg"
+    },
+    "21,26": {
+      "terrain": "swamps"
+    },
+    "21,27": {
+      "terrain": "swamps"
+    },
+    "21,28": {
+      "terrain": "swamps"
+    },
+    "21,29": {
+      "terrain": "swamps"
+    },
+    "21,30": {
+      "terrain": "swamps"
+    },
+    "21,31": {
+      "terrain": "crops"
+    },
+    "21,32": {
+      "terrain": "crops"
+    },
+    "21,33": {
+      "terrain": "crops"
+    },
+    "21,34": {
+      "terrain": "crops"
+    },
+    "21,35": {
+      "terrain": "crops"
+    },
+    "21,36": {
+      "terrain": "woods"
+    },
+    "21,37": {
+      "terrain": "plains"
+    },
+    "21,38": {
+      "terrain": "plains"
+    },
+    "21,39": {
+      "terrain": "crops"
+    },
+    "21,40": {
+      "terrain": "plains"
+    },
+    "21,41": {
+      "terrain": "plains"
+    },
+    "21,42": {
+      "terrain": "hills"
+    },
+    "21,43": {
+      "terrain": "crops"
+    },
+    "21,44": {
+      "terrain": "woods"
+    },
+    "21,45": {
+      "terrain": "plains"
+    },
+    "21,46": {
+      "terrain": "plains"
+    },
+    "21,47": {
+      "terrain": "swamps"
+    },
+    "21,48": {
+      "terrain": "woods"
+    },
+    "21,49": {
+      "terrain": "plains"
+    },
+    "22,0": {
+      "terrain": "crops"
+    },
+    "22,1": {
+      "terrain": "crops"
+    },
+    "22,2": {
+      "terrain": "crops"
+    },
+    "22,3": {
+      "terrain": "crops"
+    },
+    "22,4": {
+      "terrain": "crops"
+    },
+    "22,5": {
+      "terrain": "plains"
+    },
+    "22,6": {
+      "terrain": "plains"
+    },
+    "22,7": {
+      "terrain": "crops"
+    },
+    "22,8": {
+      "terrain": "plains"
+    },
+    "22,9": {
+      "terrain": "plains"
+    },
+    "22,10": {
+      "terrain": "hills"
+    },
+    "22,11": {
+      "terrain": "hills"
+    },
+    "22,12": {
+      "terrain": "hills"
+    },
+    "22,13": {
+      "terrain": "swamps"
+    },
+    "22,14": {
+      "terrain": "woods"
+    },
+    "22,15": {
+      "terrain": "plains"
+    },
+    "22,16": {
+      "terrain": "crops"
+    },
+    "22,17": {
+      "terrain": "hills"
+    },
+    "22,18": {
+      "terrain": "woods"
+    },
+    "22,19": {
+      "terrain": "hills"
+    },
+    "22,20": {
+      "terrain": "plains"
+    },
+    "22,21": {
+      "terrain": "swamps"
+    },
+    "22,22": {
+      "terrain": "woods"
+    },
+    "22,23": {
+      "terrain": "woods"
+    },
+    "22,24": {
+      "terrain": "woods"
+    },
+    "22,25": {
+      "terrain": "woods"
+    },
+    "22,26": {
+      "terrain": "crops"
+    },
+    "22,27": {
+      "terrain": "crops"
+    },
+    "22,28": {
+      "terrain": "crops"
+    },
+    "22,29": {
+      "terrain": "crops"
+    },
+    "22,30": {
+      "terrain": "crops"
+    },
+    "22,31": {
+      "terrain": "crops"
+    },
+    "22,32": {
+      "terrain": "crops"
+    },
+    "22,33": {
+      "terrain": "crops"
+    },
+    "22,34": {
+      "terrain": "crops"
+    },
+    "22,35": {
+      "terrain": "crops"
+    },
+    "22,36": {
+      "terrain": "woods"
+    },
+    "22,37": {
+      "terrain": "hills"
+    },
+    "22,38": {
+      "terrain": "hills"
+    },
+    "22,39": {
+      "terrain": "plains"
+    },
+    "22,40": {
+      "terrain": "plains"
+    },
+    "22,41": {
+      "terrain": "plains"
+    },
+    "22,42": {
+      "terrain": "plains"
+    },
+    "22,43": {
+      "terrain": "plains"
+    },
+    "22,44": {
+      "terrain": "woods"
+    },
+    "22,45": {
+      "terrain": "crops"
+    },
+    "22,46": {
+      "terrain": "woods"
+    },
+    "22,47": {
+      "terrain": "woods"
+    },
+    "22,48": {
+      "terrain": "plains"
+    },
+    "22,49": {
+      "terrain": "woods"
+    },
+    "23,0": {
+      "terrain": "plains"
+    },
+    "23,1": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "City I"
+    },
+    "23,2": {
+      "terrain": "woods"
+    },
+    "23,3": {
+      "terrain": "plains"
+    },
+    "23,4": {
+      "terrain": "crops"
+    },
+    "23,5": {
+      "terrain": "woods"
+    },
+    "23,6": {
+      "terrain": "plains"
+    },
+    "23,7": {
+      "terrain": "plains"
+    },
+    "23,8": {
+      "terrain": "swamps"
+    },
+    "23,9": {
+      "terrain": "plains"
+    },
+    "23,10": {
+      "terrain": "plains"
+    },
+    "23,11": {
+      "terrain": "plains"
+    },
+    "23,12": {
+      "terrain": "plains"
+    },
+    "23,13": {
+      "terrain": "woods"
+    },
+    "23,14": {
+      "terrain": "plains"
+    },
+    "23,15": {
+      "terrain": "plains"
+    },
+    "23,16": {
+      "terrain": "hills"
+    },
+    "23,17": {
+      "terrain": "crops"
+    },
+    "23,18": {
+      "terrain": "plains"
+    },
+    "23,19": {
+      "terrain": "plains"
+    },
+    "23,20": {
+      "terrain": "plains"
+    },
+    "23,21": {
+      "terrain": "hills"
+    },
+    "23,22": {
+      "terrain": "woods"
+    },
+    "23,23": {
+      "terrain": "woods"
+    },
+    "23,24": {
+      "terrain": "woods"
+    },
+    "23,25": {
+      "terrain": "woods"
+    },
+    "23,26": {
+      "terrain": "crops"
+    },
+    "23,27": {
+      "terrain": "crops",
+      "feature": "city",
+      "name": "Munich"
+    },
+    "23,28": {
+      "terrain": "crops"
+    },
+    "23,29": {
+      "terrain": "crops"
+    },
+    "23,30": {
+      "terrain": "crops"
+    },
+    "23,31": {
+      "terrain": "crops"
+    },
+    "23,32": {
+      "terrain": "woods"
+    },
+    "23,33": {
+      "terrain": "plains"
+    },
+    "23,34": {
+      "terrain": "woods"
+    },
+    "23,35": {
+      "terrain": "plains"
+    },
+    "23,36": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Augsburg"
+    },
+    "23,37": {
+      "terrain": "woods"
+    },
+    "23,38": {
+      "terrain": "swamps"
+    },
+    "23,39": {
+      "terrain": "hills"
+    },
+    "23,40": {
+      "terrain": "plains"
+    },
+    "23,41": {
+      "terrain": "plains"
+    },
+    "23,42": {
+      "terrain": "swamps"
+    },
+    "23,43": {
+      "terrain": "woods"
+    },
+    "23,44": {
+      "terrain": "plains"
+    },
+    "23,45": {
+      "terrain": "swamps"
+    },
+    "23,46": {
+      "terrain": "plains"
+    },
+    "23,47": {
+      "terrain": "plains"
+    },
+    "23,48": {
+      "terrain": "woods"
+    },
+    "23,49": {
+      "terrain": "plains"
+    },
+    "24,0": {
+      "terrain": "plains"
+    },
+    "24,1": {
+      "terrain": "crops"
+    },
+    "24,2": {
+      "terrain": "plains"
+    },
+    "24,3": {
+      "terrain": "swamps"
+    },
+    "24,4": {
+      "terrain": "woods"
+    },
+    "24,5": {
+      "terrain": "plains"
+    },
+    "24,6": {
+      "terrain": "plains"
+    },
+    "24,7": {
+      "terrain": "woods"
+    },
+    "24,8": {
+      "terrain": "plains"
+    },
+    "24,9": {
+      "terrain": "plains"
+    },
+    "24,10": {
+      "terrain": "plains"
+    },
+    "24,11": {
+      "terrain": "swamps"
+    },
+    "24,12": {
+      "terrain": "woods"
+    },
+    "24,13": {
+      "terrain": "plains"
+    },
+    "24,14": {
+      "terrain": "plains"
+    },
+    "24,15": {
+      "terrain": "plains"
+    },
+    "24,16": {
+      "terrain": "crops"
+    },
+    "24,17": {
+      "terrain": "plains"
+    },
+    "24,18": {
+      "terrain": "plains"
+    },
+    "24,19": {
+      "terrain": "swamps"
+    },
+    "24,20": {
+      "terrain": "plains"
+    },
+    "24,21": {
+      "terrain": "plains"
+    },
+    "24,22": {
+      "terrain": "woods"
+    },
+    "24,23": {
+      "terrain": "woods"
+    },
+    "24,24": {
+      "terrain": "woods"
+    },
+    "24,25": {
+      "terrain": "woods"
+    },
+    "24,26": {
+      "terrain": "crops"
+    },
+    "24,27": {
+      "terrain": "crops"
+    },
+    "24,28": {
+      "terrain": "crops"
+    },
+    "24,29": {
+      "terrain": "crops"
+    },
+    "24,30": {
+      "terrain": "crops"
+    },
+    "24,31": {
+      "terrain": "crops"
+    },
+    "24,32": {
+      "terrain": "plains"
+    },
+    "24,33": {
+      "terrain": "plains"
+    },
+    "24,34": {
+      "terrain": "hills"
+    },
+    "24,35": {
+      "terrain": "plains"
+    },
+    "24,36": {
+      "terrain": "plains"
+    },
+    "24,37": {
+      "terrain": "crops"
+    },
+    "24,38": {
+      "terrain": "woods"
+    },
+    "24,39": {
+      "terrain": "plains"
+    },
+    "24,40": {
+      "terrain": "plains"
+    },
+    "24,41": {
+      "terrain": "hills"
+    },
+    "24,42": {
+      "terrain": "swamps"
+    },
+    "24,43": {
+      "terrain": "woods"
+    },
+    "24,44": {
+      "terrain": "woods"
+    },
+    "24,45": {
+      "terrain": "crops"
+    },
+    "24,46": {
+      "terrain": "plains"
+    },
+    "24,47": {
+      "terrain": "hills"
+    },
+    "24,48": {
+      "terrain": "crops"
+    },
+    "24,49": {
+      "terrain": "plains"
+    },
+    "25,0": {
+      "terrain": "plains"
+    },
+    "25,1": {
+      "terrain": "plains"
+    },
+    "25,2": {
+      "terrain": "swamps"
+    },
+    "25,3": {
+      "terrain": "hills"
+    },
+    "25,4": {
+      "terrain": "hills"
+    },
+    "25,5": {
+      "terrain": "woods"
+    },
+    "25,6": {
+      "terrain": "plains"
+    },
+    "25,7": {
+      "terrain": "plains"
+    },
+    "25,8": {
+      "terrain": "plains"
+    },
+    "25,9": {
+      "terrain": "crops"
+    },
+    "25,10": {
+      "terrain": "plains"
+    },
+    "25,11": {
+      "terrain": "plains"
+    },
+    "25,12": {
+      "terrain": "swamps"
+    },
+    "25,13": {
+      "terrain": "swamps"
+    },
+    "25,14": {
+      "terrain": "swamps"
+    },
+    "25,15": {
+      "terrain": "swamps"
+    },
+    "25,16": {
+      "terrain": "swamps"
+    },
+    "25,17": {
+      "terrain": "plains"
+    },
+    "25,18": {
+      "terrain": "plains"
+    },
+    "25,19": {
+      "terrain": "plains"
+    },
+    "25,20": {
+      "terrain": "plains"
+    },
+    "25,21": {
+      "terrain": "hills"
+    },
+    "25,22": {
+      "terrain": "woods"
+    },
+    "25,23": {
+      "terrain": "woods"
+    },
+    "25,24": {
+      "terrain": "woods"
+    },
+    "25,25": {
+      "terrain": "woods"
+    },
+    "25,26": {
+      "terrain": "crops"
+    },
+    "25,27": {
+      "terrain": "crops"
+    },
+    "25,28": {
+      "terrain": "crops"
+    },
+    "25,29": {
+      "terrain": "crops"
+    },
+    "25,30": {
+      "terrain": "crops"
+    },
+    "25,31": {
+      "terrain": "plains"
+    },
+    "25,32": {
+      "terrain": "plains"
+    },
+    "25,33": {
+      "terrain": "hills"
+    },
+    "25,34": {
+      "terrain": "plains"
+    },
+    "25,35": {
+      "terrain": "crops"
+    },
+    "25,36": {
+      "terrain": "plains"
+    },
+    "25,37": {
+      "terrain": "crops"
+    },
+    "25,38": {
+      "terrain": "hills"
+    },
+    "25,39": {
+      "terrain": "woods"
+    },
+    "25,40": {
+      "terrain": "woods"
+    },
+    "25,41": {
+      "terrain": "woods"
+    },
+    "25,42": {
+      "terrain": "woods"
+    },
+    "25,43": {
+      "terrain": "woods"
+    },
+    "25,44": {
+      "terrain": "woods"
+    },
+    "25,45": {
+      "terrain": "plains"
+    },
+    "25,46": {
+      "terrain": "plains"
+    },
+    "25,47": {
+      "terrain": "plains"
+    },
+    "25,48": {
+      "terrain": "woods"
+    },
+    "25,49": {
+      "terrain": "plains"
+    },
+    "26,0": {
+      "terrain": "plains"
+    },
+    "26,1": {
+      "terrain": "plains"
+    },
+    "26,2": {
+      "terrain": "plains"
+    },
+    "26,3": {
+      "terrain": "hills"
+    },
+    "26,4": {
+      "terrain": "plains"
+    },
+    "26,5": {
+      "terrain": "plains"
+    },
+    "26,6": {
+      "terrain": "crops"
+    },
+    "26,7": {
+      "terrain": "plains"
+    },
+    "26,8": {
+      "terrain": "plains"
+    },
+    "26,9": {
+      "terrain": "woods"
+    },
+    "26,10": {
+      "terrain": "crops"
+    },
+    "26,11": {
+      "terrain": "plains"
+    },
+    "26,12": {
+      "terrain": "swamps"
+    },
+    "26,13": {
+      "terrain": "swamps"
+    },
+    "26,14": {
+      "terrain": "swamps"
+    },
+    "26,15": {
+      "terrain": "swamps"
+    },
+    "26,16": {
+      "terrain": "swamps"
+    },
+    "26,17": {
+      "terrain": "plains"
+    },
+    "26,18": {
+      "terrain": "plains"
+    },
+    "26,19": {
+      "terrain": "plains"
+    },
+    "26,20": {
+      "terrain": "woods"
+    },
+    "26,21": {
+      "terrain": "plains"
+    },
+    "26,22": {
+      "terrain": "hills"
+    },
+    "26,23": {
+      "terrain": "hills"
+    },
+    "26,24": {
+      "terrain": "woods"
+    },
+    "26,25": {
+      "terrain": "plains"
+    },
+    "26,26": {
+      "terrain": "crops"
+    },
+    "26,27": {
+      "terrain": "crops"
+    },
+    "26,28": {
+      "terrain": "crops"
+    },
+    "26,29": {
+      "terrain": "crops"
+    },
+    "26,30": {
+      "terrain": "crops"
+    },
+    "26,31": {
+      "terrain": "plains"
+    },
+    "26,32": {
+      "terrain": "plains"
+    },
+    "26,33": {
+      "terrain": "hills"
+    },
+    "26,34": {
+      "terrain": "hills"
+    },
+    "26,35": {
+      "terrain": "woods"
+    },
+    "26,36": {
+      "terrain": "plains"
+    },
+    "26,37": {
+      "terrain": "crops"
+    },
+    "26,38": {
+      "terrain": "woods"
+    },
+    "26,39": {
+      "terrain": "hills"
+    },
+    "26,40": {
+      "terrain": "woods"
+    },
+    "26,41": {
+      "terrain": "woods"
+    },
+    "26,42": {
+      "terrain": "woods"
+    },
+    "26,43": {
+      "terrain": "woods"
+    },
+    "26,44": {
+      "terrain": "woods"
+    },
+    "26,45": {
+      "terrain": "plains"
+    },
+    "26,46": {
+      "terrain": "plains"
+    },
+    "26,47": {
+      "terrain": "plains"
+    },
+    "26,48": {
+      "terrain": "crops"
+    },
+    "26,49": {
+      "terrain": "woods"
+    },
+    "27,0": {
+      "terrain": "plains"
+    },
+    "27,1": {
+      "terrain": "woods"
+    },
+    "27,2": {
+      "terrain": "plains"
+    },
+    "27,3": {
+      "terrain": "plains"
+    },
+    "27,4": {
+      "terrain": "plains"
+    },
+    "27,5": {
+      "terrain": "woods"
+    },
+    "27,6": {
+      "terrain": "crops"
+    },
+    "27,7": {
+      "terrain": "plains"
+    },
+    "27,8": {
+      "terrain": "plains"
+    },
+    "27,9": {
+      "terrain": "hills"
+    },
+    "27,10": {
+      "terrain": "plains"
+    },
+    "27,11": {
+      "terrain": "swamps"
+    },
+    "27,12": {
+      "terrain": "swamps"
+    },
+    "27,13": {
+      "terrain": "swamps"
+    },
+    "27,14": {
+      "terrain": "swamps"
+    },
+    "27,15": {
+      "terrain": "swamps"
+    },
+    "27,16": {
+      "terrain": "swamps"
+    },
+    "27,17": {
+      "terrain": "woods"
+    },
+    "27,18": {
+      "terrain": "plains"
+    },
+    "27,19": {
+      "terrain": "woods"
+    },
+    "27,20": {
+      "terrain": "woods"
+    },
+    "27,21": {
+      "terrain": "hills"
+    },
+    "27,22": {
+      "terrain": "hills"
+    },
+    "27,23": {
+      "terrain": "plains"
+    },
+    "27,24": {
+      "terrain": "swamps"
+    },
+    "27,25": {
+      "terrain": "hills"
+    },
+    "27,26": {
+      "terrain": "plains"
+    },
+    "27,27": {
+      "terrain": "swamps"
+    },
+    "27,28": {
+      "terrain": "plains"
+    },
+    "27,29": {
+      "terrain": "plains"
+    },
+    "27,30": {
+      "terrain": "plains"
+    },
+    "27,31": {
+      "terrain": "crops"
+    },
+    "27,32": {
+      "terrain": "plains"
+    },
+    "27,33": {
+      "terrain": "hills"
+    },
+    "27,34": {
+      "terrain": "crops"
+    },
+    "27,35": {
+      "terrain": "hills"
+    },
+    "27,36": {
+      "terrain": "hills"
+    },
+    "27,37": {
+      "terrain": "plains"
+    },
+    "27,38": {
+      "terrain": "hills"
+    },
+    "27,39": {
+      "terrain": "plains"
+    },
+    "27,40": {
+      "terrain": "woods"
+    },
+    "27,41": {
+      "terrain": "woods"
+    },
+    "27,42": {
+      "terrain": "woods"
+    },
+    "27,43": {
+      "terrain": "woods"
+    },
+    "27,44": {
+      "terrain": "woods"
+    },
+    "27,45": {
+      "terrain": "woods"
+    },
+    "27,46": {
+      "terrain": "plains"
+    },
+    "27,47": {
+      "terrain": "plains"
+    },
+    "27,48": {
+      "terrain": "plains"
+    },
+    "27,49": {
+      "terrain": "woods"
+    },
+    "28,0": {
+      "terrain": "plains"
+    },
+    "28,1": {
+      "terrain": "plains"
+    },
+    "28,2": {
+      "terrain": "plains"
+    },
+    "28,3": {
+      "terrain": "woods"
+    },
+    "28,4": {
+      "terrain": "hills"
+    },
+    "28,5": {
+      "terrain": "plains"
+    },
+    "28,6": {
+      "terrain": "hills"
+    },
+    "28,7": {
+      "terrain": "woods"
+    },
+    "28,8": {
+      "terrain": "plains"
+    },
+    "28,9": {
+      "terrain": "woods"
+    },
+    "28,10": {
+      "terrain": "hills"
+    },
+    "28,11": {
+      "terrain": "hills"
+    },
+    "28,12": {
+      "terrain": "swamps"
+    },
+    "28,13": {
+      "terrain": "swamps"
+    },
+    "28,14": {
+      "terrain": "swamps"
+    },
+    "28,15": {
+      "terrain": "swamps"
+    },
+    "28,16": {
+      "terrain": "swamps"
+    },
+    "28,17": {
+      "terrain": "woods"
+    },
+    "28,18": {
+      "terrain": "plains"
+    },
+    "28,19": {
+      "terrain": "plains"
+    },
+    "28,20": {
+      "terrain": "woods"
+    },
+    "28,21": {
+      "terrain": "plains"
+    },
+    "28,22": {
+      "terrain": "plains"
+    },
+    "28,23": {
+      "terrain": "crops"
+    },
+    "28,24": {
+      "terrain": "woods"
+    },
+    "28,25": {
+      "terrain": "plains"
+    },
+    "28,26": {
+      "terrain": "woods"
+    },
+    "28,27": {
+      "terrain": "woods"
+    },
+    "28,28": {
+      "terrain": "crops"
+    },
+    "28,29": {
+      "terrain": "hills"
+    },
+    "28,30": {
+      "terrain": "hills"
+    },
+    "28,31": {
+      "terrain": "woods"
+    },
+    "28,32": {
+      "terrain": "plains"
+    },
+    "28,33": {
+      "terrain": "plains"
+    },
+    "28,34": {
+      "terrain": "woods"
+    },
+    "28,35": {
+      "terrain": "plains"
+    },
+    "28,36": {
+      "terrain": "hills"
+    },
+    "28,37": {
+      "terrain": "swamps"
+    },
+    "28,38": {
+      "terrain": "plains"
+    },
+    "28,39": {
+      "terrain": "plains"
+    },
+    "28,40": {
+      "terrain": "woods"
+    },
+    "28,41": {
+      "terrain": "woods"
+    },
+    "28,42": {
+      "terrain": "woods"
+    },
+    "28,43": {
+      "terrain": "woods"
+    },
+    "28,44": {
+      "terrain": "woods"
+    },
+    "28,45": {
+      "terrain": "plains"
+    },
+    "28,46": {
+      "terrain": "woods"
+    },
+    "28,47": {
+      "terrain": "plains"
+    },
+    "28,48": {
+      "terrain": "plains"
+    },
+    "28,49": {
+      "terrain": "woods"
+    },
+    "29,0": {
+      "terrain": "plains"
+    },
+    "29,1": {
+      "terrain": "plains"
+    },
+    "29,2": {
+      "terrain": "woods"
+    },
+    "29,3": {
+      "terrain": "woods"
+    },
+    "29,4": {
+      "terrain": "hills"
+    },
+    "29,5": {
+      "terrain": "hills"
+    },
+    "29,6": {
+      "terrain": "crops"
+    },
+    "29,7": {
+      "terrain": "plains"
+    },
+    "29,8": {
+      "terrain": "hills"
+    },
+    "29,9": {
+      "terrain": "woods"
+    },
+    "29,10": {
+      "terrain": "hills"
+    },
+    "29,11": {
+      "terrain": "hills"
+    },
+    "29,12": {
+      "terrain": "swamps"
+    },
+    "29,13": {
+      "terrain": "swamps"
+    },
+    "29,14": {
+      "terrain": "swamps"
+    },
+    "29,15": {
+      "terrain": "swamps"
+    },
+    "29,16": {
+      "terrain": "swamps"
+    },
+    "29,17": {
+      "terrain": "crops"
+    },
+    "29,18": {
+      "terrain": "hills"
+    },
+    "29,19": {
+      "terrain": "crops"
+    },
+    "29,20": {
+      "terrain": "plains"
+    },
+    "29,21": {
+      "terrain": "crops"
+    },
+    "29,22": {
+      "terrain": "plains"
+    },
+    "29,23": {
+      "terrain": "plains"
+    },
+    "29,24": {
+      "terrain": "woods"
+    },
+    "29,25": {
+      "terrain": "woods"
+    },
+    "29,26": {
+      "terrain": "plains"
+    },
+    "29,27": {
+      "terrain": "swamps"
+    },
+    "29,28": {
+      "terrain": "woods"
+    },
+    "29,29": {
+      "terrain": "woods"
+    },
+    "29,30": {
+      "terrain": "woods"
+    },
+    "29,31": {
+      "terrain": "plains"
+    },
+    "29,32": {
+      "terrain": "woods"
+    },
+    "29,33": {
+      "terrain": "plains"
+    },
+    "29,34": {
+      "terrain": "plains"
+    },
+    "29,35": {
+      "terrain": "swamps"
+    },
+    "29,36": {
+      "terrain": "crops"
+    },
+    "29,37": {
+      "terrain": "plains"
+    },
+    "29,38": {
+      "terrain": "hills"
+    },
+    "29,39": {
+      "terrain": "plains"
+    },
+    "29,40": {
+      "terrain": "woods"
+    },
+    "29,41": {
+      "terrain": "woods"
+    },
+    "29,42": {
+      "terrain": "woods"
+    },
+    "29,43": {
+      "terrain": "woods"
+    },
+    "29,44": {
+      "terrain": "woods"
+    },
+    "29,45": {
+      "terrain": "woods"
+    },
+    "29,46": {
+      "terrain": "plains"
+    },
+    "29,47": {
+      "terrain": "plains"
+    },
+    "29,48": {
+      "terrain": "plains"
+    },
+    "29,49": {
+      "terrain": "crops"
+    },
+    "30,0": {
+      "terrain": "plains"
+    },
+    "30,1": {
+      "terrain": "crops"
+    },
+    "30,2": {
+      "terrain": "plains"
+    },
+    "30,3": {
+      "terrain": "hills"
+    },
+    "30,4": {
+      "terrain": "plains"
+    },
+    "30,5": {
+      "terrain": "hills"
+    },
+    "30,6": {
+      "terrain": "woods"
+    },
+    "30,7": {
+      "terrain": "plains"
+    },
+    "30,8": {
+      "terrain": "woods"
+    },
+    "30,9": {
+      "terrain": "plains"
+    },
+    "30,10": {
+      "terrain": "hills"
+    },
+    "30,11": {
+      "terrain": "hills"
+    },
+    "30,12": {
+      "terrain": "hills"
+    },
+    "30,13": {
+      "terrain": "hills"
+    },
+    "30,14": {
+      "terrain": "hills"
+    },
+    "30,15": {
+      "terrain": "hills"
+    },
+    "30,16": {
+      "terrain": "woods"
+    },
+    "30,17": {
+      "terrain": "plains"
+    },
+    "30,18": {
+      "terrain": "woods"
+    },
+    "30,19": {
+      "terrain": "plains"
+    },
+    "30,20": {
+      "terrain": "woods"
+    },
+    "30,21": {
+      "terrain": "plains"
+    },
+    "30,22": {
+      "terrain": "plains"
+    },
+    "30,23": {
+      "terrain": "plains"
+    },
+    "30,24": {
+      "terrain": "hills"
+    },
+    "30,25": {
+      "terrain": "plains"
+    },
+    "30,26": {
+      "terrain": "swamps"
+    },
+    "30,27": {
+      "terrain": "plains"
+    },
+    "30,28": {
+      "terrain": "plains"
+    },
+    "30,29": {
+      "terrain": "woods"
+    },
+    "30,30": {
+      "terrain": "plains"
+    },
+    "30,31": {
+      "terrain": "plains"
+    },
+    "30,32": {
+      "terrain": "woods"
+    },
+    "30,33": {
+      "terrain": "crops"
+    },
+    "30,34": {
+      "terrain": "woods"
+    },
+    "30,35": {
+      "terrain": "hills"
+    },
+    "30,36": {
+      "terrain": "plains"
+    },
+    "30,37": {
+      "terrain": "woods"
+    },
+    "30,38": {
+      "terrain": "swamps"
+    },
+    "30,39": {
+      "terrain": "plains"
+    },
+    "30,40": {
+      "terrain": "crops"
+    },
+    "30,41": {
+      "terrain": "woods"
+    },
+    "30,42": {
+      "terrain": "hills"
+    },
+    "30,43": {
+      "terrain": "plains"
+    },
+    "30,44": {
+      "terrain": "woods"
+    },
+    "30,45": {
+      "terrain": "woods"
+    },
+    "30,46": {
+      "terrain": "plains"
+    },
+    "30,47": {
+      "terrain": "plains"
+    },
+    "30,48": {
+      "terrain": "plains"
+    },
+    "30,49": {
+      "terrain": "plains"
+    },
+    "31,0": {
+      "terrain": "plains"
+    },
+    "31,1": {
+      "terrain": "crops"
+    },
+    "31,2": {
+      "terrain": "plains"
+    },
+    "31,3": {
+      "terrain": "plains"
+    },
+    "31,4": {
+      "terrain": "hills"
+    },
+    "31,5": {
+      "terrain": "plains"
+    },
+    "31,6": {
+      "terrain": "hills"
+    },
+    "31,7": {
+      "terrain": "plains"
+    },
+    "31,8": {
+      "terrain": "plains"
+    },
+    "31,9": {
+      "terrain": "woods"
+    },
+    "31,10": {
+      "terrain": "hills"
+    },
+    "31,11": {
+      "terrain": "hills"
+    },
+    "31,12": {
+      "terrain": "hills"
+    },
+    "31,13": {
+      "terrain": "hills"
+    },
+    "31,14": {
+      "terrain": "hills"
+    },
+    "31,15": {
+      "terrain": "plains"
+    },
+    "31,16": {
+      "terrain": "swamps"
+    },
+    "31,17": {
+      "terrain": "hills"
+    },
+    "31,18": {
+      "terrain": "plains"
+    },
+    "31,19": {
+      "terrain": "crops"
+    },
+    "31,20": {
+      "terrain": "plains"
+    },
+    "31,21": {
+      "terrain": "plains"
+    },
+    "31,22": {
+      "terrain": "plains"
+    },
+    "31,23": {
+      "terrain": "plains"
+    },
+    "31,24": {
+      "terrain": "swamps"
+    },
+    "31,25": {
+      "terrain": "plains"
+    },
+    "31,26": {
+      "terrain": "plains"
+    },
+    "31,27": {
+      "terrain": "hills"
+    },
+    "31,28": {
+      "terrain": "crops"
+    },
+    "31,29": {
+      "terrain": "swamps"
+    },
+    "31,30": {
+      "terrain": "plains"
+    },
+    "31,31": {
+      "terrain": "swamps"
+    },
+    "31,32": {
+      "terrain": "hills"
+    },
+    "31,33": {
+      "terrain": "plains"
+    },
+    "31,34": {
+      "terrain": "plains"
+    },
+    "31,35": {
+      "terrain": "plains"
+    },
+    "31,36": {
+      "terrain": "crops"
+    },
+    "31,37": {
+      "terrain": "plains"
+    },
+    "31,38": {
+      "terrain": "hills"
+    },
+    "31,39": {
+      "terrain": "crops"
+    },
+    "31,40": {
+      "terrain": "woods"
+    },
+    "31,41": {
+      "terrain": "plains"
+    },
+    "31,42": {
+      "terrain": "plains"
+    },
+    "31,43": {
+      "terrain": "crops"
+    },
+    "31,44": {
+      "terrain": "woods"
+    },
+    "31,45": {
+      "terrain": "woods"
+    },
+    "31,46": {
+      "terrain": "woods"
+    },
+    "31,47": {
+      "terrain": "woods"
+    },
+    "31,48": {
+      "terrain": "plains"
+    },
+    "31,49": {
+      "terrain": "hills"
+    },
+    "32,0": {
+      "terrain": "hills"
+    },
+    "32,1": {
+      "terrain": "plains"
+    },
+    "32,2": {
+      "terrain": "swamps"
+    },
+    "32,3": {
+      "terrain": "plains"
+    },
+    "32,4": {
+      "terrain": "plains"
+    },
+    "32,5": {
+      "terrain": "plains"
+    },
+    "32,6": {
+      "terrain": "plains"
+    },
+    "32,7": {
+      "terrain": "plains"
+    },
+    "32,8": {
+      "terrain": "plains"
+    },
+    "32,9": {
+      "terrain": "plains"
+    },
+    "32,10": {
+      "terrain": "hills"
+    },
+    "32,11": {
+      "terrain": "hills"
+    },
+    "32,12": {
+      "terrain": "hills"
+    },
+    "32,13": {
+      "terrain": "hills"
+    },
+    "32,14": {
+      "terrain": "hills"
+    },
+    "32,15": {
+      "terrain": "plains"
+    },
+    "32,16": {
+      "terrain": "crops"
+    },
+    "32,17": {
+      "terrain": "woods"
+    },
+    "32,18": {
+      "terrain": "plains"
+    },
+    "32,19": {
+      "terrain": "hills"
+    },
+    "32,20": {
+      "terrain": "hills"
+    },
+    "32,21": {
+      "terrain": "plains"
+    },
+    "32,22": {
+      "terrain": "woods"
+    },
+    "32,23": {
+      "terrain": "crops"
+    },
+    "32,24": {
+      "terrain": "woods"
+    },
+    "32,25": {
+      "terrain": "plains"
+    },
+    "32,26": {
+      "terrain": "woods"
+    },
+    "32,27": {
+      "terrain": "plains"
+    },
+    "32,28": {
+      "terrain": "plains"
+    },
+    "32,29": {
+      "terrain": "plains"
+    },
+    "32,30": {
+      "terrain": "plains"
+    },
+    "32,31": {
+      "terrain": "woods"
+    },
+    "32,32": {
+      "terrain": "plains"
+    },
+    "32,33": {
+      "terrain": "plains"
+    },
+    "32,34": {
+      "terrain": "crops"
+    },
+    "32,35": {
+      "terrain": "plains"
+    },
+    "32,36": {
+      "terrain": "plains"
+    },
+    "32,37": {
+      "terrain": "crops"
+    },
+    "32,38": {
+      "terrain": "plains"
+    },
+    "32,39": {
+      "terrain": "woods"
+    },
+    "32,40": {
+      "terrain": "hills"
+    },
+    "32,41": {
+      "terrain": "woods"
+    },
+    "32,42": {
+      "terrain": "hills"
+    },
+    "32,43": {
+      "terrain": "crops"
+    },
+    "32,44": {
+      "terrain": "hills"
+    },
+    "32,45": {
+      "terrain": "plains"
+    },
+    "32,46": {
+      "terrain": "woods"
+    },
+    "32,47": {
+      "terrain": "hills"
+    },
+    "32,48": {
+      "terrain": "plains"
+    },
+    "32,49": {
+      "terrain": "crops"
+    },
+    "33,0": {
+      "terrain": "woods"
+    },
+    "33,1": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Ulm"
+    },
+    "33,2": {
+      "terrain": "plains"
+    },
+    "33,3": {
+      "terrain": "plains"
+    },
+    "33,4": {
+      "terrain": "woods"
+    },
+    "33,5": {
+      "terrain": "crops"
+    },
+    "33,6": {
+      "terrain": "plains"
+    },
+    "33,7": {
+      "terrain": "plains"
+    },
+    "33,8": {
+      "terrain": "woods"
+    },
+    "33,9": {
+      "terrain": "plains"
+    },
+    "33,10": {
+      "terrain": "plains"
+    },
+    "33,11": {
+      "terrain": "plains"
+    },
+    "33,12": {
+      "terrain": "hills"
+    },
+    "33,13": {
+      "terrain": "plains"
+    },
+    "33,14": {
+      "terrain": "plains"
+    },
+    "33,15": {
+      "terrain": "plains"
+    },
+    "33,16": {
+      "terrain": "plains"
+    },
+    "33,17": {
+      "terrain": "swamps"
+    },
+    "33,18": {
+      "terrain": "plains"
+    },
+    "33,19": {
+      "terrain": "plains"
+    },
+    "33,20": {
+      "terrain": "swamps"
+    },
+    "33,21": {
+      "terrain": "plains"
+    },
+    "33,22": {
+      "terrain": "hills"
+    },
+    "33,23": {
+      "terrain": "woods"
+    },
+    "33,24": {
+      "terrain": "plains"
+    },
+    "33,25": {
+      "terrain": "plains"
+    },
+    "33,26": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Paris"
+    },
+    "33,27": {
+      "terrain": "crops"
+    },
+    "33,28": {
+      "terrain": "plains"
+    },
+    "33,29": {
+      "terrain": "woods"
+    },
+    "33,30": {
+      "terrain": "swamps"
+    },
+    "33,31": {
+      "terrain": "crops"
+    },
+    "33,32": {
+      "terrain": "hills"
+    },
+    "33,33": {
+      "terrain": "plains"
+    },
+    "33,34": {
+      "terrain": "plains"
+    },
+    "33,35": {
+      "terrain": "swamps"
+    },
+    "33,36": {
+      "terrain": "woods"
+    },
+    "33,37": {
+      "terrain": "plains"
+    },
+    "33,38": {
+      "terrain": "plains"
+    },
+    "33,39": {
+      "terrain": "hills"
+    },
+    "33,40": {
+      "terrain": "plains"
+    },
+    "33,41": {
+      "terrain": "plains"
+    },
+    "33,42": {
+      "terrain": "plains"
+    },
+    "33,43": {
+      "terrain": "woods"
+    },
+    "33,44": {
+      "terrain": "woods"
+    },
+    "33,45": {
+      "terrain": "plains"
+    },
+    "33,46": {
+      "terrain": "plains"
+    },
+    "33,47": {
+      "terrain": "hills"
+    },
+    "33,48": {
+      "terrain": "crops"
+    },
+    "33,49": {
+      "terrain": "woods"
+    },
+    "34,0": {
+      "terrain": "plains"
+    },
+    "34,1": {
+      "terrain": "plains"
+    },
+    "34,2": {
+      "terrain": "crops"
+    },
+    "34,3": {
+      "terrain": "hills"
+    },
+    "34,4": {
+      "terrain": "plains"
+    },
+    "34,5": {
+      "terrain": "plains"
+    },
+    "34,6": {
+      "terrain": "swamps"
+    },
+    "34,7": {
+      "terrain": "hills"
+    },
+    "34,8": {
+      "terrain": "crops"
+    },
+    "34,9": {
+      "terrain": "plains"
+    },
+    "34,10": {
+      "terrain": "plains"
+    },
+    "34,11": {
+      "terrain": "plains"
+    },
+    "34,12": {
+      "terrain": "plains"
+    },
+    "34,13": {
+      "terrain": "woods"
+    },
+    "34,14": {
+      "terrain": "hills"
+    },
+    "34,15": {
+      "terrain": "hills"
+    },
+    "34,16": {
+      "terrain": "plains"
+    },
+    "34,17": {
+      "terrain": "hills"
+    },
+    "34,18": {
+      "terrain": "plains"
+    },
+    "34,19": {
+      "terrain": "plains"
+    },
+    "34,20": {
+      "terrain": "plains"
+    },
+    "34,21": {
+      "terrain": "hills"
+    },
+    "34,22": {
+      "terrain": "woods"
+    },
+    "34,23": {
+      "terrain": "woods"
+    },
+    "34,24": {
+      "terrain": "plains"
+    },
+    "34,25": {
+      "terrain": "hills"
+    },
+    "34,26": {
+      "terrain": "plains"
+    },
+    "34,27": {
+      "terrain": "plains"
+    },
+    "34,28": {
+      "terrain": "plains"
+    },
+    "34,29": {
+      "terrain": "plains"
+    },
+    "34,30": {
+      "terrain": "hills"
+    },
+    "34,31": {
+      "terrain": "woods"
+    },
+    "34,32": {
+      "terrain": "plains"
+    },
+    "34,33": {
+      "terrain": "plains"
+    },
+    "34,34": {
+      "terrain": "crops"
+    },
+    "34,35": {
+      "terrain": "crops"
+    },
+    "34,36": {
+      "terrain": "crops"
+    },
+    "34,37": {
+      "terrain": "plains"
+    },
+    "34,38": {
+      "terrain": "hills"
+    },
+    "34,39": {
+      "terrain": "woods"
+    },
+    "34,40": {
+      "terrain": "plains"
+    },
+    "34,41": {
+      "terrain": "plains"
+    },
+    "34,42": {
+      "terrain": "plains"
+    },
+    "34,43": {
+      "terrain": "woods"
+    },
+    "34,44": {
+      "terrain": "hills"
+    },
+    "34,45": {
+      "terrain": "plains"
+    },
+    "34,46": {
+      "terrain": "plains"
+    },
+    "34,47": {
+      "terrain": "plains"
+    },
+    "34,48": {
+      "terrain": "plains"
+    },
+    "34,49": {
+      "terrain": "plains"
+    },
+    "35,0": {
+      "terrain": "plains"
+    },
+    "35,1": {
+      "terrain": "plains"
+    },
+    "35,2": {
+      "terrain": "woods"
+    },
+    "35,3": {
+      "terrain": "crops"
+    },
+    "35,4": {
+      "terrain": "woods"
+    },
+    "35,5": {
+      "terrain": "woods"
+    },
+    "35,6": {
+      "terrain": "plains"
+    },
+    "35,7": {
+      "terrain": "plains"
+    },
+    "35,8": {
+      "terrain": "plains"
+    },
+    "35,9": {
+      "terrain": "plains"
+    },
+    "35,10": {
+      "terrain": "hills"
+    },
+    "35,11": {
+      "terrain": "woods"
+    },
+    "35,12": {
+      "terrain": "woods"
+    },
+    "35,13": {
+      "terrain": "swamps"
+    },
+    "35,14": {
+      "terrain": "hills"
+    },
+    "35,15": {
+      "terrain": "hills"
+    },
+    "35,16": {
+      "terrain": "plains"
+    },
+    "35,17": {
+      "terrain": "crops"
+    },
+    "35,18": {
+      "terrain": "crops"
+    },
+    "35,19": {
+      "terrain": "woods"
+    },
+    "35,20": {
+      "terrain": "plains"
+    },
+    "35,21": {
+      "terrain": "plains"
+    },
+    "35,22": {
+      "terrain": "plains"
+    },
+    "35,23": {
+      "terrain": "woods"
+    },
+    "35,24": {
+      "terrain": "hills"
+    },
+    "35,25": {
+      "terrain": "hills"
+    },
+    "35,26": {
+      "terrain": "woods"
+    },
+    "35,27": {
+      "terrain": "hills"
+    },
+    "35,28": {
+      "terrain": "plains"
+    },
+    "35,29": {
+      "terrain": "plains"
+    },
+    "35,30": {
+      "terrain": "hills"
+    },
+    "35,31": {
+      "terrain": "plains"
+    },
+    "35,32": {
+      "terrain": "woods"
+    },
+    "35,33": {
+      "terrain": "crops"
+    },
+    "35,34": {
+      "terrain": "swamps"
+    },
+    "35,35": {
+      "terrain": "plains"
+    },
+    "35,36": {
+      "terrain": "plains"
+    },
+    "35,37": {
+      "terrain": "plains"
+    },
+    "35,38": {
+      "terrain": "plains"
+    },
+    "35,39": {
+      "terrain": "woods"
+    },
+    "35,40": {
+      "terrain": "plains"
+    },
+    "35,41": {
+      "terrain": "woods"
+    },
+    "35,42": {
+      "terrain": "hills"
+    },
+    "35,43": {
+      "terrain": "plains"
+    },
+    "35,44": {
+      "terrain": "crops"
+    },
+    "35,45": {
+      "terrain": "woods"
+    },
+    "35,46": {
+      "terrain": "woods"
+    },
+    "35,47": {
+      "terrain": "plains"
+    },
+    "35,48": {
+      "terrain": "hills"
+    },
+    "35,49": {
+      "terrain": "plains"
+    },
+    "36,0": {
+      "terrain": "plains"
+    },
+    "36,1": {
+      "terrain": "woods"
+    },
+    "36,2": {
+      "terrain": "woods"
+    },
+    "36,3": {
+      "terrain": "plains"
+    },
+    "36,4": {
+      "terrain": "woods"
+    },
+    "36,5": {
+      "terrain": "hills"
+    },
+    "36,6": {
+      "terrain": "woods"
+    },
+    "36,7": {
+      "terrain": "woods"
+    },
+    "36,8": {
+      "terrain": "plains"
+    },
+    "36,9": {
+      "terrain": "woods"
+    },
+    "36,10": {
+      "terrain": "woods"
+    },
+    "36,11": {
+      "terrain": "woods"
+    },
+    "36,12": {
+      "terrain": "plains"
+    },
+    "36,13": {
+      "terrain": "crops"
+    },
+    "36,14": {
+      "terrain": "plains"
+    },
+    "36,15": {
+      "terrain": "plains"
+    },
+    "36,16": {
+      "terrain": "woods"
+    },
+    "36,17": {
+      "terrain": "crops"
+    },
+    "36,18": {
+      "terrain": "woods"
+    },
+    "36,19": {
+      "terrain": "hills"
+    },
+    "36,20": {
+      "terrain": "crops"
+    },
+    "36,21": {
+      "terrain": "plains"
+    },
+    "36,22": {
+      "terrain": "woods"
+    },
+    "36,23": {
+      "terrain": "plains"
+    },
+    "36,24": {
+      "terrain": "swamps"
+    },
+    "36,25": {
+      "terrain": "woods"
+    },
+    "36,26": {
+      "terrain": "crops"
+    },
+    "36,27": {
+      "terrain": "plains"
+    },
+    "36,28": {
+      "terrain": "crops"
+    },
+    "36,29": {
+      "terrain": "hills"
+    },
+    "36,30": {
+      "terrain": "hills"
+    },
+    "36,31": {
+      "terrain": "plains"
+    },
+    "36,32": {
+      "terrain": "woods"
+    },
+    "36,33": {
+      "terrain": "plains"
+    },
+    "36,34": {
+      "terrain": "hills"
+    },
+    "36,35": {
+      "terrain": "hills"
+    },
+    "36,36": {
+      "terrain": "plains"
+    },
+    "36,37": {
+      "terrain": "woods"
+    },
+    "36,38": {
+      "terrain": "plains"
+    },
+    "36,39": {
+      "terrain": "woods"
+    },
+    "36,40": {
+      "terrain": "plains"
+    },
+    "36,41": {
+      "terrain": "hills"
+    },
+    "36,42": {
+      "terrain": "woods"
+    },
+    "36,43": {
+      "terrain": "plains"
+    },
+    "36,44": {
+      "terrain": "plains"
+    },
+    "36,45": {
+      "terrain": "crops"
+    },
+    "36,46": {
+      "terrain": "woods"
+    },
+    "36,47": {
+      "terrain": "plains"
+    },
+    "36,48": {
+      "terrain": "hills"
+    },
+    "36,49": {
+      "terrain": "plains"
+    },
+    "37,0": {
+      "terrain": "plains"
+    },
+    "37,1": {
+      "terrain": "plains"
+    },
+    "37,2": {
+      "terrain": "plains"
+    },
+    "37,3": {
+      "terrain": "crops"
+    },
+    "37,4": {
+      "terrain": "plains"
+    },
+    "37,5": {
+      "terrain": "crops"
+    },
+    "37,6": {
+      "terrain": "woods"
+    },
+    "37,7": {
+      "terrain": "hills"
+    },
+    "37,8": {
+      "terrain": "woods"
+    },
+    "37,9": {
+      "terrain": "crops"
+    },
+    "37,10": {
+      "terrain": "hills"
+    },
+    "37,11": {
+      "terrain": "plains"
+    },
+    "37,12": {
+      "terrain": "plains"
+    },
+    "37,13": {
+      "terrain": "plains"
+    },
+    "37,14": {
+      "terrain": "plains"
+    },
+    "37,15": {
+      "terrain": "swamps"
+    },
+    "37,16": {
+      "terrain": "swamps"
+    },
+    "37,17": {
+      "terrain": "plains"
+    },
+    "37,18": {
+      "terrain": "plains"
+    },
+    "37,19": {
+      "terrain": "crops"
+    },
+    "37,20": {
+      "terrain": "plains"
+    },
+    "37,21": {
+      "terrain": "plains"
+    },
+    "37,22": {
+      "terrain": "plains"
+    },
+    "37,23": {
+      "terrain": "crops"
+    },
+    "37,24": {
+      "terrain": "hills"
+    },
+    "37,25": {
+      "terrain": "plains"
+    },
+    "37,26": {
+      "terrain": "woods"
+    },
+    "37,27": {
+      "terrain": "plains"
+    },
+    "37,28": {
+      "terrain": "plains"
+    },
+    "37,29": {
+      "terrain": "woods"
+    },
+    "37,30": {
+      "terrain": "swamps"
+    },
+    "37,31": {
+      "terrain": "woods"
+    },
+    "37,32": {
+      "terrain": "plains"
+    },
+    "37,33": {
+      "terrain": "hills"
+    },
+    "37,34": {
+      "terrain": "plains"
+    },
+    "37,35": {
+      "terrain": "plains"
+    },
+    "37,36": {
+      "terrain": "plains"
+    },
+    "37,37": {
+      "terrain": "hills"
+    },
+    "37,38": {
+      "terrain": "plains"
+    },
+    "37,39": {
+      "terrain": "woods"
+    },
+    "37,40": {
+      "terrain": "swamps"
+    },
+    "37,41": {
+      "terrain": "crops"
+    },
+    "37,42": {
+      "terrain": "woods"
+    },
+    "37,43": {
+      "terrain": "hills"
+    },
+    "37,44": {
+      "terrain": "plains"
+    },
+    "37,45": {
+      "terrain": "hills"
+    },
+    "37,46": {
+      "terrain": "plains"
+    },
+    "37,47": {
+      "terrain": "swamps"
+    },
+    "37,48": {
+      "terrain": "hills"
+    },
+    "37,49": {
+      "terrain": "crops"
+    },
+    "38,0": {
+      "terrain": "woods"
+    },
+    "38,1": {
+      "terrain": "hills"
+    },
+    "38,2": {
+      "terrain": "hills"
+    },
+    "38,3": {
+      "terrain": "plains"
+    },
+    "38,4": {
+      "terrain": "plains"
+    },
+    "38,5": {
+      "terrain": "hills"
+    },
+    "38,6": {
+      "terrain": "plains"
+    },
+    "38,7": {
+      "terrain": "woods"
+    },
+    "38,8": {
+      "terrain": "hills"
+    },
+    "38,9": {
+      "terrain": "swamps"
+    },
+    "38,10": {
+      "terrain": "crops"
+    },
+    "38,11": {
+      "terrain": "woods"
+    },
+    "38,12": {
+      "terrain": "plains"
+    },
+    "38,13": {
+      "terrain": "hills"
+    },
+    "38,14": {
+      "terrain": "plains"
+    },
+    "38,15": {
+      "terrain": "hills"
+    },
+    "38,16": {
+      "terrain": "plains"
+    },
+    "38,17": {
+      "terrain": "plains"
+    },
+    "38,18": {
+      "terrain": "plains"
+    },
+    "38,19": {
+      "terrain": "plains"
+    },
+    "38,20": {
+      "terrain": "crops"
+    },
+    "38,21": {
+      "terrain": "plains"
+    },
+    "38,22": {
+      "terrain": "plains"
+    },
+    "38,23": {
+      "terrain": "hills"
+    },
+    "38,24": {
+      "terrain": "plains"
+    },
+    "38,25": {
+      "terrain": "plains"
+    },
+    "38,26": {
+      "terrain": "plains"
+    },
+    "38,27": {
+      "terrain": "woods"
+    },
+    "38,28": {
+      "terrain": "hills"
+    },
+    "38,29": {
+      "terrain": "woods"
+    },
+    "38,30": {
+      "terrain": "plains"
+    },
+    "38,31": {
+      "terrain": "plains"
+    },
+    "38,32": {
+      "terrain": "crops"
+    },
+    "38,33": {
+      "terrain": "hills"
+    },
+    "38,34": {
+      "terrain": "plains"
+    },
+    "38,35": {
+      "terrain": "woods"
+    },
+    "38,36": {
+      "terrain": "plains"
+    },
+    "38,37": {
+      "terrain": "plains"
+    },
+    "38,38": {
+      "terrain": "crops"
+    },
+    "38,39": {
+      "terrain": "hills"
+    },
+    "38,40": {
+      "terrain": "plains"
+    },
+    "38,41": {
+      "terrain": "plains"
+    },
+    "38,42": {
+      "terrain": "plains"
+    },
+    "38,43": {
+      "terrain": "plains"
+    },
+    "38,44": {
+      "terrain": "plains"
+    },
+    "38,45": {
+      "terrain": "woods"
+    },
+    "38,46": {
+      "terrain": "plains"
+    },
+    "38,47": {
+      "terrain": "woods"
+    },
+    "38,48": {
+      "terrain": "crops"
+    },
+    "38,49": {
+      "terrain": "plains"
+    },
+    "39,0": {
+      "terrain": "plains"
+    },
+    "39,1": {
+      "terrain": "woods"
+    },
+    "39,2": {
+      "terrain": "plains"
+    },
+    "39,3": {
+      "terrain": "plains"
+    },
+    "39,4": {
+      "terrain": "plains"
+    },
+    "39,5": {
+      "terrain": "plains"
+    },
+    "39,6": {
+      "terrain": "plains"
+    },
+    "39,7": {
+      "terrain": "woods"
+    },
+    "39,8": {
+      "terrain": "hills"
+    },
+    "39,9": {
+      "terrain": "hills"
+    },
+    "39,10": {
+      "terrain": "hills"
+    },
+    "39,11": {
+      "terrain": "plains"
+    },
+    "39,12": {
+      "terrain": "hills"
+    },
+    "39,13": {
+      "terrain": "hills"
+    },
+    "39,14": {
+      "terrain": "crops"
+    },
+    "39,15": {
+      "terrain": "woods"
+    },
+    "39,16": {
+      "terrain": "plains"
+    },
+    "39,17": {
+      "terrain": "woods"
+    },
+    "39,18": {
+      "terrain": "hills"
+    },
+    "39,19": {
+      "terrain": "plains"
+    },
+    "39,20": {
+      "terrain": "plains"
+    },
+    "39,21": {
+      "terrain": "hills"
+    },
+    "39,22": {
+      "terrain": "swamps"
+    },
+    "39,23": {
+      "terrain": "plains"
+    },
+    "39,24": {
+      "terrain": "plains"
+    },
+    "39,25": {
+      "terrain": "plains"
+    },
+    "39,26": {
+      "terrain": "plains"
+    },
+    "39,27": {
+      "terrain": "crops"
+    },
+    "39,28": {
+      "terrain": "woods"
+    },
+    "39,29": {
+      "terrain": "woods"
+    },
+    "39,30": {
+      "terrain": "plains"
+    },
+    "39,31": {
+      "terrain": "woods"
+    },
+    "39,32": {
+      "terrain": "plains"
+    },
+    "39,33": {
+      "terrain": "crops"
+    },
+    "39,34": {
+      "terrain": "woods"
+    },
+    "39,35": {
+      "terrain": "woods"
+    },
+    "39,36": {
+      "terrain": "plains"
+    },
+    "39,37": {
+      "terrain": "hills"
+    },
+    "39,38": {
+      "terrain": "plains"
+    },
+    "39,39": {
+      "terrain": "swamps"
+    },
+    "39,40": {
+      "terrain": "woods"
+    },
+    "39,41": {
+      "terrain": "plains"
+    },
+    "39,42": {
+      "terrain": "swamps"
+    },
+    "39,43": {
+      "terrain": "swamps"
+    },
+    "39,44": {
+      "terrain": "swamps"
+    },
+    "39,45": {
+      "terrain": "swamps"
+    },
+    "39,46": {
+      "terrain": "swamps"
+    },
+    "39,47": {
+      "terrain": "swamps"
+    },
+    "39,48": {
+      "terrain": "woods"
+    },
+    "39,49": {
+      "terrain": "woods"
+    },
+    "40,0": {
+      "terrain": "plains"
+    },
+    "40,1": {
+      "terrain": "woods"
+    },
+    "40,2": {
+      "terrain": "woods"
+    },
+    "40,3": {
+      "terrain": "swamps"
+    },
+    "40,4": {
+      "terrain": "plains"
+    },
+    "40,5": {
+      "terrain": "plains"
+    },
+    "40,6": {
+      "terrain": "woods"
+    },
+    "40,7": {
+      "terrain": "woods"
+    },
+    "40,8": {
+      "terrain": "crops"
+    },
+    "40,9": {
+      "terrain": "plains"
+    },
+    "40,10": {
+      "terrain": "plains"
+    },
+    "40,11": {
+      "terrain": "plains"
+    },
+    "40,12": {
+      "terrain": "plains"
+    },
+    "40,13": {
+      "terrain": "swamps"
+    },
+    "40,14": {
+      "terrain": "plains"
+    },
+    "40,15": {
+      "terrain": "plains"
+    },
+    "40,16": {
+      "terrain": "swamps"
+    },
+    "40,17": {
+      "terrain": "woods"
+    },
+    "40,18": {
+      "terrain": "crops"
+    },
+    "40,19": {
+      "terrain": "hills"
+    },
+    "40,20": {
+      "terrain": "plains"
+    },
+    "40,21": {
+      "terrain": "plains"
+    },
+    "40,22": {
+      "terrain": "woods"
+    },
+    "40,23": {
+      "terrain": "crops"
+    },
+    "40,24": {
+      "terrain": "plains"
+    },
+    "40,25": {
+      "terrain": "plains"
+    },
+    "40,26": {
+      "terrain": "woods"
+    },
+    "40,27": {
+      "terrain": "hills"
+    },
+    "40,28": {
+      "terrain": "plains"
+    },
+    "40,29": {
+      "terrain": "hills"
+    },
+    "40,30": {
+      "terrain": "plains"
+    },
+    "40,31": {
+      "terrain": "plains"
+    },
+    "40,32": {
+      "terrain": "hills"
+    },
+    "40,33": {
+      "terrain": "woods"
+    },
+    "40,34": {
+      "terrain": "plains"
+    },
+    "40,35": {
+      "terrain": "hills"
+    },
+    "40,36": {
+      "terrain": "hills"
+    },
+    "40,37": {
+      "terrain": "hills"
+    },
+    "40,38": {
+      "terrain": "hills"
+    },
+    "40,39": {
+      "terrain": "hills"
+    },
+    "40,40": {
+      "terrain": "crops"
+    },
+    "40,41": {
+      "terrain": "plains"
+    },
+    "40,42": {
+      "terrain": "woods"
+    },
+    "40,43": {
+      "terrain": "swamps"
+    },
+    "40,44": {
+      "terrain": "swamps"
+    },
+    "40,45": {
+      "terrain": "swamps"
+    },
+    "40,46": {
+      "terrain": "swamps"
+    },
+    "40,47": {
+      "terrain": "swamps"
+    },
+    "40,48": {
+      "terrain": "plains"
+    },
+    "40,49": {
+      "terrain": "plains"
+    },
+    "41,0": {
+      "terrain": "swamps"
+    },
+    "41,1": {
+      "terrain": "plains"
+    },
+    "41,2": {
+      "terrain": "swamps"
+    },
+    "41,3": {
+      "terrain": "plains"
+    },
+    "41,4": {
+      "terrain": "swamps"
+    },
+    "41,5": {
+      "terrain": "hills"
+    },
+    "41,6": {
+      "terrain": "plains"
+    },
+    "41,7": {
+      "terrain": "hills"
+    },
+    "41,8": {
+      "terrain": "plains"
+    },
+    "41,9": {
+      "terrain": "woods"
+    },
+    "41,10": {
+      "terrain": "woods"
+    },
+    "41,11": {
+      "terrain": "woods"
+    },
+    "41,12": {
+      "terrain": "swamps"
+    },
+    "41,13": {
+      "terrain": "hills"
+    },
+    "41,14": {
+      "terrain": "hills"
+    },
+    "41,15": {
+      "terrain": "woods"
+    },
+    "41,16": {
+      "terrain": "swamps"
+    },
+    "41,17": {
+      "terrain": "hills"
+    },
+    "41,18": {
+      "terrain": "woods"
+    },
+    "41,19": {
+      "terrain": "swamps"
+    },
+    "41,20": {
+      "terrain": "plains"
+    },
+    "41,21": {
+      "terrain": "woods"
+    },
+    "41,22": {
+      "terrain": "hills"
+    },
+    "41,23": {
+      "terrain": "hills"
+    },
+    "41,24": {
+      "terrain": "plains"
+    },
+    "41,25": {
+      "terrain": "crops"
+    },
+    "41,26": {
+      "terrain": "hills"
+    },
+    "41,27": {
+      "terrain": "plains"
+    },
+    "41,28": {
+      "terrain": "plains"
+    },
+    "41,29": {
+      "terrain": "plains"
+    },
+    "41,30": {
+      "terrain": "woods"
+    },
+    "41,31": {
+      "terrain": "crops"
+    },
+    "41,32": {
+      "terrain": "crops"
+    },
+    "41,33": {
+      "terrain": "hills"
+    },
+    "41,34": {
+      "terrain": "hills"
+    },
+    "41,35": {
+      "terrain": "hills"
+    },
+    "41,36": {
+      "terrain": "hills"
+    },
+    "41,37": {
+      "terrain": "hills"
+    },
+    "41,38": {
+      "terrain": "hills"
+    },
+    "41,39": {
+      "terrain": "hills"
+    },
+    "41,40": {
+      "terrain": "plains"
+    },
+    "41,41": {
+      "terrain": "plains"
+    },
+    "41,42": {
+      "terrain": "hills"
+    },
+    "41,43": {
+      "terrain": "swamps"
+    },
+    "41,44": {
+      "terrain": "swamps"
+    },
+    "41,45": {
+      "terrain": "swamps"
+    },
+    "41,46": {
+      "terrain": "swamps"
+    },
+    "41,47": {
+      "terrain": "swamps"
+    },
+    "41,48": {
+      "terrain": "hills"
+    },
+    "41,49": {
+      "terrain": "hills"
+    },
+    "42,0": {
+      "terrain": "woods"
+    },
+    "42,1": {
+      "terrain": "crops"
+    },
+    "42,2": {
+      "terrain": "plains"
+    },
+    "42,3": {
+      "terrain": "plains"
+    },
+    "42,4": {
+      "terrain": "plains"
+    },
+    "42,5": {
+      "terrain": "hills"
+    },
+    "42,6": {
+      "terrain": "plains"
+    },
+    "42,7": {
+      "terrain": "plains"
+    },
+    "42,8": {
+      "terrain": "plains"
+    },
+    "42,9": {
+      "terrain": "plains"
+    },
+    "42,10": {
+      "terrain": "plains"
+    },
+    "42,11": {
+      "terrain": "hills"
+    },
+    "42,12": {
+      "terrain": "plains"
+    },
+    "42,13": {
+      "terrain": "plains"
+    },
+    "42,14": {
+      "terrain": "crops"
+    },
+    "42,15": {
+      "terrain": "plains"
+    },
+    "42,16": {
+      "terrain": "plains"
+    },
+    "42,17": {
+      "terrain": "plains"
+    },
+    "42,18": {
+      "terrain": "crops"
+    },
+    "42,19": {
+      "terrain": "plains"
+    },
+    "42,20": {
+      "terrain": "plains"
+    },
+    "42,21": {
+      "terrain": "plains"
+    },
+    "42,22": {
+      "terrain": "woods"
+    },
+    "42,23": {
+      "terrain": "plains"
+    },
+    "42,24": {
+      "terrain": "plains"
+    },
+    "42,25": {
+      "terrain": "plains"
+    },
+    "42,26": {
+      "terrain": "plains"
+    },
+    "42,27": {
+      "terrain": "plains"
+    },
+    "42,28": {
+      "terrain": "plains"
+    },
+    "42,29": {
+      "terrain": "crops"
+    },
+    "42,30": {
+      "terrain": "woods"
+    },
+    "42,31": {
+      "terrain": "hills"
+    },
+    "42,32": {
+      "terrain": "plains"
+    },
+    "42,33": {
+      "terrain": "plains"
+    },
+    "42,34": {
+      "terrain": "crops"
+    },
+    "42,35": {
+      "terrain": "hills"
+    },
+    "42,36": {
+      "terrain": "hills"
+    },
+    "42,37": {
+      "terrain": "hills"
+    },
+    "42,38": {
+      "terrain": "hills"
+    },
+    "42,39": {
+      "terrain": "hills"
+    },
+    "42,40": {
+      "terrain": "hills"
+    },
+    "42,41": {
+      "terrain": "woods"
+    },
+    "42,42": {
+      "terrain": "woods"
+    },
+    "42,43": {
+      "terrain": "swamps"
+    },
+    "42,44": {
+      "terrain": "swamps"
+    },
+    "42,45": {
+      "terrain": "swamps"
+    },
+    "42,46": {
+      "terrain": "swamps"
+    },
+    "42,47": {
+      "terrain": "swamps"
+    },
+    "42,48": {
+      "terrain": "hills"
+    },
+    "42,49": {
+      "terrain": "crops"
+    },
+    "43,0": {
+      "terrain": "plains"
+    },
+    "43,1": {
+      "terrain": "crops"
+    },
+    "43,2": {
+      "terrain": "woods"
+    },
+    "43,3": {
+      "terrain": "plains"
+    },
+    "43,4": {
+      "terrain": "plains"
+    },
+    "43,5": {
+      "terrain": "swamps"
+    },
+    "43,6": {
+      "terrain": "plains"
+    },
+    "43,7": {
+      "terrain": "plains"
+    },
+    "43,8": {
+      "terrain": "plains"
+    },
+    "43,9": {
+      "terrain": "plains"
+    },
+    "43,10": {
+      "terrain": "plains"
+    },
+    "43,11": {
+      "terrain": "woods"
+    },
+    "43,12": {
+      "terrain": "plains"
+    },
+    "43,13": {
+      "terrain": "woods"
+    },
+    "43,14": {
+      "terrain": "crops"
+    },
+    "43,15": {
+      "terrain": "plains"
+    },
+    "43,16": {
+      "terrain": "plains"
+    },
+    "43,17": {
+      "terrain": "plains",
+      "feature": "city",
+      "name": "Arnhem"
+    },
+    "43,18": {
+      "terrain": "hills"
+    },
+    "43,19": {
+      "terrain": "woods"
+    },
+    "43,20": {
+      "terrain": "crops"
+    },
+    "43,21": {
+      "terrain": "plains"
+    },
+    "43,22": {
+      "terrain": "crops"
+    },
+    "43,23": {
+      "terrain": "plains"
+    },
+    "43,24": {
+      "terrain": "plains"
+    },
+    "43,25": {
+      "terrain": "plains"
+    },
+    "43,26": {
+      "terrain": "woods"
+    },
+    "43,27": {
+      "terrain": "plains"
+    },
+    "43,28": {
+      "terrain": "woods"
+    },
+    "43,29": {
+      "terrain": "hills"
+    },
+    "43,30": {
+      "terrain": "plains"
+    },
+    "43,31": {
+      "terrain": "woods"
+    },
+    "43,32": {
+      "terrain": "plains"
+    },
+    "43,33": {
+      "terrain": "plains"
+    },
+    "43,34": {
+      "terrain": "crops"
+    },
+    "43,35": {
+      "terrain": "hills"
+    },
+    "43,36": {
+      "terrain": "hills"
+    },
+    "43,37": {
+      "terrain": "hills"
+    },
+    "43,38": {
+      "terrain": "hills"
+    },
+    "43,39": {
+      "terrain": "hills"
+    },
+    "43,40": {
+      "terrain": "hills"
+    },
+    "43,41": {
+      "terrain": "hills"
+    },
+    "43,42": {
+      "terrain": "plains"
+    },
+    "43,43": {
+      "terrain": "swamps"
+    },
+    "43,44": {
+      "terrain": "swamps"
+    },
+    "43,45": {
+      "terrain": "swamps"
+    },
+    "43,46": {
+      "terrain": "swamps"
+    },
+    "43,47": {
+      "terrain": "swamps"
+    },
+    "43,48": {
+      "terrain": "plains"
+    },
+    "43,49": {
+      "terrain": "plains"
+    },
+    "44,0": {
+      "terrain": "plains"
+    },
+    "44,1": {
+      "terrain": "plains"
+    },
+    "44,2": {
+      "terrain": "plains"
+    },
+    "44,3": {
+      "terrain": "woods"
+    },
+    "44,4": {
+      "terrain": "plains"
+    },
+    "44,5": {
+      "terrain": "crops"
+    },
+    "44,6": {
+      "terrain": "woods"
+    },
+    "44,7": {
+      "terrain": "plains"
+    },
+    "44,8": {
+      "terrain": "plains"
+    },
+    "44,9": {
+      "terrain": "woods"
+    },
+    "44,10": {
+      "terrain": "hills"
+    },
+    "44,11": {
+      "terrain": "plains"
+    },
+    "44,12": {
+      "terrain": "swamps"
+    },
+    "44,13": {
+      "terrain": "plains"
+    },
+    "44,14": {
+      "terrain": "crops"
+    },
+    "44,15": {
+      "terrain": "crops"
+    },
+    "44,16": {
+      "terrain": "woods"
+    },
+    "44,17": {
+      "terrain": "plains"
+    },
+    "44,18": {
+      "terrain": "hills"
+    },
+    "44,19": {
+      "terrain": "plains"
+    },
+    "44,20": {
+      "terrain": "plains"
+    },
+    "44,21": {
+      "terrain": "plains"
+    },
+    "44,22": {
+      "terrain": "plains"
+    },
+    "44,23": {
+      "terrain": "woods"
+    },
+    "44,24": {
+      "terrain": "swamps"
+    },
+    "44,25": {
+      "terrain": "plains"
+    },
+    "44,26": {
+      "terrain": "woods"
+    },
+    "44,27": {
+      "terrain": "plains"
+    },
+    "44,28": {
+      "terrain": "plains"
+    },
+    "44,29": {
+      "terrain": "hills"
+    },
+    "44,30": {
+      "terrain": "plains"
+    },
+    "44,31": {
+      "terrain": "plains"
+    },
+    "44,32": {
+      "terrain": "plains"
+    },
+    "44,33": {
+      "terrain": "crops"
+    },
+    "44,34": {
+      "terrain": "plains"
+    },
+    "44,35": {
+      "terrain": "hills"
+    },
+    "44,36": {
+      "terrain": "hills"
+    },
+    "44,37": {
+      "terrain": "hills"
+    },
+    "44,38": {
+      "terrain": "hills"
+    },
+    "44,39": {
+      "terrain": "hills"
+    },
+    "44,40": {
+      "terrain": "swamps"
+    },
+    "44,41": {
+      "terrain": "plains"
+    },
+    "44,42": {
+      "terrain": "hills"
+    },
+    "44,43": {
+      "terrain": "plains"
+    },
+    "44,44": {
+      "terrain": "plains"
+    },
+    "44,45": {
+      "terrain": "plains"
+    },
+    "44,46": {
+      "terrain": "woods"
+    },
+    "44,47": {
+      "terrain": "hills"
+    },
+    "44,48": {
+      "terrain": "plains"
+    },
+    "44,49": {
+      "terrain": "hills"
+    },
+    "45,0": {
+      "terrain": "plains"
+    },
+    "45,1": {
+      "terrain": "plains"
+    },
+    "45,2": {
+      "terrain": "plains"
+    },
+    "45,3": {
+      "terrain": "woods"
+    },
+    "45,4": {
+      "terrain": "plains"
+    },
+    "45,5": {
+      "terrain": "woods"
+    },
+    "45,6": {
+      "terrain": "plains"
+    },
+    "45,7": {
+      "terrain": "plains"
+    },
+    "45,8": {
+      "terrain": "plains"
+    },
+    "45,9": {
+      "terrain": "plains"
+    },
+    "45,10": {
+      "terrain": "plains"
+    },
+    "45,11": {
+      "terrain": "plains"
+    },
+    "45,12": {
+      "terrain": "plains"
+    },
+    "45,13": {
+      "terrain": "plains"
+    },
+    "45,14": {
+      "terrain": "plains"
+    },
+    "45,15": {
+      "terrain": "plains"
+    },
+    "45,16": {
+      "terrain": "woods"
+    },
+    "45,17": {
+      "terrain": "crops"
+    },
+    "45,18": {
+      "terrain": "crops"
+    },
+    "45,19": {
+      "terrain": "woods"
+    },
+    "45,20": {
+      "terrain": "crops"
+    },
+    "45,21": {
+      "terrain": "plains"
+    },
+    "45,22": {
+      "terrain": "plains"
+    },
+    "45,23": {
+      "terrain": "plains"
+    },
+    "45,24": {
+      "terrain": "plains"
+    },
+    "45,25": {
+      "terrain": "plains"
+    },
+    "45,26": {
+      "terrain": "plains"
+    },
+    "45,27": {
+      "terrain": "woods"
+    },
+    "45,28": {
+      "terrain": "woods"
+    },
+    "45,29": {
+      "terrain": "plains"
+    },
+    "45,30": {
+      "terrain": "plains"
+    },
+    "45,31": {
+      "terrain": "woods"
+    },
+    "45,32": {
+      "terrain": "plains"
+    },
+    "45,33": {
+      "terrain": "woods"
+    },
+    "45,34": {
+      "terrain": "plains"
+    },
+    "45,35": {
+      "terrain": "plains"
+    },
+    "45,36": {
+      "terrain": "plains"
+    },
+    "45,37": {
+      "terrain": "plains"
+    },
+    "45,38": {
+      "terrain": "woods"
+    },
+    "45,39": {
+      "terrain": "hills"
+    },
+    "45,40": {
+      "terrain": "hills"
+    },
+    "45,41": {
+      "terrain": "plains"
+    },
+    "45,42": {
+      "terrain": "plains"
+    },
+    "45,43": {
+      "terrain": "plains"
+    },
+    "45,44": {
+      "terrain": "plains"
+    },
+    "45,45": {
+      "terrain": "plains"
+    },
+    "45,46": {
+      "terrain": "hills"
+    },
+    "45,47": {
+      "terrain": "swamps"
+    },
+    "45,48": {
+      "terrain": "swamps"
+    },
+    "45,49": {
+      "terrain": "hills"
+    },
+    "46,0": {
+      "terrain": "woods"
+    },
+    "46,1": {
+      "terrain": "woods"
+    },
+    "46,2": {
+      "terrain": "swamps"
+    },
+    "46,3": {
+      "terrain": "plains"
+    },
+    "46,4": {
+      "terrain": "plains"
+    },
+    "46,5": {
+      "terrain": "woods"
+    },
+    "46,6": {
+      "terrain": "plains"
+    },
+    "46,7": {
+      "terrain": "plains"
+    },
+    "46,8": {
+      "terrain": "swamps"
+    },
+    "46,9": {
+      "terrain": "plains"
+    },
+    "46,10": {
+      "terrain": "woods"
+    },
+    "46,11": {
+      "terrain": "plains"
+    },
+    "46,12": {
+      "terrain": "plains"
+    },
+    "46,13": {
+      "terrain": "hills"
+    },
+    "46,14": {
+      "terrain": "plains"
+    },
+    "46,15": {
+      "terrain": "plains"
+    },
+    "46,16": {
+      "terrain": "hills"
+    },
+    "46,17": {
+      "terrain": "crops"
+    },
+    "46,18": {
+      "terrain": "plains"
+    },
+    "46,19": {
+      "terrain": "plains"
+    },
+    "46,20": {
+      "terrain": "plains"
+    },
+    "46,21": {
+      "terrain": "crops"
+    },
+    "46,22": {
+      "terrain": "plains"
+    },
+    "46,23": {
+      "terrain": "crops"
+    },
+    "46,24": {
+      "terrain": "plains"
+    },
+    "46,25": {
+      "terrain": "plains"
+    },
+    "46,26": {
+      "terrain": "woods"
+    },
+    "46,27": {
+      "terrain": "hills"
+    },
+    "46,28": {
+      "terrain": "plains"
+    },
+    "46,29": {
+      "terrain": "plains"
+    },
+    "46,30": {
+      "terrain": "plains"
+    },
+    "46,31": {
+      "terrain": "crops"
+    },
+    "46,32": {
+      "terrain": "plains"
+    },
+    "46,33": {
+      "terrain": "plains"
+    },
+    "46,34": {
+      "terrain": "hills"
+    },
+    "46,35": {
+      "terrain": "woods"
+    },
+    "46,36": {
+      "terrain": "crops"
+    },
+    "46,37": {
+      "terrain": "hills"
+    },
+    "46,38": {
+      "terrain": "plains"
+    },
+    "46,39": {
+      "terrain": "plains"
+    },
+    "46,40": {
+      "terrain": "plains"
+    },
+    "46,41": {
+      "terrain": "crops"
+    },
+    "46,42": {
+      "terrain": "hills"
+    },
+    "46,43": {
+      "terrain": "plains"
+    },
+    "46,44": {
+      "terrain": "plains"
+    },
+    "46,45": {
+      "terrain": "plains"
+    },
+    "46,46": {
+      "terrain": "plains"
+    },
+    "46,47": {
+      "terrain": "swamps"
+    },
+    "46,48": {
+      "terrain": "woods"
+    },
+    "46,49": {
+      "terrain": "crops"
+    },
+    "47,0": {
+      "terrain": "swamps"
+    },
+    "47,1": {
+      "terrain": "crops"
+    },
+    "47,2": {
+      "terrain": "plains"
+    },
+    "47,3": {
+      "terrain": "crops"
+    },
+    "47,4": {
+      "terrain": "hills"
+    },
+    "47,5": {
+      "terrain": "hills"
+    },
+    "47,6": {
+      "terrain": "woods"
+    },
+    "47,7": {
+      "terrain": "woods",
+      "feature": "city",
+      "name": "Rhiems"
+    },
+    "47,8": {
+      "terrain": "woods"
+    },
+    "47,9": {
+      "terrain": "woods"
+    },
+    "47,10": {
+      "terrain": "woods"
+    },
+    "47,11": {
+      "terrain": "woods"
+    },
+    "47,12": {
+      "terrain": "plains"
+    },
+    "47,13": {
+      "terrain": "woods"
+    },
+    "47,14": {
+      "terrain": "plains"
+    },
+    "47,15": {
+      "terrain": "plains"
+    },
+    "47,16": {
+      "terrain": "hills"
+    },
+    "47,17": {
+      "terrain": "plains"
+    },
+    "47,18": {
+      "terrain": "plains"
+    },
+    "47,19": {
+      "terrain": "woods"
+    },
+    "47,20": {
+      "terrain": "crops"
+    },
+    "47,21": {
+      "terrain": "woods"
+    },
+    "47,22": {
+      "terrain": "woods"
+    },
+    "47,23": {
+      "terrain": "plains"
+    },
+    "47,24": {
+      "terrain": "crops"
+    },
+    "47,25": {
+      "terrain": "woods"
+    },
+    "47,26": {
+      "terrain": "plains"
+    },
+    "47,27": {
+      "terrain": "plains"
+    },
+    "47,28": {
+      "terrain": "plains"
+    },
+    "47,29": {
+      "terrain": "swamps"
+    },
+    "47,30": {
+      "terrain": "plains"
+    },
+    "47,31": {
+      "terrain": "woods"
+    },
+    "47,32": {
+      "terrain": "woods"
+    },
+    "47,33": {
+      "terrain": "woods"
+    },
+    "47,34": {
+      "terrain": "plains"
+    },
+    "47,35": {
+      "terrain": "plains"
+    },
+    "47,36": {
+      "terrain": "plains"
+    },
+    "47,37": {
+      "terrain": "plains"
+    },
+    "47,38": {
+      "terrain": "crops"
+    },
+    "47,39": {
+      "terrain": "plains"
+    },
+    "47,40": {
+      "terrain": "crops"
+    },
+    "47,41": {
+      "terrain": "plains"
+    },
+    "47,42": {
+      "terrain": "woods"
+    },
+    "47,43": {
+      "terrain": "plains"
+    },
+    "47,44": {
+      "terrain": "plains"
+    },
+    "47,45": {
+      "terrain": "plains"
+    },
+    "47,46": {
+      "terrain": "woods"
+    },
+    "47,47": {
+      "terrain": "plains"
+    },
+    "47,48": {
+      "terrain": "plains"
+    },
+    "47,49": {
+      "terrain": "hills"
+    },
+    "48,0": {
+      "terrain": "crops"
+    },
+    "48,1": {
+      "terrain": "hills"
+    },
+    "48,2": {
+      "terrain": "plains"
+    },
+    "48,3": {
+      "terrain": "plains"
+    },
+    "48,4": {
+      "terrain": "woods"
+    },
+    "48,5": {
+      "terrain": "hills"
+    },
+    "48,6": {
+      "terrain": "plains"
+    },
+    "48,7": {
+      "terrain": "woods"
+    },
+    "48,8": {
+      "terrain": "plains"
+    },
+    "48,9": {
+      "terrain": "hills"
+    },
+    "48,10": {
+      "terrain": "plains"
+    },
+    "48,11": {
+      "terrain": "plains"
+    },
+    "48,12": {
+      "terrain": "plains"
+    },
+    "48,13": {
+      "terrain": "plains"
+    },
+    "48,14": {
+      "terrain": "plains"
+    },
+    "48,15": {
+      "terrain": "crops"
+    },
+    "48,16": {
+      "terrain": "plains"
+    },
+    "48,17": {
+      "terrain": "plains"
+    },
+    "48,18": {
+      "terrain": "woods"
+    },
+    "48,19": {
+      "terrain": "crops"
+    },
+    "48,20": {
+      "terrain": "plains"
+    },
+    "48,21": {
+      "terrain": "crops"
+    },
+    "48,22": {
+      "terrain": "hills"
+    },
+    "48,23": {
+      "terrain": "woods"
+    },
+    "48,24": {
+      "terrain": "plains"
+    },
+    "48,25": {
+      "terrain": "woods"
+    },
+    "48,26": {
+      "terrain": "plains"
+    },
+    "48,27": {
+      "terrain": "hills"
+    },
+    "48,28": {
+      "terrain": "plains"
+    },
+    "48,29": {
+      "terrain": "swamps"
+    },
+    "48,30": {
+      "terrain": "plains"
+    },
+    "48,31": {
+      "terrain": "hills"
+    },
+    "48,32": {
+      "terrain": "plains"
+    },
+    "48,33": {
+      "terrain": "plains"
+    },
+    "48,34": {
+      "terrain": "plains"
+    },
+    "48,35": {
+      "terrain": "woods"
+    },
+    "48,36": {
+      "terrain": "plains"
+    },
+    "48,37": {
+      "terrain": "crops"
+    },
+    "48,38": {
+      "terrain": "crops"
+    },
+    "48,39": {
+      "terrain": "plains"
+    },
+    "48,40": {
+      "terrain": "plains"
+    },
+    "48,41": {
+      "terrain": "woods"
+    },
+    "48,42": {
+      "terrain": "hills"
+    },
+    "48,43": {
+      "terrain": "woods"
+    },
+    "48,44": {
+      "terrain": "plains"
+    },
+    "48,45": {
+      "terrain": "woods"
+    },
+    "48,46": {
+      "terrain": "plains"
+    },
+    "48,47": {
+      "terrain": "hills"
+    },
+    "48,48": {
+      "terrain": "woods"
+    },
+    "48,49": {
+      "terrain": "swamps"
+    },
+    "49,0": {
+      "terrain": "plains"
+    },
+    "49,1": {
+      "terrain": "woods"
+    },
+    "49,2": {
+      "terrain": "plains"
+    },
+    "49,3": {
+      "terrain": "woods"
+    },
+    "49,4": {
+      "terrain": "plains"
+    },
+    "49,5": {
+      "terrain": "hills"
+    },
+    "49,6": {
+      "terrain": "hills"
+    },
+    "49,7": {
+      "terrain": "swamps"
+    },
+    "49,8": {
+      "terrain": "plains"
+    },
+    "49,9": {
+      "terrain": "hills"
+    },
+    "49,10": {
+      "terrain": "swamps"
+    },
+    "49,11": {
+      "terrain": "plains"
+    },
+    "49,12": {
+      "terrain": "crops"
+    },
+    "49,13": {
+      "terrain": "plains"
+    },
+    "49,14": {
+      "terrain": "plains"
+    },
+    "49,15": {
+      "terrain": "plains"
+    },
+    "49,16": {
+      "terrain": "plains"
+    },
+    "49,17": {
+      "terrain": "woods"
+    },
+    "49,18": {
+      "terrain": "hills"
+    },
+    "49,19": {
+      "terrain": "crops"
+    },
+    "49,20": {
+      "terrain": "woods"
+    },
+    "49,21": {
+      "terrain": "plains"
+    },
+    "49,22": {
+      "terrain": "plains"
+    },
+    "49,23": {
+      "terrain": "woods"
+    },
+    "49,24": {
+      "terrain": "hills"
+    },
+    "49,25": {
+      "terrain": "woods"
+    },
+    "49,26": {
+      "terrain": "plains"
+    },
+    "49,27": {
+      "terrain": "swamps"
+    },
+    "49,28": {
+      "terrain": "plains"
+    },
+    "49,29": {
+      "terrain": "plains"
+    },
+    "49,30": {
+      "terrain": "hills"
+    },
+    "49,31": {
+      "terrain": "crops"
+    },
+    "49,32": {
+      "terrain": "crops"
+    },
+    "49,33": {
+      "terrain": "swamps"
+    },
+    "49,34": {
+      "terrain": "plains"
+    },
+    "49,35": {
+      "terrain": "plains"
+    },
+    "49,36": {
+      "terrain": "crops"
+    },
+    "49,37": {
+      "terrain": "woods"
+    },
+    "49,38": {
+      "terrain": "plains"
+    },
+    "49,39": {
+      "terrain": "woods"
+    },
+    "49,40": {
+      "terrain": "woods"
+    },
+    "49,41": {
+      "terrain": "crops"
+    },
+    "49,42": {
+      "terrain": "swamps"
+    },
+    "49,43": {
+      "terrain": "plains"
+    },
+    "49,44": {
+      "terrain": "crops"
+    },
+    "49,45": {
+      "terrain": "plains"
+    },
+    "49,46": {
+      "terrain": "plains"
+    },
+    "49,47": {
+      "terrain": "plains"
+    },
+    "49,48": {
+      "terrain": "plains"
+    },
+    "49,49": {
+      "terrain": "woods"
+    }
+  },
+  "units": [
+    {
+      "id": "blue_hq",
+      "name": "Army of Italy",
+      "team": "blue",
+      "position": [
+        2,
+        10
+      ],
+      "leader": "Napoleon",
+      "skill": 5,
+      "hq": true
+    },
+    {
+      "id": "blue_1",
+      "name": "Blue Unit 1",
+      "team": "blue",
+      "position": [
+        18,
+        28
+      ],
+      "strength": 9422,
+      "guns": 1,
+      "leader": "Moore",
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_1_brig_1",
+          "name": "1st Brigade"
+        },
+        {
+          "id": "blue_1_brig_2",
+          "name": "2nd Brigade"
+        }
+      ]
+    },
+    {
+      "id": "blue_2",
+      "name": "Blue Unit 2",
+      "team": "blue",
+      "position": [
+        4,
+        10
+      ],
+      "strength": 4339,
+      "guns": 3,
+      "leader": "Archduke Charles",
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_2_brig_1",
+          "name": "3rd Brigade"
+        },
+        {
+          "id": "blue_2_brig_2",
+          "name": "4th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "blue_7",
+      "name": "Blue Unit 7",
+      "team": "blue",
+      "position": [
+        4,
+        10
+      ],
+      "strength": 9000,
+      "guns": 9,
+      "leader": "Moore",
+      "skill": 5,
+      "brigades": [
+        {
+          "id": "blue_7_brig_1",
+          "name": "5th Brigade"
+        },
+        {
+          "id": "blue_7_brig_2",
+          "name": "6th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "red_6",
+      "name": "Red Unit 6",
+      "team": "red",
+      "position": [
+        4,
+        11
+      ],
+      "strength": 6339,
+      "guns": 4,
+      "leader": "Moore",
+      "skill": 5,
+      "brigades": [
+        {
+          "id": "red_6_brig_1",
+          "name": "7th Brigade"
+        },
+        {
+          "id": "red_6_brig_2",
+          "name": "8th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "blue_3",
+      "name": "Blue Unit 3",
+      "team": "blue",
+      "position": [
+        21,
+        17
+      ],
+      "strength": 9069,
+      "guns": 9,
+      "leader": "Soult",
+      "skill": 2,
+      "brigades": [
+        {
+          "id": "blue_3_brig_1",
+          "name": "9th Brigade"
+        },
+        {
+          "id": "blue_3_brig_2",
+          "name": "10th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "blue_4",
+      "name": "Blue Unit 4",
+      "team": "blue",
+      "position": [
+        19,
+        40
+      ],
+      "strength": 2281,
+      "guns": 7,
+      "leader": "Davout",
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_4_brig_1",
+          "name": "11th Brigade"
+        },
+        {
+          "id": "blue_4_brig_2",
+          "name": "12th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "blue_5",
+      "name": "Blue Unit 5",
+      "team": "blue",
+      "position": [
+        13,
+        9
+      ],
+      "strength": 6367,
+      "guns": 4,
+      "leader": "Davout",
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "blue_5_brig_1",
+          "name": "13th Brigade"
+        },
+        {
+          "id": "blue_5_brig_2",
+          "name": "14th compras"
+        }
+      ]
+    },
+    {
+      "id": "red_1",
+      "name": "Red Unit 1",
+      "team": "red",
+      "position": [
+        47,
+        37
+      ],
+      "strength": 3232,
+      "guns": 1,
+      "leader": "Ney",
+      "skill": 2,
+      "brigades": [
+        {
+          "id": "red_1_brig_1",
+          "name": "15th Brigade"
+        },
+        {
+          "id": "red_1_brig_2",
+          "name": "16th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "red_2",
+      "name": "Red Unit 2",
+      "team": "red",
+      "position": [
+        30,
+        44
+      ],
+      "strength": 9535,
+      "guns": 3,
+      "leader": "Archduke Charles",
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_2_brig_1",
+          "name": "17th Brigade"
+        },
+        {
+          "id": "red_2_brig_2",
+          "name": "18th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "red_3",
+      "name": "Red Unit 3",
+      "team": "red",
+      "position": [
+        38,
+        12
+      ],
+      "strength": 3199,
+      "guns": 9,
+      "leader": "Blücher",
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "red_3_brig_1",
+          "name": "19th Brigade"
+        },
+        {
+          "id": "red_3_brig_2",
+          "name": "20th Brigade"
+        }
+      ]
+    },
+    {
+      "id": "red_4",
+      "name": "Red Unit 4",
+      "team": "red",
+      "position": [
+        39,
+        39
+      ],
+      "strength": 2413,
+      "guns": 3,
+      "leader": "Archduke Charles",
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_4_brig_1",
+          "name": "21st Brigade"
+        },
+        {
+          "id": "red_4_brig_2",
+          "name": "22nd Brigade"
+        }
+      ]
+    },
+    {
+      "id": "red_5",
+      "name": "Red Unit 5",
+      "team": "red",
+      "position": [
+        37,
+        7
+      ],
+      "strength": 6339,
+      "guns": 5,
+      "leader": "Davout",
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_5_brig_1",
+          "name": "23rd Brigade"
+        },
+        {
+          "id": "red_5_brig_2",
+          "name": "24th Brigade"
+        }
+      ]
+    }
+  ],
+  "features": {
+    "roads": [
+      {
+        "path": [
+          [
+            12,
+            3
+          ],
+          [
+            12,
+            2
+          ],
+          [
+            11,
+            3
+          ],
+          [
+            12,
+            3
+          ],
+          [
+            13,
+            2
+          ],
+          [
+            13,
+            1
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            14,
+            21
+          ],
+          [
+            17,
+            21
+          ],
+          [
+            17,
+            26
+          ],
+          [
+            17,
+            31
+          ],
+          [
+            40,
+            31
+          ]
+        ]
+      },
+      {
+        "path": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    ]
+  }
+}
