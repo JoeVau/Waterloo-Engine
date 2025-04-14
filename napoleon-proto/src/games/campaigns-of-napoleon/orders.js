@@ -34,27 +34,35 @@ export const orderRegistry = {
     scout: {
         validate: (state, unitId, params, config) => {
             const unit = state.units.find(u => u.id === unitId);
-            return unit.horses > 0;
+            if (unit.hq || !unit.brigades) return false;
+            const availableBrigade = unit.brigades.find(b => !b.order);
+            const availableStrength = unit.strength - (unit.detachedStrength || 0);
+            const brigadeStrength = unit.strength / config.division.brigades;
+            return availableBrigade && availableStrength >= brigadeStrength;
         },
         apply: (state, unitId, params, config) => {
             const unit = state.units.find(u => u.id === unitId);
-            const detachmentStrength = unit.horses;
+            const brigade = unit.brigades.find(b => !b.order);
+            const brigadeStrength = unit.strength / config.division.brigades;
+
             const detachment = {
                 id: `${unitId}_scout_${state.turn}`,
-                name: `${unit.name} Scouts`,
+                name: `${brigade.name} Scouts`,
                 team: unit.team,
                 position: [...unit.position],
-                strength: detachmentStrength,
-                horses: unit.horses,
+                strength: brigadeStrength,
                 divisionId: unitId,
+                brigadeId: brigade.id,
                 order: 'scout',
                 returnTurn: state.turn + config.orders.scout.returnTurns
             };
+
             state.units.push(detachment);
             state.hexes.find(h => h.q === unit.position[0] && h.r === unit.position[1]).units.push(detachment.id);
-            unit.detachedStrength = (unit.detachedStrength || 0) + detachmentStrength;
-            unit.horses = 0;
-            console.log(`Detached scouting unit from ${unit.name}: ${detachmentStrength} strength, ${detachment.horses} horses at [${unit.position}]`);
+            unit.detachedStrength = (unit.detachedStrength || 0) + brigadeStrength;
+            brigade.order = 'scout';
+            brigade.detachmentId = detachment.id;
+            console.log(`Detached scouting brigade ${brigade.name} from ${unit.name}: ${brigadeStrength} strength at [${unit.position}]`);
             state.orders[state.currentPlayer][unitId] = { type: 'scout', ...params };
         }
     }

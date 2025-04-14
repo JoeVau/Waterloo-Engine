@@ -9,7 +9,8 @@ const defaultConfig = {
         scout: {
             los: 3,
             boost: 10,
-            returnTurns: 1
+            returnTurns: 1,
+            strengthFraction: 0.5 // Half strength per brigade
         }
     },
     combat: {
@@ -61,6 +62,9 @@ const defaultConfig = {
     effects: {
         corpsBonus: { roll: 1, los: 1 }, // Placeholder
         hqBonus: { roll: 2, los: 2 }    // Placeholder
+    },
+    division: {
+        brigades: 2 // Two brigades per division
     }
 };
 

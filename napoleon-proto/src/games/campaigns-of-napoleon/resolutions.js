@@ -41,16 +41,20 @@ export function resolveDetachments(state, config) {
         console.log("detachment fired");
         const division = updatedUnits.find(u => u.id === detachment.divisionId);
         if (division) {
-            division.detachedStrength = (division.detachedStrength || 0) - detachment.strength;
-            division.horses += detachment.horses;
-            division.losBoost = config.orders.scout.boost;
-            console.log(`${division.name} scouting detachment returned: ${detachment.strength} strength, ${detachment.horses} horses, LOS boost set to ${division.losBoost}`);
-            notifications.push(`${division.name} scouting detachment returned—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
-            const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));
-            if (detachmentHex) {
-                detachmentHex.units = detachmentHex.units.filter(id => id !== detachment.id);
+            const brigade = division.brigades.find(b => b.detachmentId === detachment.id);
+            if (brigade) {
+                division.detachedStrength = (division.detachedStrength || 0) - detachment.strength;
+                division.losBoost = config.orders.scout.boost;
+                brigade.order = null;
+                brigade.detachmentId = null;
+                console.log(`${brigade.name} scouting detachment returned to ${division.name}: ${detachment.strength} strength, LOS boost set to ${division.losBoost}`);
+                notifications.push(`${brigade.name} scouting detachment returned to ${division.name}—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
+                const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));
+                if (detachmentHex) {
+                    detachmentHex.units = detachmentHex.units.filter(id => id !== detachment.id);
+                }
+                updatedUnits = updatedUnits.filter(u => u.id !== detachment.id);
             }
-            updatedUnits = updatedUnits.filter(u => u.id !== detachment.id);
         }
     });
 
