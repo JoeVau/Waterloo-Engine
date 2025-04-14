@@ -22,36 +22,89 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   ctx.fillStyle = baseColor;
   ctx.fill();
 
+  // Initialize seed for randomness once
+  let seed = (hex.q + hex.r) * 100; // Simple seed based on hex coords
+  const rand = (max) => {
+    const x = Math.sin(seed++) * 10000;
+    return Math.floor((x - Math.floor(x)) * max);
+  };
+
   // Terrain-specific features (overlay on elevation background)
   switch (hex.terrain) {
     case 'hills':
-      ctx.fillStyle = '#6b4e31';
-      const hillPositions = [
-        { x: x - size * 0.4, y: y - size * 0.1, w: size * 0.4, h: size * 0.3 },
-        { x: x + size * 0.1, y: y - size * 0.2, w: size * 0.5, h: size * 0.4 }
-      ];
-      hillPositions.forEach(hill => {
+      const numHills = 3 + rand(3); // 3-5 hills
+      const hills = [];
+      for (let i = 0; i < numHills; i++) {
+        let attempts = 0;
+        let placed = false;
+        while (!placed && attempts < 10) {
+          const offsetX = (rand(100) - 50) * size / 150; // ±0.5 * size
+          const offsetY = (rand(100) - 50) * size / 150; // ±0.5 * size
+          const tx = x + offsetX;
+          const ty = y + offsetY;
+          const hillWidth = size * (0.4 + rand(20) / 100); // ±20%
+          const hillHeight = size * (0.3 + rand(10) / 100); // ±10%
+          const overlaps = hills.some(h => {
+            const dx = h.x - tx;
+            const dy = h.y - ty;
+            return Math.sqrt(dx * dx + dy * dy) < (hillWidth + h.width) * 0.5;
+          });
+          const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+          if (!overlaps && distFromCenter < size * 0.75) { // Within hex
+            hills.push({ x: tx, y: ty, width: hillWidth, height: hillHeight });
+            placed = true;
+          }
+          attempts++;
+        }
+      }
+      hills.forEach(hill => {
         ctx.beginPath();
         ctx.moveTo(hill.x, hill.y);
-        ctx.quadraticCurveTo(hill.x + hill.w * 0.5, hill.y - hill.h, hill.x + hill.w, hill.y);
+        ctx.quadraticCurveTo(hill.x + hill.width * 0.5, hill.y - hill.height, hill.x + hill.width, hill.y);
+        ctx.fillStyle = '#5a3f2a'; // Richer brown
         ctx.fill();
+        ctx.strokeStyle = '#3c2f2f';
+        ctx.lineWidth = 0.1 / zoom;
+        ctx.stroke();
       });
       break;
 
     case 'woods':
-      ctx.fillStyle = '#006400';
-      const treePositions = [
-        { x: x - size * 0.4, y: y - size * 0.2 },
-        { x: x + size * 0.3, y: y - size * 0.1 },
-        { x: x, y: y + size * 0.3 },
-      ];
-      treePositions.forEach(pos => {
+      const numTrees = 5 + rand(3); // 5-7 trees
+      const trees = [];
+      for (let i = 0; i < numTrees; i++) {
+        let attempts = 0;
+        let placed = false;
+        while (!placed && attempts < 10) {
+          const offsetX = (rand(100) - 50) * size / 100; // ±0.5 * size
+          const offsetY = (rand(100) - 50) * size / 100; // ±0.5 * size
+          const tx = x + offsetX;
+          const ty = y + offsetY;
+          const treeSize = size * (0.15 + rand(10) / 100); // Base ±20%
+          const overlaps = trees.some(t => {
+            const dx = t.x - tx;
+            const dy = t.y - ty;
+            return Math.sqrt(dx * dx + dy * dy) < (treeSize + t.size) * 0.7; // Tighter spacing
+          });
+          const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+          if (!overlaps && distFromCenter < size * 0.75) { // Wider but within hex
+            trees.push({ x: tx, y: ty, size: treeSize });
+            placed = true;
+          }
+          attempts++;
+        }
+      }
+      trees.forEach(t => {
         ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y - size * 0.3);
-        ctx.lineTo(pos.x - size * 0.2, pos.y + size * 0.2);
-        ctx.lineTo(pos.x + size * 0.2, pos.y + size * 0.2);
+        ctx.moveTo(t.x, t.y - t.size * 1.5); // Height 1.5x base
+        ctx.lineTo(t.x - t.size, t.y + t.size);
+        ctx.lineTo(t.x + t.size, t.y + t.size);
         ctx.closePath();
+        ctx.fillStyle = rand(100) < 30 ? '#228b22' : '#004d00'; // 30% lighter, 70% darker
         ctx.fill();
+        ctx.strokeStyle = '#002200';
+        ctx.lineWidth = 0.1 / zoom;
+        ctx.stroke();
       });
       break;
 
@@ -97,8 +150,8 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   }
 
   if (hex.feature === 'city') {
-    let seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const rand = (max) => {
+    seed = hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const randCity = (max) => {
       const x = Math.sin(seed++) * 10000;
       return Math.floor((x - Math.floor(x)) * max);
     };
@@ -109,18 +162,18 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       let attempts = 0;
       let placed = false;
       while (!placed && attempts < 22) {
-        const tileWidth = size * (0.10 + rand(14) / 100);
-        const tileHeight = size * (0.05 + rand(14) / 100);
+        const tileWidth = size * (0.10 + randCity(14) / 100);
+        const tileHeight = size * (0.05 + randCity(14) / 100);
         const tileSize = Math.max(tileWidth, tileHeight);
         seed += hex.q * hex.r + i;
-        const cluster = rand(3);
-        const dist = size * (cluster === 0 ? 0.3 : cluster === 1 ? 0.55 : 0.8) * Math.sqrt(rand(100) / 100);
-        const angle = (rand(180) + (cluster * 120)) * Math.PI / 180;
+        const cluster = randCity(3);
+        const dist = size * (cluster === 0 ? 0.3 : cluster === 1 ? 0.55 : 0.8) * Math.sqrt(randCity(100) / 100);
+        const angle = (randCity(180) + (cluster * 120)) * Math.PI / 180;
         const offsetX = Math.cos(angle) * dist;
         const offsetY = Math.sin(angle) * dist;
         const tx = x + offsetX;
         const ty = y + offsetY;
-        const rotation = rand(100) < 65 ? 0 : (rand(2) - 0.5) * Math.PI / 10;
+        const rotation = randCity(100) < 65 ? 0 : (randCity(2) - 0.5) * Math.PI / 10;
         const minGap = tileSize * 0.25;
         const overlaps = buildings.some(b => {
           const dx = b.x - tx;
@@ -158,12 +211,12 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
     // Add old city walls: semi-random polygon around inner tier (dist < size * 0.35)
     ctx.save();
     seed += hex.q + hex.r;
-    const numSides = 5 + rand(4); // 5-8 sides
-    const wallRadius = size * 0.4; // Slightly beyond inner tier (dist < 0.35)
+    const numSides = 5 + randCity(4); // 5-8 sides
+    const wallRadius = size * 0.7; // Slightly beyond inner tier (dist < 0.35)
     const wallPoints = [];
     for (let i = 0; i < numSides; i++) {
-      const angle = (2 * Math.PI * i) / numSides + (rand(20) - 10) * Math.PI / 180; // Random angle offset ±10°
-      const radiusVariation = wallRadius * (0.9 + rand(20) / 100); // ±10% radius variation
+      const angle = (2 * Math.PI * i) / numSides + (randCity(20) - 10) * Math.PI / 180; // Random angle offset ±10°
+      const radiusVariation = wallRadius * (0.9 + randCity(20) / 100); // ±10% radius variation
       const px = x + radiusVariation * Math.cos(angle);
       const py = y + radiusVariation * Math.sin(angle);
       wallPoints.push({ x: px, y: py });
@@ -174,21 +227,21 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
     });
     ctx.closePath();
     ctx.strokeStyle = '#000';
-    ctx.lineWidth = 0.2 / zoom; // Thin line, scales with zoom
+    ctx.lineWidth = 0.8 / zoom; // Thin line, scales with zoom
     ctx.stroke();
     ctx.restore();
 
-    // Golden cross
+    // Church 
     ctx.save();
     seed += hex.q + hex.r;
-    const crossDist = size * (0.1 + rand(50) / 100);
-    const crossAngle = rand(360) * Math.PI / 180;
+    const crossDist = size * (0.1 + randCity(50) / 100);
+    const crossAngle = randCity(360) * Math.PI / 180;
     const crossX = x + Math.cos(crossAngle) * crossDist;
     const crossY = y + Math.sin(crossAngle) * crossDist;
     ctx.translate(crossX, crossY);
-    ctx.fillStyle = '#ffd700';
+    ctx.fillStyle = '#8b4513';
     ctx.font = '4px serif';
-    ctx.fillText('✝', 0, 0);
+    ctx.fillText('✝', 1, 0);
     ctx.restore();
   }
 
