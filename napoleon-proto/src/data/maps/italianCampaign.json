@@ -7550,9 +7550,18 @@
       ],
       "strength": 9422,
       "guns": 1,
-      "horses": 5859,
       "leader": "Moore",
-      "skill": 1
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_1_brig_1",
+          "name": "1st Brigade"
+        },
+        {
+          "id": "blue_1_brig_2",
+          "name": "2nd Brigade"
+        }
+      ]
     },
     {
       "id": "blue_2",
@@ -7564,9 +7573,18 @@
       ],
       "strength": 4339,
       "guns": 3,
-      "horses": 2316,
       "leader": "Archduke Charles",
-      "skill": 1
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_2_brig_1",
+          "name": "3rd Brigade"
+        },
+        {
+          "id": "blue_2_brig_2",
+          "name": "4th Brigade"
+        }
+      ]
     },
     {
       "id": "blue_7",
@@ -7578,9 +7596,18 @@
       ],
       "strength": 9000,
       "guns": 9,
-      "horses": 7584,
       "leader": "Moore",
-      "skill": 5
+      "skill": 5,
+      "brigades": [
+        {
+          "id": "blue_7_brig_1",
+          "name": "5th Brigade"
+        },
+        {
+          "id": "blue_7_brig_2",
+          "name": "6th Brigade"
+        }
+      ]
     },
     {
       "id": "red_6",
@@ -7592,9 +7619,18 @@
       ],
       "strength": 6339,
       "guns": 4,
-      "horses": 1482,
       "leader": "Moore",
-      "skill": 5
+      "skill": 5,
+      "brigades": [
+        {
+          "id": "red_6_brig_1",
+          "name": "7th Brigade"
+        },
+        {
+          "id": "red_6_brig_2",
+          "name": "8th Brigade"
+        }
+      ]
     },
     {
       "id": "blue_3",
@@ -7606,9 +7642,18 @@
       ],
       "strength": 9069,
       "guns": 9,
-      "horses": 3077,
       "leader": "Soult",
-      "skill": 2
+      "skill": 2,
+      "brigades": [
+        {
+          "id": "blue_3_brig_1",
+          "name": "9th Brigade"
+        },
+        {
+          "id": "blue_3_brig_2",
+          "name": "10th Brigade"
+        }
+      ]
     },
     {
       "id": "blue_4",
@@ -7620,9 +7665,18 @@
       ],
       "strength": 2281,
       "guns": 7,
-      "horses": 1130,
       "leader": "Davout",
-      "skill": 1
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "blue_4_brig_1",
+          "name": "11th Brigade"
+        },
+        {
+          "id": "blue_4_brig_2",
+          "name": "12th Brigade"
+        }
+      ]
     },
     {
       "id": "blue_5",
@@ -7634,9 +7688,18 @@
       ],
       "strength": 6367,
       "guns": 4,
-      "horses": 3277,
       "leader": "Davout",
-      "skill": 3
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "blue_5_brig_1",
+          "name": "13th Brigade"
+        },
+        {
+          "id": "blue_5_brig_2",
+          "name": "14th compras"
+        }
+      ]
     },
     {
       "id": "red_1",
@@ -7648,9 +7711,18 @@
       ],
       "strength": 3232,
       "guns": 1,
-      "horses": 1987,
       "leader": "Ney",
-      "skill": 2
+      "skill": 2,
+      "brigades": [
+        {
+          "id": "red_1_brig_1",
+          "name": "15th Brigade"
+        },
+        {
+          "id": "red_1_brig_2",
+          "name": "16th Brigade"
+        }
+      ]
     },
     {
       "id": "red_2",
@@ -7662,9 +7734,18 @@
       ],
       "strength": 9535,
       "guns": 3,
-      "horses": 6958,
       "leader": "Archduke Charles",
-      "skill": 3
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_2_brig_1",
+          "name": "17th Brigade"
+        },
+        {
+          "id": "red_2_brig_2",
+          "name": "18th Brigade"
+        }
+      ]
     },
     {
       "id": "red_3",
@@ -7676,9 +7757,18 @@
       ],
       "strength": 3199,
       "guns": 9,
-      "horses": 520,
       "leader": "Blücher",
-      "skill": 1
+      "skill": 1,
+      "brigades": [
+        {
+          "id": "red_3_brig_1",
+          "name": "19th Brigade"
+        },
+        {
+          "id": "red_3_brig_2",
+          "name": "20th Brigade"
+        }
+      ]
     },
     {
       "id": "red_4",
@@ -7690,9 +7780,18 @@
       ],
       "strength": 2413,
       "guns": 3,
-      "horses": 2238,
       "leader": "Archduke Charles",
-      "skill": 3
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_4_brig_1",
+          "name": "21st Brigade"
+        },
+        {
+          "id": "red_4_brig_2",
+          "name": "22nd Brigade"
+        }
+      ]
     },
     {
       "id": "red_5",
@@ -7704,9 +7803,18 @@
       ],
       "strength": 6339,
       "guns": 5,
-      "horses": 5236,
       "leader": "Davout",
-      "skill": 3
+      "skill": 3,
+      "brigades": [
+        {
+          "id": "red_5_brig_1",
+          "name": "23rd Brigade"
+        },
+        {
+          "id": "red_5_brig_2",
+          "name": "24th Brigade"
+        }
+      ]
     }
   ],
   "features": {
