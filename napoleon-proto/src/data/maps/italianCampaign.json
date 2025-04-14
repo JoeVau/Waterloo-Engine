@@ -7529,6 +7529,18 @@
   },
   "units": [
     {
+      "id": "blue_hq",
+      "name": "Army of Italy",
+      "team": "blue",
+      "position": [
+        2,
+        10
+      ],
+      "leader": "Napoleon",
+      "skill": 5,
+      "hq": true
+    },
+    {
       "id": "blue_1",
       "name": "Blue Unit 1",
       "team": "blue",

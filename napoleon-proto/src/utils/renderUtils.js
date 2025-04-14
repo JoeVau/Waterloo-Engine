@@ -285,17 +285,18 @@ export function drawUnits(ctx, units, hexSize, hexWidth, hexHeight, zoom, positi
     ctx.strokeRect(x - counterWidth / 2, y - counterHeight / 2, counterWidth, counterHeight);
 
     // Draw the "X" with thin black lines
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 1 / zoom;
-    ctx.beginPath();
-    ctx.moveTo(x - counterWidth / 2, y - counterHeight / 2);
-    ctx.lineTo(x + counterWidth / 2, y + counterHeight / 2);
-    ctx.moveTo(x + counterWidth / 2, y - counterHeight / 2);
-    ctx.lineTo(x - counterWidth / 2, y + counterHeight / 2);
-    ctx.stroke();
-
+    if (!unit.hq) {
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 1 / zoom;
+      ctx.beginPath();
+      ctx.moveTo(x - counterWidth / 2, y - counterHeight / 2);
+      ctx.lineTo(x + counterWidth / 2, y + counterHeight / 2);
+      ctx.moveTo(x + counterWidth / 2, y - counterHeight / 2);
+      ctx.lineTo(x - counterWidth / 2, y + counterHeight / 2);
+      ctx.stroke();
+    }
     // Text shadow background for rank symbol (XX)
-    const rankText = 'XX'; // Division
+    const rankText = unit.hq ? 'XXXX' : 'XX'; // Division
     ctx.font = `${8 / zoom}px Arial`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
