@@ -1,5 +1,35 @@
 import { hexDistance } from '../../utils/hexGrid';
 
+export function validateOrder(state, unitId, orderType, params) {
+    const unit = state.units.find(u => u.id === unitId);
+    const unitHex = state.hexes.find(h => h.units.includes(unitId));
+
+    switch (orderType) {
+        case 'move':
+            const { dest } = params;
+            const destHex = state.hexes.find(h => h.q === dest[0] && h.r === dest[1]);
+            return destHex && hexDistance(unitHex.q, unitHex.r, dest[0], dest[1]) <= 2;
+        case 'attack':
+            const { targetId } = params;
+            const target = state.units.find(u => u.id === targetId);
+            const targetHex = state.hexes.find(h => h.units.includes(targetId));
+            return (
+                target &&
+                target.team !== unit.team &&
+                targetHex &&
+                hexDistance(unitHex.q, unitHex.r, targetHex.q, targetHex.r) <= 1
+            );
+        case 'scout':
+            if (unit.hq || !unit.brigades) return false;
+            const availableBrigade = unit.brigades.find(b => !b.order);
+            const availableStrength = unit.strength - (unit.detachedStrength || 0);
+            const brigadeStrength = unit.strength / 2; // Two brigades
+            return availableBrigade && availableStrength >= brigadeStrength;
+        default:
+            return false;
+    }
+}
+
 export const orderRegistry = {
     move: {
         validate: (state, unitId, params, config) => {

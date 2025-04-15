@@ -3,7 +3,8 @@ import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition } from '../utils/hexGrid';
 import WaterlooEngine from '../engine/WaterlooEngine';
-import { validateOrder, resolveCombat } from '../games/campaigns-of-napoleon/Rules';
+import { validateOrder } from '../games/campaigns-of-napoleon/orders'; // Updated import
+import { resolveCombat } from '../games/campaigns-of-napoleon/resolutions'; // Updated import
 import campaign2 from '../data/maps/italianCampaign.json';
 
 function MapContainer() {
@@ -13,24 +14,26 @@ function MapContainer() {
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [fogOfWar, setFogOfWar] = useState(true);
-  const [paintMode, setPaintMode] = useState(null); // null, 'road_paint', 'road_erase', 'terrain', 'height'
+  const [paintMode, setPaintMode] = useState(null);
   const [paintTerrainType, setPaintTerrainType] = useState('plains');
   const [paintHeightType, setPaintHeightType] = useState('0');
   const [paintingHexes, setPaintingHexes] = useState(null);
 
   const updateGameState = (newState) => {
     console.log('Updating game state:', newState);
-    setGameState(prev => {
-      const updatedHexes = newState.hexes ? newState.hexes.map(h => ({ ...h, units: [...h.units] })) : prev.hexes;
-      const updatedUnits = newState.units ? [...newState.units] : prev.units;
-      return {
-        ...prev,
-        hexes: updatedHexes,
-        units: updatedUnits,
-      };
-    });
+    setGameState(prev => ({
+      ...prev,
+      hexes: newState.hexes ? newState.hexes.map(h => ({ ...h, units: [...h.units] })) : prev.hexes,
+      units: newState.units ? newState.units.map(u => ({ ...u, position: [...u.position] })) : prev.units,
+      turn: newState.turn ?? prev.turn,
+      currentPlayer: newState.currentPlayer ?? prev.currentPlayer,
+      orders: newState.orders ?? prev.orders,
+      notifications: newState.notifications ?? prev.notifications,
+      selectedHex: newState.selectedHex ?? prev.selectedHex,
+      selectedUnitId: newState.selectedUnitId ?? prev.selectedUnitId
+    }));
     if (newState.hexes) engine.state.hexes = newState.hexes.map(h => ({ ...h, units: [...h.units] }));
-    if (newState.units) engine.state.units = [...newState.units];
+    if (newState.units) engine.state.units = newState.units.map(u => ({ ...u, position: [...u.position] }));
   };
 
   const handleClick = (e) => {
@@ -92,7 +95,7 @@ function MapContainer() {
   const handleScoutOrder = (unitId) => {
     if (paintMode) return;
     const unit = gameState.units.find(u => u.id === unitId);
-    if (!unit || unit.team !== gameState.currentPlayer || unit.horses <= 0) return;
+    if (!unit || unit.team !== gameState.currentPlayer) return;
 
     const success = engine.issueOrder(unitId, 'scout', {}, validateOrder);
     if (success) {

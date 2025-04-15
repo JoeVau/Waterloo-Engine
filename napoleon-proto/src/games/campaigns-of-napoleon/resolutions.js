@@ -3,23 +3,28 @@ import { getCombatResult } from './combatResults';
 
 export function resolveMovement(state, config, resolveCombatCallback, pendingCombats = []) {
     let newHexes = state.hexes.map(h => ({ ...h, units: [...h.units] }));
+    let updatedUnits = state.units.map(u => ({ ...u, position: [...u.position] })); // Deep clone units
     const combats = [...pendingCombats];
     const notifications = [];
 
     ['blue', 'red'].forEach(team => {
         Object.entries(state.orders[team] || {}).forEach(([unitId, order]) => {
             if (order && order.type === 'move') {
+                const unit = updatedUnits.find(u => u.id === unitId);
                 const oldHex = newHexes.find(h => h.units.includes(unitId));
                 const newHex = newHexes.find(h => h.q === order.dest[0] && h.r === order.dest[1]);
-                if (oldHex && newHex) {
+                if (oldHex && newHex && unit) {
                     if (newHex.units.length > 0) {
                         const defenderId = newHex.units[0];
                         combats.push({ attackerId: unitId, defenderId });
                     } else {
+                        // Update hexes
                         oldHex.units = oldHex.units.filter(id => id !== unitId);
                         newHex.units.push(unitId);
-                        const unit = state.units.find(u => u.id === unitId);
-                        unit.position = order.dest;
+                        // Update unit 
+                        console.log('debug orders', unit.position, order.dest)
+                        unit.position = [order.dest[0], order.dest[1]];
+                        console.log('debug orders destinating move', unit.position)
                         notifications.push(`${unit.name} moved to [${order.dest[0]}, ${order.dest[1]}]`);
                     }
                 }
@@ -29,7 +34,7 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
         });
     });
 
-    return { updatedUnits: state.units, notifications, updatedHexes: newHexes, pendingCombats: combats };
+    return { updatedUnits, notifications, updatedHexes: newHexes, pendingCombats: combats };
 }
 
 export function resolveDetachments(state, config) {
