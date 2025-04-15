@@ -12,7 +12,7 @@ class WaterlooEngine {
       units,
       features,
       orders: { blue: {}, red: {} },
-      notifications: [],
+      notifications: { red: [], blue: [] }, // Split by team
       config: defaultConfig,
     };
   }
@@ -45,14 +45,15 @@ class WaterlooEngine {
     let newHexes = this.state.hexes.map(h => ({ ...h, units: [...h.units] }));
     let updatedUnits = this.state.units.map(u => ({ ...u, position: [...u.position] }));
     let pendingCombats = [];
-    let notifications = [];
+    let notifications = { red: [], blue: [] };
 
-    // Run resolution phases in order: movement, detachments, combat
+    // Run resolution phases
     resolutionPhases.forEach(phase => {
       const result = phase(this.state, this.state.config, resolveCombatCallback, pendingCombats);
       if (result.updatedUnits) updatedUnits = result.updatedUnits;
-      if (result.notifications && Array.isArray(result.notifications)) {
-        notifications = [...notifications, ...result.notifications];
+      if (result.notifications) {
+        notifications.red = [...notifications.red, ...(result.notifications.red || [])];
+        notifications.blue = [...notifications.blue, ...(result.notifications.blue || [])];
       }
       if (result.updatedHexes) newHexes = result.updatedHexes;
       if (result.pendingCombats) pendingCombats = result.pendingCombats;
@@ -60,16 +61,6 @@ class WaterlooEngine {
       this.state.units = updatedUnits;
       this.state.hexes = newHexes;
     });
-
-    // Apply combat callback only for pendingCombats, merge results
-    if (resolveCombatCallback && pendingCombats.length > 0) {
-      const combatResult = resolveCombatCallback(this.state, pendingCombats);
-      if (combatResult.updatedUnits) updatedUnits = combatResult.updatedUnits;
-      if (combatResult.notifications && Array.isArray(combatResult.notifications)) {
-        notifications = [...notifications, ...combatResult.notifications];
-      }
-      if (combatResult.updatedHexes) newHexes = combatResult.updatedHexes;
-    }
 
     this.state.units = updatedUnits;
     this.state.notifications = notifications;

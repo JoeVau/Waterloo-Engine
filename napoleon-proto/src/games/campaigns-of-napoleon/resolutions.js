@@ -6,7 +6,7 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
     let newHexes = state.hexes.map(h => ({ ...h, units: [...h.units] }));
     let updatedUnits = state.units.map(u => ({ ...u, position: [...u.position] }));
     const combats = [...pendingCombats];
-    const notifications = [];
+    const notifications = { red: [], blue: [] };
 
     ['blue', 'red'].forEach(team => {
         Object.entries(state.orders[team] || {}).forEach(([unitId, order]) => {
@@ -19,14 +19,14 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
                         const defenderId = newHex.units[0];
                         combats.push({ attackerId: unitId, defenderId });
                     } else {
-                        oldHex.units = oldHex.units.filter(id => id !== unitId);
-                        newHex.units.push(unitId);
+                        oldHex.units = oldHexes.filter(id => id !== unitId);
+                        new wicht.units.push(unitId);
                         unit.position = [order.dest[0], order.dest[1]];
                         if (order.forceMarch) {
                             unit.exhaustion = (unit.exhaustion || 0) + config.effects.exhaustion.forceMarch;
-                            notifications.push(`${unit.name} force marched to [${order.dest[0]}, ${order.dest[1]}]`);
+                            notifications[team].push(`${unit.name} force marched to [${order.dest[0]}, ${order.dest[1]}]`);
                         } else {
-                            notifications.push(`${unit.name} moved to [${order.dest[0]}, ${order.dest[1]}]`);
+                            notifications[team].push(`${unit.name} moved to [${order.dest[0]}, ${order.dest[1]}]`);
                         }
                     }
                 }
@@ -40,7 +40,7 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
 }
 
 export function resolveDetachments(state, config) {
-    const notifications = [];
+    const notifications = { red: [], blue: [] };
     let updatedUnits = [...state.units];
     const activeDetachments = updatedUnits.filter(u => u.order === 'scout' && u.returnTurn <= state.turn);
 
@@ -55,7 +55,7 @@ export function resolveDetachments(state, config) {
                 brigade.order = null;
                 brigade.detachmentId = null;
                 console.log(`${brigade.name} scouting detachment returned to ${division.name}: ${detachment.strength} strength, LOS boost set to ${division.losBoost}`);
-                notifications.push(`${brigade.name} scouting detachment returned to ${division.name}—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
+                notifications[division.team].push(`${brigade.name} scouting detachment returned to ${division.name}—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
                 const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));
                 if (detachmentHex) {
                     detachmentHex.units = detachmentHex.units.filter(id => id !== detachment.id);
@@ -69,13 +69,13 @@ export function resolveDetachments(state, config) {
 }
 
 export function resolveEffects(state, config) {
-    const notifications = [];
+    const notifications = { red: [], blue: [] };
     let updatedUnits = [...state.units];
 
     updatedUnits.forEach(unit => {
         const result = applyEffects(unit, state, config);
         if (result.updated) {
-            notifications.push(result.notification);
+            notifications[unit.team].push(result.notification);
         }
     });
 
@@ -83,9 +83,9 @@ export function resolveEffects(state, config) {
 }
 
 export function resolveCombat(state, config, resolveCombatCallback, pendingCombats = []) {
-    const notifications = [];
+    const notifications = { red: [], blue: [] };
     if (!pendingCombats || pendingCombats.length === 0) {
-        return { updatedUnits: state.units, notifications, updatedHexes: state.hexes };
+        return { updatedUnits: state.units, notifications, updatedHexes: state.hexes, pendingCombats: [] };
     }
 
     console.log('Resolving combat with combats:', pendingCombats);
@@ -114,35 +114,38 @@ export function resolveCombat(state, config, resolveCombatCallback, pendingComba
                 switch (result) {
                     case "AE":
                         attacker.strength = 0;
-                        notifications.push(`Your unit ${attacker.name} was eliminated by ${defender.name}`);
-                        notifications.push(`${defender.name} destroyed ${attacker.name}`);
+                        notifications[attacker.team].push(`Your unit ${attacker.name} was eliminated by ${defender.name}`);
+                        notifications[defender.team].push(`${defender.name} destroyed ${attacker.name}`);
                         break;
                     case "AR":
                         attacker.strength = Math.floor(attacker.strength * 0.5);
-                        notifications.push(`${attacker.name} retreated from ${defender.name} with ${attacker.strength} strength remaining`);
-                        notifications.push(`${defender.name} drove back ${attacker.name}`);
-                        retreatUnit(attacker, defenderHex, state.hexes, notifications);
+                        notifications[attacker.team].push(`${attacker.name} retreated from ${defender.name} with ${attacker.strength} strength remaining`);
+                        notifications[defender.team].push(`${defender.name} drove back ${attacker.name}`);
+                        retreatUnit(attacker, defenderHex, state.hexes, notifications[attacker.team]);
                         break;
                     case "DR":
                         defender.strength = Math.floor(defender.strength * 0.5);
-                        notifications.push(`${defender.name} retreated from ${attacker.name} with ${defender.strength} strength remaining`);
-                        notifications.push(`${attacker.name} drove back ${defender.name}`);
-                        retreatUnit(defender, attackerHex, state.hexes, notifications);
+                        notifications[defender.team].push(`${defender.name} retreated from ${attacker.name} with ${defender.strength} strength remaining`);
+                        notifications[attacker.team].push(`${attacker.name} drove back ${defender.name}`);
+                        retreatUnit(defender, attackerHex, state.hexes, notifications[defender.team]);
                         break;
                     case "DE":
                         defender.strength = 0;
-                        notifications.push(`Your unit ${defender.name} was eliminated by ${attacker.name}`);
-                        notifications.push(`${attacker.name} destroyed ${defender.name}`);
+                        notifications[defender.team].push(`Your unit ${defender.name} was eliminated by ${attacker.name}`);
+                        notifications[attacker.team].push(`${attacker.name} destroyed ${defender.name}`);
                         break;
                     case "NE":
-                        notifications.push(`Combat between ${attacker.name} and ${defender.name} had no effect`);
+                        notifications.red.push(`Combat between ${attacker.name} and ${defender.name} had no effect`);
+                        notifications.blue.push(`Combat between ${attacker.name} and ${defender.name} had no effect`);
                         break;
                     default:
                         console.warn(`Unknown combat result: ${result}`);
-                        notifications.push(`Combat between ${attacker.name} and ${defender.name} unresolved`);
+                        notifications.red.push(`Combat between ${attacker.name} and ${defender.name} unresolved`);
+                        notifications.blue.push(`Combat between ${attacker.name} and ${defender.name} unresolved`);
                 }
             } else {
-                notifications.push(`Combat between ${attacker.name} and ${defender.name} avoided—units no longer adjacent`);
+                notifications.red.push(`Combat between ${attacker.name} and ${defender.name} avoided—units no longer adjacent`);
+                notifications.blue.push(`Combat between ${attacker.name} and ${defender.name} avoided—units no longer adjacent`);
             }
         }
     });
@@ -153,10 +156,10 @@ export function resolveCombat(state, config, resolveCombatCallback, pendingComba
         units: updatedUnits.filter(u => u.position[0] === h.q && u.position[1] === h.r).map(u => u.id),
     }));
 
-    return { updatedUnits, notifications, updatedHexes: newHexes, pendingCombats: [] }; // Clear pendingCombats
+    return { updatedUnits, notifications, updatedHexes: newHexes, pendingCombats: [] };
 }
 
-function retreatUnit(unit, enemyHex, hexes, notifications) {
+function retreatUnit(unit, enemyHex, hexes, teamNotifications) {
     const currentHex = hexes.find(h => h.units.includes(unit.id));
     console.log(`Retreating ${unit.name} from [${currentHex.q}, ${currentHex.r}] away from enemy at [${enemyHex.q}, ${enemyHex.r}]`);
 
@@ -175,10 +178,10 @@ function retreatUnit(unit, enemyHex, hexes, notifications) {
         retreatHex.units.push(unit.id);
         unit.position = [retreatHex.q, retreatHex.r];
         console.log(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
-        notifications.push(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
+        teamNotifications.push(`${unit.name} retreated to [${retreatHex.q}, ${retreatHex.r}]`);
     } else {
         console.log(`${unit.name} had nowhere to retreat—holding position`);
-        notifications.push(`${unit.name} had nowhere to retreat—holding position`);
+        teamNotifications.push(`${unit.name} had nowhere to retreat—holding position`);
     }
 }
 
