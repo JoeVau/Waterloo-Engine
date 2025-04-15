@@ -6,9 +6,12 @@ export function validateOrder(state, unitId, orderType, params) {
 
     switch (orderType) {
         case 'move':
-            const { dest } = params;
+            const { dest, forceMarch } = params;
             const destHex = state.hexes.find(h => h.q === dest[0] && h.r === dest[1]);
-            return destHex && hexDistance(unitHex.q, unitHex.r, dest[0], dest[1]) <= 2;
+            if (!destHex) return false;
+            const maxRange = unit.cavalry ? 15 : (forceMarch ? 10 : 5);
+            const distance = hexDistance(unitHex.q, unitHex.r, destHex.q, destHex.r);
+            return distance <= maxRange;
         case 'attack':
             const { targetId } = params;
             const target = state.units.find(u => u.id === targetId);
@@ -23,8 +26,10 @@ export function validateOrder(state, unitId, orderType, params) {
             if (unit.hq || !unit.brigades) return false;
             const availableBrigade = unit.brigades.find(b => !b.order);
             const availableStrength = unit.strength - (unit.detachedStrength || 0);
-            const brigadeStrength = unit.strength / 2; // Two brigades
+            const brigadeStrength = unit.strength / 2;
             return availableBrigade && availableStrength >= brigadeStrength;
+        case 'rest':
+            return !state.orders[state.currentPlayer][unitId];
         default:
             return false;
     }
@@ -35,11 +40,18 @@ export const orderRegistry = {
         validate: (state, unitId, params, config) => {
             const unit = state.units.find(u => u.id === unitId);
             const unitHex = state.hexes.find(h => h.units.includes(unitId));
-            const { dest } = params;
+            const { dest, forceMarch } = params;
             const destHex = state.hexes.find(h => h.q === dest[0] && h.r === dest[1]);
-            return destHex && hexDistance(unitHex.q, unitHex.r, dest[0], dest[1]) <= config.orders.move.range;
+            if (!destHex) return false;
+            const maxRange = unit.cavalry ? config.orders.move.cavalry : (forceMarch ? config.orders.move.forceMarch : config.orders.move.infantry);
+            const distance = hexDistance(unitHex.q, unitHex.r, destHex.q, destHex.r);
+            return distance <= maxRange;
         },
-        apply: (state, unitId, params) => {
+        apply: (state, unitId, params, config) => {
+            const unit = state.units.find(u => u.id === unitId);
+            if (params.forceMarch) {
+                unit.exhaustion = (unit.exhaustion || 0) + config.effects.exhaustion.forceMarch;
+            }
             state.orders[state.currentPlayer][unitId] = { type: 'move', ...params };
         }
     },
@@ -94,6 +106,18 @@ export const orderRegistry = {
             brigade.detachmentId = detachment.id;
             console.log(`Detached scouting brigade ${brigade.name} from ${unit.name}: ${brigadeStrength} strength at [${unit.position}]`);
             state.orders[state.currentPlayer][unitId] = { type: 'scout', ...params };
+        }
+    },
+    rest: {
+        validate: (state, unitId, params, config) => {
+            return !state.orders[state.currentPlayer][unitId];
+        },
+        apply: (state, unitId, params, config) => {
+            const unit = state.units.find(u => u.id === unitId);
+            unit.exhaustion = 0;
+            unit.strength = Math.round(unit.strength * (1 + config.effects.rest.strength));
+            unit.rest = { expires: state.turn + config.orders.rest.duration };
+            state.orders[state.currentPlayer][unitId] = { type: 'rest', ...params };
         }
     }
 };

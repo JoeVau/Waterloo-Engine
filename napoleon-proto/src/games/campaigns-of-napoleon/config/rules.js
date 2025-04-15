@@ -1,7 +1,9 @@
 const defaultConfig = {
     orders: {
         move: {
-            range: 2
+            infantry: 5,
+            cavalry: 15,
+            forceMarch: 10
         },
         attack: {
             range: 1
@@ -10,8 +12,33 @@ const defaultConfig = {
             los: 3,
             boost: 10,
             returnTurns: 1,
-            strengthFraction: 0.5 // Half strength per brigade
+            strengthFraction: 0.5
+        },
+        rest: {
+            strength: -0.1, // 10% strength reduction
+            duration: 1 // Recovers next turn
         }
+    },
+    terrain: {
+        plains: { moveCost: 1 },
+        woods: { moveCost: 2 },
+        hills: { moveCost: 3 },
+        road: { moveCost: 0 }
+    },
+    effects: {
+        exhaustion: {
+            skill: -1, // -1 skill per point
+            forceMarch: 1 // +1 per force march
+        },
+        rest: {
+            strength: -0.1, // 10% reduction
+            duration: 1 // 1-turn recovery
+        },
+        corpsBonus: { roll: 1, los: 1 },
+        hqBonus: { roll: 2, los: 2 }
+    },
+    division: {
+        brigades: 2
     },
     combat: {
         crtTable: {
@@ -58,13 +85,6 @@ const defaultConfig = {
                 "15+": "DE"
             }
         }
-    },
-    effects: {
-        corpsBonus: { roll: 1, los: 1 }, // Placeholder
-        hqBonus: { roll: 2, los: 2 }    // Placeholder
-    },
-    division: {
-        brigades: 2 // Two brigades per division
     }
 };
 

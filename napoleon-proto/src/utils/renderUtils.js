@@ -38,11 +38,11 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
         let attempts = 0;
         let placed = false;
         while (!placed && attempts < 10) {
-          const offsetX = (rand(120) - 60) * size / 150; // ±0.6 * size
-          const offsetY = (rand(120) - 60) * size / 150; // ±0.6 * size
+          const offsetX = (rand(120) - 60) * size / 180; // ±0.6 * size
+          const offsetY = (rand(120) - 60) * size / 180; // ±0.6 * size
           const tx = x + offsetX;
           const ty = y + offsetY;
-          const hillWidth = size * (0.4 + rand(20) / 100); // ±20%
+          const hillWidth = size * (0.4 + rand(15) / 100); // ±20%
           const hillHeight = size * (0.3 + rand(10) / 100); // ±10%
           const overlaps = hills.some(h => {
             const dx = h.x - tx;
@@ -156,7 +156,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       const x = Math.sin(seed++) * 10000;
       return Math.floor((x - Math.floor(x)) * max);
     };
-    const numBuildings = isVillage ? 5 + randSettlement(6) : 30; // 5-10 for village, 30 for city
+    const numBuildings = isVillage ? 5 + randSettlement(6) : 40; // 5-10 for village, 40 for city
     const maxDist = isVillage ? 0.5 : 0.8; // Village: tighter, city: wider
     const buildings = [];
     const avenueAngles = isVillage ? [] : [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3]; // No avenues for village
@@ -165,8 +165,8 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       let attempts = 0;
       let placed = false;
       while (!placed && attempts < 22) {
-        const tileWidth = size * (0.08 + randSettlement(10) / 100); // Smaller for village
-        const tileHeight = size * (0.04 + randSettlement(10) / 100);
+        const tileWidth = size * (0.08 + randSettlement(10) / 50); // Smaller for village
+        const tileHeight = size * (0.04 + randSettlement(10) / 50);
         const tileSize = Math.max(tileWidth, tileHeight);
         seed += hex.q * hex.r + i;
         const cluster = randSettlement(3);
@@ -203,11 +203,12 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       ctx.save();
       ctx.translate(b.x, b.y);
       ctx.rotate(b.rotation);
-      ctx.fillStyle = b.tier === 0 ? '#8b4513' : b.tier === 1 ? '#a0522d' : '#cd853f';
+      //ctx.fillStyle = b.tier === 0 ? '#8b4513' : b.tier === 1 ? '#a0522d' : '#cd853f';
+      ctx.fillStyle = b.tier === 0 ? '#000000' : b.tier === 1 ? '#262626' : '#262626';
       ctx.fillRect(-b.width / 2, -b.height / 2, b.width, b.height);
-      ctx.strokeStyle = '#1c2526';
-      ctx.lineWidth = 0.15;
-      ctx.strokeRect(-b.width / 2, -b.height / 2, b.width, b.height);
+      //ctx.strokeStyle = '#1c2526';
+      //ctx.lineWidth = 0.15;
+      //ctx.strokeRect(-b.width / 2, -b.height / 2, b.width, b.height);
       ctx.restore();
     });
 
@@ -231,7 +232,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
       });
       ctx.closePath();
       ctx.strokeStyle = '#000';
-      ctx.lineWidth = 0.8 / zoom;
+      ctx.lineWidth = 1.5 / zoom;
       ctx.stroke();
       ctx.restore();
     }
@@ -244,7 +245,7 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
     const crossX = x + Math.cos(crossAngle) * crossDist;
     const crossY = y + Math.sin(crossAngle) * crossDist;
     ctx.translate(crossX, crossY);
-    ctx.fillStyle = '#8b4513';
+    ctx.fillStyle = '#262626';
     ctx.font = isVillage ? '3px serif' : '4px serif'; // Smaller for village
     ctx.fillText('✝', 0, 0);
     ctx.restore();

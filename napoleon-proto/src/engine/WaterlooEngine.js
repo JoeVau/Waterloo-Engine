@@ -74,6 +74,7 @@ class WaterlooEngine {
     this.state.units = updatedUnits;
     this.state.notifications = notifications;
     this.state.hexes = newHexes;
+    this.state.orders = { blue: {}, red: {} }; // Flush orders
   }
 
   getState() {

@@ -1,9 +1,10 @@
 import { hexDistance } from '../../utils/hexGrid';
 import { getCombatResult } from './combatResults';
+import { applyEffects, getCombatModifiers } from './effects';
 
 export function resolveMovement(state, config, resolveCombatCallback, pendingCombats = []) {
     let newHexes = state.hexes.map(h => ({ ...h, units: [...h.units] }));
-    let updatedUnits = state.units.map(u => ({ ...u, position: [...u.position] })); // Deep clone units
+    let updatedUnits = state.units.map(u => ({ ...u, position: [...u.position] }));
     const combats = [...pendingCombats];
     const notifications = [];
 
@@ -18,14 +19,15 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
                         const defenderId = newHex.units[0];
                         combats.push({ attackerId: unitId, defenderId });
                     } else {
-                        // Update hexes
                         oldHex.units = oldHex.units.filter(id => id !== unitId);
                         newHex.units.push(unitId);
-                        // Update unit 
-                        console.log('debug orders', unit.position, order.dest)
                         unit.position = [order.dest[0], order.dest[1]];
-                        console.log('debug orders destinating move', unit.position)
-                        notifications.push(`${unit.name} moved to [${order.dest[0]}, ${order.dest[1]}]`);
+                        if (order.forceMarch) {
+                            unit.exhaustion = (unit.exhaustion || 0) + config.effects.exhaustion.forceMarch;
+                            notifications.push(`${unit.name} force marched to [${order.dest[0]}, ${order.dest[1]}]`);
+                        } else {
+                            notifications.push(`${unit.name} moved to [${order.dest[0]}, ${order.dest[1]}]`);
+                        }
                     }
                 }
             } else if (order && order.type === 'attack') {
@@ -66,6 +68,20 @@ export function resolveDetachments(state, config) {
     return { updatedUnits, notifications, updatedHexes: state.hexes };
 }
 
+export function resolveEffects(state, config) {
+    const notifications = [];
+    let updatedUnits = [...state.units];
+
+    updatedUnits.forEach(unit => {
+        const result = applyEffects(unit, state, config);
+        if (result.updated) {
+            notifications.push(result.notification);
+        }
+    });
+
+    return { updatedUnits, notifications, updatedHexes: state.hexes };
+}
+
 export function resolveCombat(state, config, resolveCombatCallback, pendingCombats = []) {
     const notifications = [];
     if (!pendingCombats || pendingCombats.length === 0) {
@@ -81,38 +97,42 @@ export function resolveCombat(state, config, resolveCombatCallback, pendingComba
         if (attacker && defender) {
             const attackerHex = state.hexes.find(h => h.units.includes(attacker.id));
             const defenderHex = state.hexes.find(h => h.units.includes(defender.id));
-            const stillAdjacent = hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
+            const stillAdjacent = attackerHex && defenderHex && hexDistance(attackerHex.q, attackerHex.r, defenderHex.q, defenderHex.r) === 1;
 
-            const defenderOrder = state.orders[defender.team] ?.[defender.id];
-            const defenderStands = !defenderOrder || defenderOrder === null;
-            const defenderAttacksBack = defenderOrder ?.type === 'attack' && defenderOrder.targetId === attackerId;
-
-            if (stillAdjacent && (defenderStands || defenderAttacksBack)) {
+            if (stillAdjacent) {
                 const effectiveAttackerStrength = attacker.strength - (attacker.detachedStrength || 0);
                 const effectiveDefenderStrength = defender.strength - (defender.detachedStrength || 0);
+                const attackerModifiers = getCombatModifiers(attacker, config);
+                const defenderModifiers = getCombatModifiers(defender, config);
                 const result = getCombatResult(
                     { ...attacker, strength: effectiveAttackerStrength },
                     { ...defender, strength: effectiveDefenderStrength },
-                    config
+                    config,
+                    attackerModifiers,
+                    defenderModifiers
                 );
                 switch (result) {
                     case "AE":
                         attacker.strength = 0;
                         notifications.push(`Your unit ${attacker.name} was eliminated by ${defender.name}`);
+                        notifications.push(`${defender.name} destroyed ${attacker.name}`);
                         break;
                     case "AR":
                         attacker.strength = Math.floor(attacker.strength * 0.5);
                         notifications.push(`${attacker.name} retreated from ${defender.name} with ${attacker.strength} strength remaining`);
+                        notifications.push(`${defender.name} drove back ${attacker.name}`);
                         retreatUnit(attacker, defenderHex, state.hexes, notifications);
                         break;
                     case "DR":
                         defender.strength = Math.floor(defender.strength * 0.5);
                         notifications.push(`${defender.name} retreated from ${attacker.name} with ${defender.strength} strength remaining`);
+                        notifications.push(`${attacker.name} drove back ${defender.name}`);
                         retreatUnit(defender, attackerHex, state.hexes, notifications);
                         break;
                     case "DE":
                         defender.strength = 0;
                         notifications.push(`Your unit ${defender.name} was eliminated by ${attacker.name}`);
+                        notifications.push(`${attacker.name} destroyed ${defender.name}`);
                         break;
                     case "NE":
                         notifications.push(`Combat between ${attacker.name} and ${defender.name} had no effect`);
@@ -121,8 +141,8 @@ export function resolveCombat(state, config, resolveCombatCallback, pendingComba
                         console.warn(`Unknown combat result: ${result}`);
                         notifications.push(`Combat between ${attacker.name} and ${defender.name} unresolved`);
                 }
-            } else if (state.orders[state.currentPlayer] ?.[attackerId] ?.type === 'attack') {
-                notifications.push(`Attack by ${attacker.name} missed—${defender.name} moved away`);
+            } else {
+                notifications.push(`Combat between ${attacker.name} and ${defender.name} avoided—units no longer adjacent`);
             }
         }
     });
@@ -133,7 +153,7 @@ export function resolveCombat(state, config, resolveCombatCallback, pendingComba
         units: updatedUnits.filter(u => u.position[0] === h.q && u.position[1] === h.r).map(u => u.id),
     }));
 
-    return { updatedUnits, notifications, updatedHexes: newHexes };
+    return { updatedUnits, notifications, updatedHexes: newHexes, pendingCombats: [] }; // Clear pendingCombats
 }
 
 function retreatUnit(unit, enemyHex, hexes, notifications) {
@@ -165,5 +185,6 @@ function retreatUnit(unit, enemyHex, hexes, notifications) {
 export const resolutionPhases = [
     resolveMovement,
     resolveDetachments,
+    resolveEffects,
     resolveCombat
 ];

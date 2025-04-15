@@ -1,6 +1,3 @@
-// src/games/campaigns-of-napoleon/combatResults.js
-
-// Combat Results Table (CRT)
 const combatResultsTable = {
     "1:3": {
         "2-5": "AE",
@@ -46,12 +43,10 @@ const combatResultsTable = {
     }
 };
 
-// Roll 2d6
 function roll2d6() {
     return Math.floor(Math.random() * 6) + 1 + Math.floor(Math.random() * 6) + 1;
 }
 
-// Calculate strength ratio
 function getStrengthRatio(attackerStrength, defenderStrength) {
     const ratio = attackerStrength / defenderStrength;
     if (ratio <= 0.33) return "1:3";
@@ -62,7 +57,6 @@ function getStrengthRatio(attackerStrength, defenderStrength) {
     return "4:1+";
 }
 
-// Get roll range for CRT lookup
 function getRollRange(roll) {
     if (roll <= 5) return "2-5";
     if (roll <= 8) return "6-8";
@@ -71,27 +65,24 @@ function getRollRange(roll) {
     return "15+";
 }
 
-// Compute combat result
-export function getCombatResult(attacker, defender) {
-    // Surprise roll: 2d6 + skill difference
+export function getCombatResult(attacker, defender, config, attackerModifiers = {}, defenderModifiers = {}) {
     const surpriseRoll = roll2d6() + (attacker.skill - defender.skill);
     console.log(`Surprise roll: ${surpriseRoll} (2d6 + ${attacker.skill} - ${defender.skill})`);
     const surpriseMod = surpriseRoll > 7 ? 3 : (surpriseRoll <= 7 ? -3 : 0);
     console.log(`Surprise modifier: ${surpriseMod}`);
 
-    // Main combat roll
-    const combatRoll = roll2d6() + surpriseMod;
-    console.log(`Combat roll: ${combatRoll} (2d6 + ${surpriseMod})`);
+    const skillMod = (attackerModifiers.skill || 0) - (defenderModifiers.skill || 0);
+    console.log(`Skill modifier: ${skillMod} (attacker ${attackerModifiers.skill || 0} vs defender ${defenderModifiers.skill || 0})`);
 
-    // Strength ratio
+    const combatRoll = roll2d6() + surpriseMod + skillMod;
+    console.log(`Combat roll: ${combatRoll} (2d6 + ${surpriseMod} + ${skillMod})`);
+
     const ratio = getStrengthRatio(attacker.strength, defender.strength);
-    console.log(`Strength ratio: ${ratio} (${attacker.strength} vs. ${defender.strength})`);
+    console.log(`Strength ratio: ${ratio} (${attacker.strength} vs ${defender.strength})`);
 
-    // Lookup result
     const rollRange = getRollRange(combatRoll);
     const result = combatResultsTable[ratio][rollRange];
     console.log(`Combat result: ${result} (Roll ${combatRoll} in range ${rollRange})`);
 
     return result;
 }
-//test
