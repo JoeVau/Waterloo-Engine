@@ -3,32 +3,43 @@ import './DebugPanel.css';
 
 function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggleFogOfWar, updateGameState, paintMode, setPaintMode, paintTerrainType, setPaintTerrainType, paintHeightType, setPaintHeightType }) {
   const [editTerrain, setEditTerrain] = useState('');
-  const [editFeature, setEditFeature] = useState(''); // Changed to handle city/village
+  const [editFeature, setEditFeature] = useState('');
   const [editCityName, setEditCityName] = useState('');
   const [editUnitId, setEditUnitId] = useState('');
   const [editUnitStrength, setEditUnitStrength] = useState(1000);
   const [editRoad, setEditRoad] = useState('');
   const [editHeight, setEditHeight] = useState('');
+  const [editRivers, setEditRivers] = useState([false, false, false, false, false, false]); // 6 sides
   const [localPaintMode, setLocalPaintMode] = useState(paintMode);
   const terrainOptions = ['plains', 'woods', 'hills', 'crops', 'swamps'];
-  const featureOptions = ['', 'city', 'village']; // Added village
+  const featureOptions = ['', 'city', 'village'];
   const heightOptions = ['0', '1', '2'];
+
+  // Load selected hex’s rivers on selection
+  React.useEffect(() => {
+    if (selectedHex) {
+      const [q, r] = selectedHex;
+      const hex = hexes.find(h => h.q === q && h.r === r);
+      setEditRivers(hex ?.rivers || [false, false, false, false, false, false]);
+    }
+  }, [selectedHex, hexes]);
 
   const handleApplyEdits = () => {
     if (!selectedHex) return;
     const [q, r] = selectedHex;
 
-    console.log('Applying edits for hex:', [q, r], { editTerrain, editFeature, editCityName, editUnitId, editUnitStrength, editRoad, editHeight });
+    console.log('Applying edits for hex:', [q, r], { editTerrain, editFeature, editCityName, editUnitId, editUnitStrength, editRoad, editHeight, editRivers });
 
     const updatedHexes = hexes.map(h => {
       if (h.q === q && h.r === r) {
         return {
           ...h,
           terrain: editTerrain || h.terrain,
-          feature: editFeature || undefined, // Handle city/village/none
+          feature: editFeature || undefined,
           name: editFeature ? (editCityName || h.name || '') : undefined,
           road: editRoad !== '' ? editRoad : h.road,
           height: editHeight !== '' ? parseInt(editHeight) : h.height || 0,
+          rivers: editRivers, // Store 6-side river array
           units: [...h.units],
         };
       }
@@ -85,6 +96,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
     setEditUnitStrength(1000);
     setEditRoad('');
     setEditHeight('');
+    setEditRivers([false, false, false, false, false, false]);
   };
 
   const isBlue = currentPlayer === 'blue';
@@ -165,6 +177,25 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
             </select>
           </label>
           <label>
+            Rivers (Sides):
+            <div className="river-controls">
+              {['Right', 'Top-Right', 'Top', 'Left', 'Bottom-Left', 'Bottom'].map((side, i) => (
+                <label key={i}>
+                  {side}:
+                  <input
+                    type="checkbox"
+                    checked={editRivers[i]}
+                    onChange={(e) => {
+                      const newRivers = [...editRivers];
+                      newRivers[i] = e.target.checked;
+                      setEditRivers(newRivers);
+                    }}
+                  />
+                </label>
+              ))}
+            </div>
+          </label>
+          <label>
             Add/Edit Unit ID:
             <input
               type="text"
@@ -188,7 +219,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
           <button
             onClick={handleApplyEdits}
             className={buttonClass}
-            disabled={!selectedHex || (!editTerrain && !editFeature && !editUnitId && editRoad === '' && editHeight === '')}
+            disabled={!selectedHex || (!editTerrain && !editFeature && !editUnitId && editRoad === '' && editHeight === '' && editRivers.every(r => !r))}
           >
             Apply Changes
           </button>
@@ -263,6 +294,7 @@ function DebugPanel({ hexes, units, selectedHex, currentPlayer, fogOfWar, toggle
                 name: h.name,
                 road: h.road || false,
                 height: h.height || 0,
+                rivers: h.rivers || [false, false, false, false, false, false],
                 units: h.units || [],
               },
             }), {}),

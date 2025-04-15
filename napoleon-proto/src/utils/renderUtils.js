@@ -34,6 +34,28 @@ export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, is
   } else if (hex.feature === 'village') {
     seed = drawVillage(ctx, x, y, size, hex, zoom, seed);
   }
+
+  // Draw rivers
+  if (hex.rivers && hex.rivers.some(r => r)) {
+    ctx.save();
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      if (hex.rivers[i]) {
+        const angle1 = (Math.PI / 3) * i + Math.PI / 6;
+        const angle2 = (Math.PI / 3) * ((i + 1) % 6) + Math.PI / 6;
+        const p1x = x + size * Math.cos(angle1);
+        const p1y = y + size * Math.sin(angle1);
+        const p2x = x + size * Math.cos(angle2);
+        const p2y = y + size * Math.sin(angle2);
+        ctx.moveTo(p1x, p1y);
+        ctx.lineTo(p2x, p2y);
+      }
+    }
+    ctx.strokeStyle = '#4682b4';
+    ctx.lineWidth = 2 / zoom;
+    ctx.stroke();
+    ctx.restore();
+  }
 }
 
 // Draws names for cities and villages

@@ -1,50 +1,79 @@
 .debug-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    z-index: 1000;
+    background-color: black;
+  }
+  
+  .end-turn-button {
+    display: block;
+    margin: 5px 0;
+    padding: 5px 10px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .end-turn-button-red {
+    background: #d44;
   }
   
   .god-mode-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px;
-    border-top: 1px solid #ccc;
+    margin-top: 10px;
   }
   
   .god-mode-controls label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
+    margin: 5px 0;
   }
   
+  .god-mode-controls select,
   .god-mode-controls input[type="text"],
-  .god-mode-controls input[type="number"],
-  .god-mode-controls select {
-    width: 150px;
+  .god-mode-controls input[type="number"] {
+    margin-left: 5px;
+    padding: 2px;
+    font-size: 12px;
   }
   
   .god-mode-controls input[type="checkbox"] {
-    margin-left: 10px;
+    margin-left: 5px;
   }
   
-  .paint-controls {
+  .river-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 5px;
+  }
+  
+  .river-controls label {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     align-items: center;
   }
   
-  .paint-controls button {
-    flex: 1;
-    min-width: 80px;
+  .paint-controls {
+    margin-top: 10px;
   }
   
-  .paint-controls button.active {
-    background: #0056b3;
+  .paint-controls button {
+    margin-right: 5px;
+    margin-bottom: 5px;
   }
   
   .paint-controls select {
-    width: 100px;
+    margin-left: 5px;
+    padding: 2px;
+  }
+  
+  .active {
+    background: #2ecc71;
   }
