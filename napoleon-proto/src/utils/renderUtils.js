@@ -1,273 +1,45 @@
 import { hexDistance } from '../utils/hexGrid';
+import { drawBaseHex } from './renderBaseHex';
+import { drawHills } from './renderHills';
+import { drawWoods } from './renderWoods';
+import { drawCrops } from './renderCrops';
+import { drawSwamps } from './renderSwamps';
+import { drawCity } from './renderCity';
+import { drawVillage } from './renderVillage';
 
 // Draws terrain and features
 export function drawHexBase(ctx, x, y, size, color, isHighlighted, hex, zoom, isUnitHighlighted) {
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 3) * i + Math.PI / 6;
-    const px = x + size * Math.cos(angle);
-    const py = y + size * Math.sin(angle);
-    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-  }
-  ctx.closePath();
+  drawBaseHex(ctx, x, y, size, hex, zoom, isHighlighted);
 
-  // Elevation gradient for all hexes based on height
-  const heightColors = {
-    0: '#e6f0e6', // Low: Light green, flat plains
-    1: '#b3c9b3', // Mid: Mid green-gray, gentle rise
-    2: '#809b80'  // High: Darker green-gray, rugged
-  };
-  const baseColor = hex && hex.height !== undefined ? heightColors[Math.min(Math.max(hex.height, 0), 2)] : '#e6f0e6';
-
-  ctx.fillStyle = baseColor;
-  ctx.fill();
-
-  // Initialize seed for randomness once
-  let seed = (hex.q + hex.r) * 100; // Simple seed based on hex coords
-  const rand = (max) => {
-    const x = Math.sin(seed++) * 10000;
-    return Math.floor((x - Math.floor(x)) * max);
-  };
-
-  // Terrain-specific features (overlay on elevation background)
-  switch (hex.terrain) {
-    case 'hills':
-      const numHills = 3 + rand(3); // 3-5 hills
-      const hills = [];
-      for (let i = 0; i < numHills; i++) {
-        let attempts = 0;
-        let placed = false;
-        while (!placed && attempts < 10) {
-          const offsetX = (rand(120) - 60) * size / 180; // ±0.6 * size
-          const offsetY = (rand(120) - 60) * size / 180; // ±0.6 * size
-          const tx = x + offsetX;
-          const ty = y + offsetY;
-          const hillWidth = size * (0.4 + rand(15) / 100); // ±20%
-          const hillHeight = size * (0.3 + rand(10) / 100); // ±10%
-          const overlaps = hills.some(h => {
-            const dx = h.x - tx;
-            const dy = h.y - ty;
-            return Math.sqrt(dx * dx + dy * dy) < (hillWidth + h.width) * 0.5;
-          });
-          const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
-          if (!overlaps && distFromCenter < size * 0.75) { // Within hex
-            hills.push({ x: tx, y: ty, width: hillWidth, height: hillHeight });
-            placed = true;
-          }
-          attempts++;
-        }
-      }
-      hills.forEach(hill => {
-        ctx.beginPath();
-        ctx.moveTo(hill.x, hill.y);
-        ctx.quadraticCurveTo(hill.x + hill.width * 0.5, hill.y - hill.height, hill.x + hill.width, hill.y);
-        ctx.fillStyle = '#5a3f2a'; // Richer brown
-        ctx.fill();
-        ctx.strokeStyle = '#3c2f2f';
-        ctx.lineWidth = 0.1 / zoom;
-        ctx.stroke();
-      });
-      break;
-
-    case 'woods':
-      const numTrees = 5 + rand(3); // 5-7 trees
-      const trees = [];
-      for (let i = 0; i < numTrees; i++) {
-        let attempts = 0;
-        let placed = false;
-        while (!placed && attempts < 10) {
-          const offsetX = (rand(100) - 50) * size / 100; // ±0.5 * size
-          const offsetY = (rand(100) - 50) * size / 100; // ±0.5 * size
-          const tx = x + offsetX;
-          const ty = y + offsetY;
-          const treeSize = size * (0.15 + rand(10) / 100); // Base ±20%
-          const overlaps = trees.some(t => {
-            const dx = t.x - tx;
-            const dy = t.y - ty;
-            return Math.sqrt(dx * dx + dy * dy) < (treeSize + t.size) * 0.7; // Tighter spacing
-          });
-          const distFromCenter = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
-          if (!overlaps && distFromCenter < size * 0.75) { // Wider but within hex
-            trees.push({ x: tx, y: ty, size: treeSize });
-            placed = true;
-          }
-          attempts++;
-        }
-      }
-      trees.forEach(t => {
-        ctx.beginPath();
-        ctx.moveTo(t.x, t.y - t.size * 1.5); // Height 1.5x base
-        ctx.lineTo(t.x - t.size, t.y + t.size);
-        ctx.lineTo(t.x + t.size, t.y + t.size);
-        ctx.closePath();
-        ctx.fillStyle = rand(100) < 30 ? '#228b22' : '#004d00'; // 30% lighter, 70% darker
-        ctx.fill();
-        ctx.strokeStyle = '#002200';
-        ctx.lineWidth = 0.1 / zoom;
-        ctx.stroke();
-      });
-      break;
-
-    case 'crops':
-      ctx.strokeStyle = '#2f4f2f';
-      ctx.lineWidth = 0.5 / zoom;
-      const wheatShades = ['#e6d8a8', '#d2c68a', '#bfa86b'];
-      const splotchPositions = [
-        { x: x - size * 0.5, y: y - size * 0.4, s: size * 0.25 },
-        { x: x + size * 0.35, y: y - size * 0.35, s: size * 0.38 },
-        { x: x - size * 0.45, y: y + size * 0.3, s: size * 0.25 },
-        { x: x + size * 0.4, y: y + size * 0.25, s: size * 0.22 },
-        { x: x - size * 0.2, y: y - size * 0.15, s: size * 0.28 },
-        { x: x + size * 0.15, y: y + size * 0.1, s: size * 0.31 },
-      ];
-      splotchPositions.forEach((pos, i) => {
-        ctx.fillStyle = wheatShades[i % wheatShades.length];
-        ctx.fillRect(pos.x, pos.y, pos.s, pos.s);
-        ctx.strokeRect(pos.x, pos.y, pos.s, pos.s);
-      });
-      break;
-
-    case 'swamps':
-      ctx.fillStyle = '#4682b4';
-      ctx.font = `${size * 0.8 / zoom}px monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      const dashPositions = [
-        { x: x - size * 0.3, y: y - size * 0.2 },
-        { x: x + size * 0.2, y: y - size * 0.1 },
-        { x: x - size * 0.1, y: y + size * 0.3 },
-        { x: x + size * 0.3, y: y + size * 0.2 },
-        { x: x + size * 0.1, y: y + size * 0.4 },
-        { x: x + size * 0.3, y: y + size * 0.55 },
-      ];
-      dashPositions.forEach(pos => {
-        ctx.fillText('__', pos.x, pos.y);
-      });
-      ctx.strokeStyle = '#6b8e23';
-      ctx.lineWidth = 0.5 / zoom;
-      ctx.stroke();
-      break;
-  }
-
-  if (hex.feature === 'city' || hex.feature === 'village') {
-    const isVillage = hex.feature === 'village';
-    seed = hex.name ? hex.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : seed;
-    const randSettlement = (max) => {
-      const x = Math.sin(seed++) * 10000;
-      return Math.floor((x - Math.floor(x)) * max);
-    };
-    const numBuildings = isVillage ? 5 + randSettlement(6) : 40; // 5-10 for village, 40 for city
-    const maxDist = isVillage ? 0.5 : 0.8; // Village: tighter, city: wider
-    const buildings = [];
-    const avenueAngles = isVillage ? [] : [Math.PI / 3, -Math.PI / 3, 2 * Math.PI / 3]; // No avenues for village
-    const avenueWidths = isVillage ? [] : [size * 0.16, size * 0.14, size * 0.15];
-    for (let i = 0; i < numBuildings; i++) {
-      let attempts = 0;
-      let placed = false;
-      while (!placed && attempts < 22) {
-        const tileWidth = size * (0.08 + randSettlement(10) / 50); // Smaller for village
-        const tileHeight = size * (0.04 + randSettlement(10) / 50);
-        const tileSize = Math.max(tileWidth, tileHeight);
-        seed += hex.q * hex.r + i;
-        const cluster = randSettlement(3);
-        const dist = size * (cluster === 0 ? 0.2 : cluster === 1 ? 0.35 : maxDist) * Math.sqrt(randSettlement(100) / 100);
-        const angle = (randSettlement(180) + (cluster * 120)) * Math.PI / 180;
-        const offsetX = Math.cos(angle) * dist;
-        const offsetY = Math.sin(angle) * dist;
-        const tx = x + offsetX;
-        const ty = y + offsetY;
-        const rotation = randSettlement(100) < 65 ? 0 : (randSettlement(2) - 0.5) * Math.PI / 10;
-        const minGap = tileSize * 0.25;
-        const overlaps = buildings.some(b => {
-          const dx = b.x - tx;
-          const dy = b.y - ty;
-          return Math.sqrt(dx * dx + dy * dy) < (tileSize + b.size) * 0.5 + minGap;
-        });
-        const inAvenue = isVillage ? false : avenueAngles.some((angle, idx) => {
-          const width = avenueWidths[idx] / 1.5;
-          const dx = tx - x;
-          const dy = ty - y;
-          const proj = dx * Math.cos(angle) + dy * Math.sin(angle);
-          const perp = Math.abs(dx * Math.sin(angle) - dy * Math.cos(angle));
-          return perp < width && proj > -size * 0.5 && proj < size * 0.5;
-        });
-        if (!overlaps && !inAvenue) {
-          const tier = dist < size * 0.25 ? 0 : dist < size * 0.4 ? 1 : 2;
-          buildings.push({ x: tx, y: ty, rotation, width: tileWidth, height: tileHeight, size: tileSize, tier });
-          placed = true;
-        }
-        attempts++;
-      }
+  let seed = (hex.q + hex.r) * 100; // Seed for terrain
+  if (hex.terrain) {
+    switch (hex.terrain) {
+      case 'hills':
+        seed = drawHills(ctx, x, y, size, hex, zoom, seed);
+        break;
+      case 'woods':
+        seed = drawWoods(ctx, x, y, size, hex, zoom, seed);
+        break;
+      case 'crops':
+        seed = drawCrops(ctx, x, y, size, hex, zoom, seed);
+        break;
+      case 'swamps':
+        seed = drawSwamps(ctx, x, y, size, hex, zoom, seed);
+        break;
     }
-    buildings.forEach(b => {
-      ctx.save();
-      ctx.translate(b.x, b.y);
-      ctx.rotate(b.rotation);
-      //ctx.fillStyle = b.tier === 0 ? '#8b4513' : b.tier === 1 ? '#a0522d' : '#cd853f';
-      ctx.fillStyle = b.tier === 0 ? '#000000' : b.tier === 1 ? '#262626' : '#262626';
-      ctx.fillRect(-b.width / 2, -b.height / 2, b.width, b.height);
-      //ctx.strokeStyle = '#1c2526';
-      //ctx.lineWidth = 0.15;
-      //ctx.strokeRect(-b.width / 2, -b.height / 2, b.width, b.height);
-      ctx.restore();
-    });
-
-    // City walls only for cities
-    if (hex.feature === 'city') {
-      ctx.save();
-      seed += hex.q + hex.r;
-      const numSides = 5 + randSettlement(4); // 5-8 sides
-      const wallRadius = size * 0.7; // Slightly beyond inner tier
-      const wallPoints = [];
-      for (let i = 0; i < numSides; i++) {
-        const angle = (2 * Math.PI * i) / numSides + (randSettlement(20) - 10) * Math.PI / 180;
-        const radiusVariation = wallRadius * (0.9 + randSettlement(20) / 100);
-        const px = x + radiusVariation * Math.cos(angle);
-        const py = y + radiusVariation * Math.sin(angle);
-        wallPoints.push({ x: px, y: py });
-      }
-      ctx.beginPath();
-      wallPoints.forEach((p, i) => {
-        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-      });
-      ctx.closePath();
-      ctx.strokeStyle = '#000';
-      ctx.lineWidth = 1.5 / zoom;
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Golden cross for both
-    ctx.save();
-    seed += hex.q + hex.r;
-    const crossDist = size * (0.1 + randSettlement(50) / 100);
-    const crossAngle = randSettlement(360) * Math.PI / 180;
-    const crossX = x + Math.cos(crossAngle) * crossDist;
-    const crossY = y + Math.sin(crossAngle) * crossDist;
-    ctx.translate(crossX, crossY);
-    ctx.fillStyle = '#262626';
-    ctx.font = isVillage ? '3px serif' : '4px serif'; // Smaller for village
-    ctx.fillText('✝', 0, 0);
-    ctx.restore();
   }
 
-  ctx.strokeStyle = isHighlighted ? 'yellow' : '#000';
-  ctx.lineWidth = 0.1 / zoom;
-  ctx.stroke();
-
-  if (zoom >= 2) {
-    ctx.fillStyle = '#000';
-    ctx.font = `${6 / zoom}px Arial`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText(`${hex.q},${hex.r}`, x, y - size * 0.8);
+  if (hex.feature === 'city') {
+    seed = drawCity(ctx, x, y, size, hex, zoom, seed);
+  } else if (hex.feature === 'village') {
+    seed = drawVillage(ctx, x, y, size, hex, zoom, seed);
   }
 }
 
 // Draws names for cities and villages
 export function drawHexName(ctx, x, y, size, hex, zoom) {
   if ((hex.feature === 'city' || hex.feature === 'village') && hex.name) {
-    const fontSize = hex.feature === 'village' ? 14 / zoom : 18 / zoom; // Smaller for village
+    const fontSize = hex.feature === 'village' ? 14 / zoom : 18 / zoom;
     ctx.font = `${fontSize}px 'Times New Roman'`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';

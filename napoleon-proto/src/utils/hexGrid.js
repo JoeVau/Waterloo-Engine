@@ -164,7 +164,7 @@ export function getHexRange(q, r, maxCost, hexes, costFn, unitElevation = 0) {
 }
 
 // Helpers
-function getNeighbors(q, r) {
+export function getNeighbors(q, r) {
   return [
     [q + 1, r], [q + 1, r - 1], [q, r - 1], // Right, top-right, top
     [q - 1, r], [q - 1, r + 1], [q, r + 1]  // Left, bottom-left, bottom
