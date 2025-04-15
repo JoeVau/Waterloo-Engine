@@ -19,8 +19,8 @@ export function resolveMovement(state, config, resolveCombatCallback, pendingCom
                         const defenderId = newHex.units[0];
                         combats.push({ attackerId: unitId, defenderId });
                     } else {
-                        oldHex.units = oldHexes.filter(id => id !== unitId);
-                        new wicht.units.push(unitId);
+                        oldHex.units = oldHex.units.filter(id => id !== unitId);
+                        newHex.units.push(unitId);
                         unit.position = [order.dest[0], order.dest[1]];
                         if (order.forceMarch) {
                             unit.exhaustion = (unit.exhaustion || 0) + config.effects.exhaustion.forceMarch;
@@ -54,8 +54,9 @@ export function resolveDetachments(state, config) {
                 division.losBoost = config.orders.scout.boost;
                 brigade.order = null;
                 brigade.detachmentId = null;
-                console.log(`${brigade.name} scouting detachment returned to ${division.name}: ${detachment.strength} strength, LOS boost set to ${division.losBoost}`);
-                notifications[division.team].push(`${brigade.name} scouting detachment returned to ${division.name}—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
+                const isRecall = state.orders[division.team] ?.[division.id] ?.type === 'recall';
+                console.log(`${brigade.name} scouting detachment ${isRecall ? 'recalled' : 'returned'} to ${division.name}: ${detachment.strength} strength, LOS boost set to ${division.losBoost}`);
+                notifications[division.team].push(`${brigade.name} ${isRecall ? 'recalled' : 'returned'} to ${division.name}—LOS boosted to ${config.orders.scout.boost} hexes this turn`);
                 const detachmentHex = state.hexes.find(h => h.units.includes(detachment.id));
                 if (detachmentHex) {
                     detachmentHex.units = detachmentHex.units.filter(id => id !== detachment.id);

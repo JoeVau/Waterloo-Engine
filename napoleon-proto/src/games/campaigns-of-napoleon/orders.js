@@ -30,6 +30,11 @@ export function validateOrder(state, unitId, orderType, params) {
             return availableBrigade && availableStrength >= brigadeStrength;
         case 'rest':
             return !state.orders[state.currentPlayer][unitId];
+        case 'recall':
+            if (unit.hq || !unit.brigades) return false;
+            const { brigadeId } = params;
+            const brigade = unit.brigades.find(b => b.id === brigadeId);
+            return brigade && brigade.order === 'scout' && brigade.detachmentId;
         default:
             return false;
     }
@@ -118,6 +123,27 @@ export const orderRegistry = {
             unit.strength = Math.round(unit.strength * (1 + config.effects.rest.strength));
             unit.rest = { expires: state.turn + config.orders.rest.duration };
             state.orders[state.currentPlayer][unitId] = { type: 'rest', ...params };
+        }
+    },
+    recall: {
+        validate: (state, unitId, params, config) => {
+            const unit = state.units.find(u => u.id === unitId);
+            if (unit.hq || !unit.brigades) return false;
+            const { brigadeId } = params;
+            const brigade = unit.brigades.find(b => b.id === brigadeId);
+            return brigade && brigade.order === 'scout' && brigade.detachmentId;
+        },
+        apply: (state, unitId, params, config) => {
+            const unit = state.units.find(u => u.id === unitId);
+            const { brigadeId } = params;
+            const brigade = unit.brigades.find(b => b.id === brigadeId);
+            if (brigade && brigade.detachmentId) {
+                const detachment = state.units.find(u => u.id === brigade.detachmentId);
+                if (detachment) {
+                    detachment.returnTurn = state.turn + config.orders.scout.recallDelay;
+                }
+                state.orders[state.currentPlayer][unitId] = { type: 'recall', ...params };
+            }
         }
     }
 };
