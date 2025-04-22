@@ -3,9 +3,10 @@ import Map from './Map';
 import Frame from './Frame';
 import { loadMap, getHexAtPosition } from '../utils/hexGrid';
 import WaterlooEngine from '../engine/WaterlooEngine';
-import { validateOrder } from '../games/campaigns-of-napoleon/orders'; // Updated import
-import { resolveCombat } from '../games/campaigns-of-napoleon/resolutions'; // Updated import
+import { validateOrder } from '../games/campaigns-of-napoleon/orders';
+import { resolveCombat } from '../games/campaigns-of-napoleon/resolutions';
 import campaign2 from '../data/maps/italianCampaign.json';
+import { handleClick, handleUnitSelect, handleScoutOrder, handleDeselect, handleEndTurn, clearNotifications, toggleFogOfWar } from './uiHandlers';
 
 function MapContainer() {
   const canvasRef = useRef(null);
@@ -34,91 +35,6 @@ function MapContainer() {
     }));
     if (newState.hexes) engine.state.hexes = newState.hexes.map(h => ({ ...h, units: [...h.units] }));
     if (newState.units) engine.state.units = newState.units.map(u => ({ ...u, position: [...u.position] }));
-  };
-
-  const handleClick = (e) => {
-    if (paintMode) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const clickedHex = getHexAtPosition(x, y, gameState.hexes, Map.hexWidth, Map.hexHeight, zoom, offset);
-    if (!clickedHex) return;
-
-    setGameState(prev => {
-      if (prev.selectedHex && clickedHex.q === prev.selectedHex[0] && clickedHex.r === prev.selectedHex[1]) {
-        engine.state.orders[prev.currentPlayer] = {};
-        return { ...prev, selectedHex: null, selectedUnitId: null };
-      }
-
-      if (!prev.selectedUnitId) {
-        return { ...prev, selectedHex: [clickedHex.q, clickedHex.r] };
-      }
-
-      const unit = prev.units.find(u => u.id === prev.selectedUnitId);
-      if (unit && unit.team === prev.currentPlayer) {
-        const targetUnit = clickedHex.units
-          .map(id => prev.units.find(u => u.id === id))
-          .find(u => u.team !== unit.team);
-
-        const success = engine.issueOrder(prev.selectedUnitId, 'move', { dest: [clickedHex.q, clickedHex.r] }, validateOrder);
-        if (success) {
-          if (targetUnit) {
-            console.log(`Combat triggered: ${unit.id} moves to [${clickedHex.q}, ${clickedHex.r}] and engages ${targetUnit.id}`);
-          } else {
-            console.log(`Move order issued for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
-          }
-          engine.state.orders[prev.currentPlayer] = engine.state.orders[prev.currentPlayer] || {};
-          engine.state.orders[prev.currentPlayer][prev.selectedUnitId] = { type: 'move', dest: [clickedHex.q, clickedHex.r] };
-          return { ...engine.getState(), selectedUnitId: null, selectedHex: null };
-        } else {
-          console.log(`Move order failed for ${prev.selectedUnitId} to [${clickedHex.q}, ${clickedHex.r}]`);
-        }
-      }
-      return prev;
-    });
-  };
-
-  const handleUnitSelect = (unitId) => {
-    if (paintMode) return;
-    setGameState(prev => {
-      const unit = prev.units.find(u => u.id === unitId);
-      if (unit && unit.team === prev.currentPlayer && !prev.orders[unit.team][unitId]) {
-        engine.state.orders[unit.team][unitId] = null;
-        return { ...prev, selectedUnitId: unitId };
-      }
-      return prev;
-    });
-  };
-
-  const handleScoutOrder = (unitId) => {
-    if (paintMode) return;
-    const unit = gameState.units.find(u => u.id === unitId);
-    if (!unit || unit.team !== gameState.currentPlayer) return;
-
-    const success = engine.issueOrder(unitId, 'scout', {}, validateOrder);
-    if (success) {
-      console.log(`Scout order issued for ${unitId}`);
-      setGameState(prev => ({
-        ...engine.getState(),
-        selectedUnitId: null,
-        selectedHex: null,
-      }));
-    } else {
-      console.log(`Scout order failed for ${unitId}`);
-    }
-  };
-
-  const handleDeselect = () => {
-    if (paintMode) return;
-    setGameState(prev => {
-      if (prev.selectedUnitId) {
-        engine.state.orders[prev.currentPlayer] = {};
-        return { ...prev, selectedUnitId: null, selectedHex: null };
-      }
-      return prev;
-    });
   };
 
   const handleWheel = (e) => {
@@ -273,26 +189,6 @@ function MapContainer() {
     }
   }, [paintMode, paintingHexes, gameState.hexes, zoom, offset, paintTerrainType, paintHeightType]);
 
-  const handleEndTurn = (player) => {
-    if (player !== gameState.currentPlayer) return;
-    console.log(`Ending turn for ${player}`);
-    engine.endTurn(player, resolveCombat);
-    const newState = engine.getState();
-    console.log('New game state after endTurn:', newState);
-    console.log('Notifications after endTurn:', newState.notifications);
-    setGameState(newState);
-  };
-
-  const clearNotifications = () => {
-    engine.state.notifications = [];
-    setGameState(prev => ({ ...prev, notifications: [] }));
-  };
-
-  const toggleFogOfWar = () => {
-    setFogOfWar(prev => !prev);
-    console.log(`Fog of war toggled to: ${!fogOfWar}`);
-  };
-
   return (
     <Frame
       hexes={gameState.hexes}
@@ -303,12 +199,12 @@ function MapContainer() {
       selectedHex={gameState.selectedHex}
       selectedUnitId={gameState.selectedUnitId}
       notifications={gameState.notifications}
-      onEndTurn={handleEndTurn}
-      onUnitSelect={handleUnitSelect}
-      onDeselect={handleDeselect}
-      handleScoutOrder={handleScoutOrder}
-      clearNotifications={clearNotifications}
-      toggleFogOfWar={toggleFogOfWar}
+      onEndTurn={(player) => handleEndTurn(player, gameState, engine, setGameState, resolveCombat)}
+      onUnitSelect={(unitId) => handleUnitSelect(unitId, gameState, engine, setGameState, paintMode)}
+      onDeselect={() => handleDeselect(gameState, engine, setGameState, paintMode)}
+      handleScoutOrder={(unitId) => handleScoutOrder(unitId, gameState, engine, setGameState, paintMode)}
+      clearNotifications={() => clearNotifications(engine, setGameState)}
+      toggleFogOfWar={() => toggleFogOfWar(setFogOfWar)}
       fogOfWar={fogOfWar}
       zoom={zoom}
       offset={offset}
@@ -329,7 +225,7 @@ function MapContainer() {
         zoom={zoom}
         offset={offset}
         selectedUnitId={gameState.selectedUnitId}
-        onClick={handleClick}
+        onClick={(e) => handleClick(e, gameState, engine, setGameState, getHexAtPosition, Map, zoom, offset)}
         onMouseDown={handleMouseDown}
         fogOfWar={fogOfWar}
         currentPlayer={gameState.currentPlayer}
